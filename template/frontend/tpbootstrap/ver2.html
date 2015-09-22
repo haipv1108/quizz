@@ -1,0 +1,278 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Datasection VietNam">
+
+<meta name="og:url" content="/PostRealtime/" />
+<meta property="og:type" content="article" />
+<meta property="article:author" content="https://www.facebook.com/dsvn5" />
+<meta property="article:tag" content="" />
+<meta name="og:image" content="" />
+
+
+<link type="image/x-icon" href="" rel="shortcut icon" />
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic"
+	rel="stylesheet" type="text/css">
+<link rel="stylesheet"
+	href="/PostRealtime/font-awesome/css/font-awesome.min.css">
+<!-- javascript  -->
+<script src="bootstrap/js/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="bootstrap/js/highcharts.js"></script>
+<link rel="stylesheet" type="text/css" 	href="dist/css/AdminLTE.min.css">
+<link rel="stylesheet" type="text/css" 	href="dist/css/style.css">
+
+<script>
+	var chart; // global
+	var showPost = false;
+
+	/**
+	 * Request data from the server, add it to the graph and set a timeout to request again
+	 */
+	function requestData() {
+		$
+				.ajax({
+					url : 'http://103.3.255.6:10103/PostRealtime/update',
+					success : function(point) {
+						data = jQuery.parseJSON(point);
+						// var chartData = data.action_info;
+						//console.log(data);
+						var series = chart.series[0], shift = series.data.length > 30;
+						// shift if the series is longer than 20
+
+						chart.series[0].addPoint([ data.action_info.date_time,
+								data.action_info.like_count ], true, shift);
+						chart.series[1].addPoint([ data.action_info.date_time,
+								data.action_info.share_count ], true, shift);
+						chart.series[2].addPoint([ data.action_info.date_time,
+								data.action_info.comment_count ], true, shift);
+						$('.direct-chat-msg').html(
+								"<p id='insert-comment'></p>");
+						if (data.comment_infos.length != 0) {
+							for ( var i in data.comment_infos) {
+								var time_comment = new Date(
+										data.comment_infos[i].create_time);
+								var new_comment = '<div class="direct-chat-info clearfix">'
+										+ '<span class="direct-chat-name pull-left">'
+										+ data.comment_infos[i].from_name
+										+ '</span>'
+										+ '<a target="_blank" href="'+data.comment_infos[i].url +'"><span class="direct-chat-timestamp pull-right" style="text-decoration: underline;">'
+										+ time_comment
+										+ '</span></a>'
+										+ '</div><a target="_blank" href="https://www.facebook.com/'+ data.comment_infos[i].from_id+'">'
+										+ '<img class="direct-chat-img" src=" https://graph.facebook.com/'+ data.comment_infos[i].from_id + '/picture" alt="message user image"/></a>'
+										+ '<div class="direct-chat-text" style="word-break: break-all;">'
+										+ data.comment_infos[i].content
+										+ '</div><br>';
+
+								$(new_comment).insertAfter("#insert-comment");
+
+							}
+						}
+
+						if (data.user_infos.length != 0) {
+							var list_user = '';
+
+							for ( var i in data.user_infos) {
+								list_user += '<div class="col-md-12 col-xs-12 col-sm-12 delete" style="height:100%;padding:9px 10px ">'
+										+ '<a target="_blank" href="https://www.facebook.com/'+ data.user_infos[i].userId+'">'
+										+ '<img class="direct-chat-img" style="width:50px;height:50px;padding: 0;"'
+								+ 'src="https://graph.facebook.com/'+ data.user_infos[i].userId + '/picture" alt=""/></a><br>'
+										+ '<span class="direct-chat-timestamp pull-right">'
+										+ data.user_infos[i].numCmt
+										+ ' <i class="fa fa-thumbs-o-up"></i></span></a>'
+										+ '</div>';
+							}
+							$(".delete").remove();
+							$(list_user).appendTo('#list-user');
+
+						}
+
+						if (!showPost) {
+							var postDiv = '<div class="col-sm-5">'
+									+ '<img height="auto" width="100%" src="' + data.post_info.picture + '"></div>';
+							postDiv += '<div class="col-sm-7">';
+							postDiv += '<a style="font-size:1.2em;word-wrap:break-word" href="' + data.post_info.url + '">'
+									+ data.post_info.url
+									+ '</a>'
+									+ '<p style="font-size:1.2em;">'
+									+ data.post_info.content + '</p>';
+
+							postDiv += '</div>';
+							$('#post-detail').append(postDiv);
+							showPost = true;
+						}
+
+						$(".delete2").remove();
+						var like_share_comment = '<div class="delete2" style="font-size: 1.2em; padding: 15px">'
+								+ '<p><span><i class="fa fa-thumbs-o-up"></i> </span> :'
+								+ data.post_info.like_count
+								+ '<p>'
+								+ '<p><span><i class="fa fa-share"></i> </span> :'
+								+ data.post_info.share_count
+								+ '<p>'
+								+ '<p><span><i class="fa fa-comments-o"></i> </span> :'
+								+ data.post_info.comment_count
+								+ '<p>'
+								+ '</div>';
+						$('#like-share-comment').append(like_share_comment);
+						setTimeout(requestData, 500);
+					},
+					cache : false
+				});
+	}
+
+	$(document).ready(function() {
+		chart = new Highcharts.Chart({
+			chart : {
+				renderTo : 'container',
+				events : {
+					load : requestData
+				}
+			},
+			title : {
+				text : 'Timeline Information'
+			},
+			xAxis : {
+				type : 'datetime',
+				labels : {
+					formatter : function() {
+						var myDate = new Date(this.value + 7 * 60 * 60 * 1000);
+						return Highcharts.dateFormat('%H:%M:%S', myDate);
+					}
+				}
+			},
+			credits : {
+				enabled : false
+			},
+			yAxis : {
+				min : 0,
+				minPadding : 0.2,
+				maxPadding : 0.2,
+				title : {
+					text : 'Value',
+					margin : 40
+				}
+			},
+			plotOptions : {
+				line : {
+					marker : {
+						enabled : false
+					}
+				}
+			},
+			series : [ {
+				name : 'Like',
+				data : []
+			}, {
+				name : 'Share',
+				data : []
+			}, {
+				name : 'Comment',
+				data : []
+			} ]
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="row" style="height: 100%; margin: 0">
+		<div class="col-md-8 col-xs-8 col-sm-8" style="height: 100%;margin-top:10px;">
+			<!-- good member -->
+			<div class="col-md-2" style="height: 100%">
+				<div class="box box-warning"  style="height:97%;overflow-y:auto">
+					<div id="list-user" >
+						<div class="col-md-12 col-xs-12 col-sm-12">
+							<h4 class="box-title" style="font-size:17px;">Top comment</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10" style="height: 100%">
+				<div class="row" style="height: 38%">
+					<div class=" box box-info" style="height:100%">
+					<!-- post -->
+						<div class="col-md-2 col-xs-2 col-sm-2">
+							<div id="like-share-comment"></div>
+							<!-- <div class="info-box" style="height:20%;min-height:40px;margin: 0 10px 10px 10px;">
+					                <span class="bg-aqua" style="font-size:30px" >
+					                	<i class="fa fa-thumbs-up"></i>
+					                </span>
+	
+					                <div class="info-box-content">
+					                </div>/.info-box-content
+					            </div>
+	
+					            <div class="info-box" style="height:20%;min-height:40px;margin: 0 10px 10px 10px;">
+					                <span class="bg-aqua" style="font-size:30px" >
+					                	<i class="fa fa-comments-o"></i>
+					                </span>
+	
+					                <div class="info-box-content">
+					                	<span class="info-box-number">1,410</span>
+					                </div>/.info-box-content
+					            </div>
+	
+					            <div class="info-box" style="height:20%;min-height:40px;margin: 0 10px 10px 10px;">
+					                <span class="bg-aqua" style="font-size:30px" >
+					                	<i class="fa fa-share"></i>
+					                </span>
+	
+					                <div class="info-box-content">
+					                	<span class="info-box-number">1,410</span>
+					                </div>/.info-box-content
+					            </div>
+	
+					            <div class="info-box" style="height:20%;min-height:40px;margin: 0 10px 10px 10px;">
+					                <span class="bg-aqua" style="font-size:30px" >
+					                	<i class="fa fa-users"></i>
+					                </span>
+	
+					                <div class="info-box-content">
+					                </div>/.info-box-content
+					            </div> -->
+						</div>
+	
+						<div class="col-md-10 col-xs-10 col-sm-10"
+							style="height: 95%; overflow-y: auto;padding: 20px">
+							<div id="post-detail" class="row"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px;height:58%">
+					<!-- chart -->
+					<div class="box box-danger" style="height: 95%; overflow-y: auto;margin-top: 20px">
+						<div id="container" ></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-4 col-xs-4 col-sm-4" style="height: 100%">
+			<div class="box box-success" style="margin-top: 10px; height: 97%; margin-bottom: 0">
+
+				<div class="box-header with-border">
+					<h3 class="box-title">Newest comment</h3>
+				</div>
+				<div class="box-body"
+					style="height: 90%; overflow-y: auto;">
+					<div class="direct-chat-msg">
+						<p id="insert-comment"></p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

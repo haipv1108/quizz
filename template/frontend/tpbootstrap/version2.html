@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Datasection VietNam">
+
+		<meta name="og:url" content="/PostRealtime/" />
+		<meta property="og:type" content="article" />
+		<meta property="article:author" content="https://www.facebook.com/dsvn5" />
+		<meta property="article:tag" content="" />
+		<meta name="og:image" content="" />
+
+		<link type="image/x-icon" href="" rel="shortcut icon" />
+
+		<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link
+			href="http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic"
+			rel="stylesheet" type="text/css">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+		<link href="dist/css/AdminLTE.min.css" rel="stylesheet">
+		<link href="dist/css/skins/_all-skins.min.css" rel="stylesheet">
+		<link href="style.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="https://google-code-prettify.googlecode.com/svn/loader/prettify.css">
+		<link rel="stylesheet" href="style_customer.css" type="text/css">
+		<!-- javascript  -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+		<style type="text/css">
+		.test {
+			border: solid 1px red;
+		}
+		.box {
+			margin-bottom: 10px;
+		}
+
+		body,html {
+			height: 100%;
+			width: 100%;
+			background-color: #ECF0F5;
+		}
+		</style>
+
+		<script>
+
+			
+			var chart; // global
+			var showPost = false;
+
+			/**
+			 * Request data from the server, add it to the graph and set a timeout to request again
+			 */
+function requestData() {
+	$.ajax({
+		url : 'http://103.3.255.6:10103/PostRealtime/update',
+		success : function(point) {
+			data = jQuery.parseJSON(point);
+			// var chartData = data.action_info;
+			//console.log(data);
+			var series = chart.series[0], shift = series.data.length > 30;
+			// shift if the series is longer than 20
+
+			chart.series[0].addPoint([ data.action_info.date_time,
+					data.action_info.like_count ], true, shift);
+			chart.series[1].addPoint([ data.action_info.date_time,
+					data.action_info.share_count ], true, shift);
+			chart.series[2].addPoint([ data.action_info.date_time,
+					data.action_info.comment_count ], true, shift);
+			$('.direct-chat-msg').html(
+					"<p id='insert-comment'></p>");
+
+			if (data.comment_infos.length != 0) {
+				for ( var i in data.comment_infos) {
+					var time_comment = new Date(
+							data.comment_infos[i].create_time);
+					var new_comment = '<div class="direct-chat-info clearfix">'
+							+ '<span class="direct-chat-name pull-left">'
+							+ data.comment_infos[i].from_name
+							+ '<span class="direct-chat-timestamp pull-right">'
+							+ time_comment
+							+ '</span>'
+							+ '</div><a target="_blank" href="https://www.facebook.com/'+ data.comment_infos[i].from_id+'">'
+							+ '<img class="direct-chat-img" src=" https://graph.facebook.com/'+ data.comment_infos[i].from_id + '/picture" alt="message user image"/></a>'
+							+ '<div class="direct-chat-text" style="-ms-word-break: break-all;">'
+							+ data.comment_infos[i].content
+							+ '</div><br>';
+
+					$(new_comment).insertAfter("#insert-comment");
+
+				}
+			}
+
+			if (data.user_infos.length != 0) {
+				var list_user = '';
+
+				for ( var i in data.user_infos) {
+					list_user += '<div class="col-md-1 col-xs-1 col-sm-1 delete" style="height:100%;padding-top:5px">'
+							+ '<a target="_blank" href="https://www.facebook.com/'+ data.user_infos[i].userId+'">'
+							+ '<img class="direct-chat-img" style="width:50px;height:50px;padding: 0;"'
+					+ 'src="https://graph.facebook.com/'+ data.user_infos[i].userId + '/picture" alt=""/></a><br>'
+							+ '<span class="direct-chat-timestamp pull-right">'
+							+ data.user_infos[i].numCmt
+							+ ' <i class="fa fa-thumbs-o-up"></i></span></a>'
+							+ '</div>';
+				}
+				$(".delete").remove();
+				$(list_user).appendTo('#list-user');
+
+			}
+
+			if (!showPost) {
+				var postDiv = '<a style="font-size:1.2em" href="' + data.post_info.url + '">'
+						+ data.post_info.url
+						+ '</a>'
+						+ '<p style="font-size:1.2em">'
+						+ data.post_info.content
+						+ '</p>'
+						+ '<img width="400" src="' + data.post_info.picture + '">';
+				$('#post-detail').append(postDiv);
+				showPost = true;
+			}
+
+			$(".delete2").remove();
+			var like_share_comment = '<div class="delete2" style="font-size: 1.2em; padding: 15px">'
+					+ '<p><span><i class="fa fa-thumbs-o-up"></i> </span>like:'
+					+ data.post_info.like_count
+					+ '<p>'
+					+ '<p><span><i class="fa fa-share"></i> </span>share:'
+					+ data.post_info.share_count
+					+ '<p>'
+					+ '<p><span><i class="fa fa-comments-o"></i> </span>comment:'
+					+ data.post_info.comment_count
+					+ '<p>'
+					+ '</div>';
+			$('#like-share-comment').append(like_share_comment);
+			setTimeout(requestData, 500);
+		},
+		cache : false
+	});
+}
+			
+			$(function () {
+			    $(document).ready(function () {
+			        Highcharts.setOptions({
+			            global: {
+			                useUTC: false
+			            }
+			        });
+
+			        $('#container').highcharts({
+			            chart: {
+			                type: 'spline',
+			                animation: Highcharts.svg, // don't animate in old IE
+			                marginRight: 10,
+			                events: {
+			                    load: function () {
+
+			                        // set up the updating of the chart each second
+			                        var series = this.series[0];
+			                        setInterval(function () {
+			                            var x = (new Date()).getTime(), // current time
+			                                y = Math.random()* (20 - 10) + 10;
+			                                // * (max - min) + min : cho giá trị ngẫu nhiên từ 10-20
+			                            series.addPoint([x, y], true, true);
+			                        }, 1000);
+			                    }
+			                }
+			            },
+			            title: {
+			                text: 'Biểu đồ'
+			            },
+			            xAxis: {
+			                type: 'datetime',
+			                tickPixelInterval: 150 // độ rộng trên trục x
+			            },
+			            yAxis: {
+			                title: {
+			                    text: 'Value'
+			                },
+			                plotLines: [{
+			                    value: 0,
+			                    width: 1,
+			                    color: '#808080'
+			                }]
+			            },
+			            // Hiện thị thông tin khi di chuột qua
+			            tooltip: {
+			                formatter: function () {
+			                    return '<b>' + this.series.name + '</b><br/>' +
+			                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+			                        Highcharts.numberFormat(this.y, 2);
+			                }
+			            },
+			            legend: {
+			                enabled: false
+			            },
+			            exporting: {
+			                enabled: false
+			            },
+			            series: [{
+			                name: 'Random data',
+			                data: (function () {
+			                    // generate an array of random data
+			                    var data = [],
+			                        time = (new Date()).getTime(),
+			                        i;
+
+			                    for (i = -19; i <= 0; i += 1) {
+			                        data.push({
+			                            x: time + i * 1000,
+			                            y: Math.random()
+			                        });
+			                    }
+			                    return data;
+			                }())
+			            }]
+			        });
+			    });
+			});
+		</script>
+	</head>
+<body>
+	<script src="bootstrap/js/highcharts.js"></script>
+	<script src="bootstrap/js/modules/exporting.js"></script>
+	<div class="row" style="height: 100%; margin: 0">
+		<div class="col-md-8 col-xs-8 col-sm-8" style="height: 100%">
+			<div class=" box box-info"
+				style="height: 41%; margin: 0; margin-top: 10px;">
+				<!-- post -->
+				<div class="row" style="height: 100%">
+
+					<div class="col-md-3 col-xs-3 col-sm-3" style="height: 100%">
+						<div id="like-share-comment">
+							<div class="box-header with-border">
+								<h3 class="box-title">Statistical</h3>
+							</div>
+							<div class="info-box bg-green" style="height:20%;min-height:40px;margin: 10px 0px 0px;">
+				                <span class="info-box-icon" style="height: 55px; width: 57px;position: relative;">
+				                	<i class="fa fa-thumbs-up" style="position: absolute; left: 9px; top: 4px;"></i>
+				                </span>
+
+				                <div class="info-box-content">
+				                	<span class="info-box-text"><strong>Likes</strong></span>
+				                	<span class="info-box-number">1,234</span>
+				                </div><!-- /.info-box-content -->
+				            </div>
+
+				            <div class="info-box bg-red" style="height:20%;min-height:40px;margin: 10px 0px 0px;">
+				                <span class="info-box-icon " style="height: 55px; width: 57px;position: relative;">
+				                	<i class="fa fa-comment" style="position: absolute; left: 6px; top: 4px;"></i>
+				                </span>
+
+				                <div class="info-box-content">
+				                	<span class="info-box-text"><strong>Comments</strong></span>
+				                	<span class="info-box-number">1,234</span>
+				                </div><!-- /.info-box-content -->
+				            </div>
+
+				            <div class="info-box bg-yellow" style="height:20%;min-height:40px;margin: 10px 0px 0px;">
+				                <span class="info-box-icon" style="height: 55px; width: 57px;position: relative;">
+				                	<i class="fa fa-share" style="position: absolute; left: 6px; top: 9px;"></i>
+				                </span>
+
+				                <div class="info-box-content">
+				                	<span class="info-box-text"><strong>Shares</strong></span>
+				                	<span class="info-box-number">1,234</span>
+				                </div><!-- /.info-box-content -->
+				            </div>
+						</div>
+						
+					</div>
+
+					<div class="col-md-9 col-xs-9 col-sm-9"
+						style="height: 100%; overflow-y: scroll; over-flow-x: hidden">
+						<div id="post-detail">
+							<a href="https://www.facebook.com/545645352177634/posts/911192745622891" style="font-size:1.2em">https://www.facebook.com/545645352177634/posts/911192745622891</a>
+							<p style="font-size:1.2em">Các Fan của anh Noo đang rất háo hức ăn trưa tại nhà hàng Bữa Trưa Vui Vẻ rồi đó!!! Bếp trưởng Hoa Thanh Tùng cũng đang háo hức lắm đây :D</p>
+							<img width="400" src="https://fbcdn-sphotos-a-a.akamaihd.net/hphotos-ak-xfp1/t31.0-8/11900102_911191595623006_434171371728307085_o.jpg" style="float: left;">
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- chart -->
+			<div class="box box-danger"
+				style="margin: 0; height: 56%; margin-bottom: 1%; margin-top: 1%; background-color: silver">
+				<div id="container" style="width: 100%; height: 100%; margin: 0 0"></div>
+			</div>
+		</div>
+
+		<div class="col-md-4 col-xs-4 col-sm-4" style="height: 100%">
+			
+			<!-- good member -->
+			<div class="box box-warning" style="height: 14%; margin-top: 10px">
+				<div id="list-user" class="row" style="height: 100%; margin: 0">
+					<div class="col-md-3 col-xs-3 col-sm-3" style="height: 100%">
+						<h4 class="box-title">Top Comments</h4>
+					</div>
+					<div class="col-md-3 delete" style="height: 100%; padding-top: 5px;">
+						<a href="http://facebook.com/rankid94">
+							<img src="dist/img/user2-160x160.jpg" alt="avatar" class="direct-chat-img" style="width: 65px; height: 65px; padding: 0; "><br>
+							<span class="direct-chat-timestamp" style="left: 37px; position: absolute; top: 70px;">
+								<i class="fa fa-thumbs-o-up"> 10</i>
+							</span>
+						</a>
+					</div>
+
+					<div class="col-md-3 delete" style="height: 100%; padding-top: 5px;">
+						<a href="http://facebook.com/rankid94">
+							<img src="dist/img/user3-128x128.jpg" alt="avatar" class="direct-chat-img" style="width: 65px; height: 65px; padding: 0; "><br>
+							<span class="direct-chat-timestamp" style="left: 37px; position: absolute; top: 70px;">
+								<i class="fa fa-thumbs-o-up"> 9</i>
+							</span>
+						</a>
+					</div>
+
+					<div class="col-md-3 delete" style="height: 100%; padding-top: 5px;">
+						<a href="http://facebook.com/rankid94">
+							<img src="dist/img/user8-128x128.jpg" alt="avatar" class="direct-chat-img" style="width: 65px; height: 65px; padding: 0; "><br>
+							<span class="direct-chat-timestamp" style="left: 37px; position: absolute; top: 70px;">
+								<i class="fa fa-thumbs-o-up"> 9</i>
+							</span>
+						</a>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="box box-success"
+				style="margin-top: 5px; height: 83%; margin-bottom: 0;">
+				<div class="box-header with-border">
+					<h3 class="box-title">Latest Comments</h3>
+					<span style="float: right;">
+						<i class="fa fa-comment-o" style="font-size: 18px;"></i>
+						<span class="label label-success">5</span>
+					</span>
+				</div>
+				<div class="box-body" style="height: 94%; overflow-y: scroll; over-flow-x: hidden; padding: 10px;">
+					<div class="direct-chat-msg" >
+						<p id="insert-comment"></p>
+						<div class="direct-chat-info clearfix">
+							<span class="direct-chat-name pull-left">Alexander Pierce</span>
+							<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+						</div>	
+						<a href="http://www.facebook.com/rankid94">
+							<img class="direct-chat-img" alt="message user image" src="dist/img/user1-128x128.jpg">
+						</a>
+						<div class="direct-chat-text" style="-ms-word-break: break-all;"> Is this template really for free? That's unbelievable! 
+						</div>
+
+						<div class="direct-chat-info clearfix">
+							<span class="direct-chat-name pull-left">Alexander Pierce</span>
+							<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+						</div>	
+						<a href="http://www.facebook.com/rankid94">
+							<img class="direct-chat-img" alt="message user image" src="dist/img/user6-128x128.jpg">
+						</a>
+						<div class="direct-chat-text" style="-ms-word-break: break-all;"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum vitae officia pariatur facere, dolor reiciendis aperiam non ad quis quod sint, nihil, ab ea voluptate itaque, enim eligendi aut porro.
+						</div>
+
+						<div class="direct-chat-info clearfix">
+							<span class="direct-chat-name pull-left">Alexander Pierce</span>
+							<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+						</div>	
+						<a href="http://www.facebook.com/rankid94">
+							<img class="direct-chat-img" alt="message user image" src="dist/img/user6-128x128.jpg">
+						</a>
+						<div class="direct-chat-text" style="-ms-word-break: break-all;"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum vitae officia pariatur facere, dolor reiciendis aperiam non ad quis quod sint, nihil, ab ea voluptate itaque, enim eligendi aut porro.
+						</div>
+
+						<div class="direct-chat-info clearfix">
+							<span class="direct-chat-name pull-left">Alexander Pierce</span>
+							<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+						</div>	
+						<a href="http://www.facebook.com/rankid94">
+							<img class="direct-chat-img" alt="message user image" src="dist/img/user6-128x128.jpg">
+						</a>
+						<div class="direct-chat-text" style="-ms-word-break: break-all;"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum vitae officia pariatur facere, dolor reiciendis aperiam non ad quis quod sint, nihil, ab ea voluptate itaque, enim eligendi aut porro.
+						</div>
+
+						<div class="direct-chat-info clearfix">
+							<span class="direct-chat-name pull-left">Alexander Pierce</span>
+							<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+						</div>	
+						<a href="http://www.facebook.com/rankid94">
+							<img class="direct-chat-img" alt="message user image" src="dist/img/user6-128x128.jpg">
+						</a>
+						<div class="direct-chat-text" style="-ms-word-break: break-all;"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum vitae officia pariatur facere, dolor reiciendis aperiam non ad quis quod sint, nihil, ab ea voluptate itaque, enim eligendi aut porro.
+						</div>
+							
+
+					</div>
+				</div>
+			</div> <!-- .box-success -->
+		</div>
+		
+	</div>
+</body>
+</html>
