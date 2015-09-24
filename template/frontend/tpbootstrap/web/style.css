@@ -1,0 +1,228 @@
+body {
+    color: #333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+}
+.btn-app{
+	min-width: 91px;
+}
+.border_col {
+	border: 2px double #ddd;
+	text-align: center;
+	background-color: #f4f4f4;
+	border-radius: 12px;
+}
+.btn2-app {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.divider2 {
+    background-image: url("../image/2.png");
+    height: 7px;
+}
+.divider {
+    background-position: center center;
+    background-repeat: no-repeat;
+    clear: both;
+    margin: 5px 0;
+    overflow: hidden;
+}
+.cauhoi-wrap {
+    padding: 10px !important;
+}
+
+.cauhoi {
+    color: #103b5c;
+    display: block;
+    font-size: 1.333em;
+    font-weight: 700;
+    margin: 5px 0;
+    overflow: hidden;
+}
+.dapan {
+    color: #103b5c;
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+/*  Trang trac nghiem */
+
+
+#container_clock {
+    background: rgba(0, 0, 0, 0) url("../image/bg_bt_test.png") no-repeat scroll -10px -281px !important;
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    height: 136px;
+    line-height: 204px;
+    text-align: center;
+    width: 81px;
+    padding: 12px
+}
+
+.page_toeic, .toeic_cmd_full {
+    display: none;
+}
+.page_toeic {
+    display: none;
+    margin: 0 auto;
+    width: 728px;
+}
+.toeic_center {
+    border: 1px solid #d6e4f1;
+    display: block;
+    float: left;
+    position: relative;
+    width: 97%;
+
+}
+.toeic_title {
+    background: #ff7e00 none repeat scroll 0 0;
+    color: #fff;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 35px;
+}
+.toeic_title_r {
+    color: #fff200;
+    float: right;
+    font-weight: normal;
+    margin-right: 25px;
+    text-align: right;
+}
+.toeic_cont_part {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color -moz-use-text-color #666666;
+    border-image: none;
+    border-style: none none dashed;
+    border-width: medium medium 1px;
+    font-style: italic;
+    font-weight: bold;
+    line-height: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    position: relative;
+    text-align: justify;
+}
+.toeic_title_part {
+    color: #fe2000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: bold;
+    margin: 20px auto;
+    text-align: center;
+}
+.toeic_main {
+    display: block;
+    float: left;
+    margin: 0 20px;
+    width: 618px;
+}
+.box_current {
+    display: block;
+}
+
+
+.toeic_title_part {
+    color: #fe2000;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: bold;
+    margin: 20px auto;
+    text-align: center;
+}
+.details {
+    line-height: 180%;
+}
+.toeic_ques_col2 {
+    float: left;
+}
+.toeic_ques {
+    display: block;
+    margin: 20px 0;
+    width: 100%;
+}
+.toeic_q_select.col2 {
+    display: block;
+    margin: 0 0 0 30px;
+    width: 566px;
+}
+.toeic_q_select {
+    background: rgba(0, 0, 0, 0) url("../image/hr_space.png") no-repeat scroll center bottom;
+    display: block;
+    float: left;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    width: 100%;
+}
+.toeic_index {
+    border: 1px solid #58960f;
+    border-radius: 50px;
+    color: #58960f;
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    margin-top: 7px;
+    text-align: center;
+    width: 72px;
+}
+.toeic_q_title {
+    color: #004040;
+    display: inline-block;
+    float: left;
+    font-weight: bold;
+    line-height: 24px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 540px;
+}
+.toeic_select_col2, .toeic_select_col1, .toeic_select_col3 {
+    float: left;
+    margin-left: 40px;
+    width: 600px;
+}
+.toeic_col2 {
+    float: left;
+    margin-top: 10px;
+    text-align: center;
+    width: 50%;
+}
+.label_radio_2 {
+    float: left;
+}
+
+
+.style {
+    clear: both;
+}
+
+.toeic_footer {
+    margin: 0 auto;
+    position: relative;
+    width: 450px;
+}
+
+.pagination{
+    padding-left: 90px;
+    text-align: center;
+    padding-bottom: 20px;   
+}
+#nopbai{
+    text-align: center !important; 
+    margin: 4% 41%;
+    font-size: 25px;
+}
+.progress{
+    padding-right: 0px;
+    border-radius: 10px;
+}
+/*  end. trang trac nghiem*/
