@@ -1,3 +1,25 @@
+<script>
+	$(document).ready(function(){
+		$("#name").change(function(){
+			var name = $(this).val();
+			$.ajax({
+				url: "<?php site_url()?>subject/ajax/check_subject_availablity",
+				dataType: 'html',
+				type: 'POST',
+				data: {
+					name: name,
+				},
+				success: function(result){
+					if(result == 'true' ){
+						$('#available').html('<span class="notification error png_bg">Subject is NOT available.</span>');
+					}else if(result == 'false'){
+						$('#available').html('<span class="notification success png_bg">Subject is available.</span>');
+					}
+				}
+			});
+		});
+	});
+</script>
 <div class="content-box"><!-- Start Content Box -->
 	<div class="content-box-header">
 		<h3>Content box</h3>
@@ -14,7 +36,8 @@
 		<form action="" method="post">
 			<p>
 				<label>Name Subject</label>
-				<input class="text-input" type="text" name="name" value="<?php echo set_value('name'); ?>"/>
+				<input id = 'name' class="text-input" type="text" name="name" value="<?php echo set_value('name'); ?>"/>
+				<span id="available"></span>
 			</p>
 				<div class="clear"></div>
 			<p>

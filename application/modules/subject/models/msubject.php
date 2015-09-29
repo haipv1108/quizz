@@ -48,4 +48,10 @@ class Msubject extends CI_Model{
 			return $query->row_array();
 		else return false;
 	}
+	function check_subject_availablity($name){
+		$query = $this->db->select('name')->where('name',$name)->get($this->_name);
+		if($query->row_array()>0)
+			return true;
+		else return false;
+	}
 }
