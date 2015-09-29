@@ -43,4 +43,16 @@ class Madmin extends CI_Model{
 			return $query->row_array();
 		else return false;
 	}
+	function check_name_availablity($username){
+		$query = $this->db->select('name')->where('name',$username)->get($this->_name);
+		if($query->row_array()>0)
+			return true;
+		else return false;
+	}
+	function check_email_availablity($email){
+		$query = $this->db->select('email')->where('email',$email)->get($this->_name);
+		if($query->row_array()>0)
+			return true;
+		else return false;
+	}
 }

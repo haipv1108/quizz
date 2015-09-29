@@ -1,3 +1,45 @@
+<script>
+	$(document).ready(function(){
+		$("#username").change(function(){
+			var username = $(this).val();
+			$.ajax({
+				url: "<?php site_url()?>admin/ajax/check_user_availablity",
+				dataType: 'html',
+				type: 'POST',
+				data: {
+					username: username,
+				},
+				success: function(result){
+					if(result == 'true' ){
+						$('#avai').html('<span class="notification error png_bg">Username is NOT available.</span>');
+					}else if(result == 'false'){
+						$('#avai').html('<span class="notification success png_bg">Username is available.</span>');
+					}
+				}
+			});
+		});
+	});
+	$(document).ready(function(){
+		$("#email").change(function(){
+			var email = $(this).val();
+			$.ajax({
+				type: 'POST',
+				url: "<?php site_url();?>admin/ajax/check_email_availablity",
+				dataType: 'html',
+				data: {
+					email : email,
+				},
+				success: function(response){
+					if(response == 'true'){
+						$('#available').html('<span class="notification error png_bg">Email is NOT available.</span>');
+					}else if(response == 'false'){
+						$('#available').html('<span class="notification success png_bg">Email is available.</span>');
+					}
+				}
+			});
+		});
+	});
+</script>
 <div class="content-box"><!-- Start Content Box -->
 	<div class="content-box-header">
 		<h3>Content box</h3>
@@ -14,12 +56,14 @@
 		<form action="" method="post">
 			<p>
 				<label>Username</label>
-				<input class="text-input" type="text" name="username" value="<?php echo set_value('username'); ?>"/>
+				<input id="username" class="text-input" type="text" name="username" value="<?php echo set_value('username'); ?>"/>
+				<span id="avai"></span>
 			</p>
 				<div class="clear"></div>
 			<p> 
 				<label>Email</label>
-				<input class="text-input" type="text" name="email" value="<?php echo set_value('email'); ?>"/>
+				<input id = "email" class="text-input" type="text" name="email" value="<?php echo set_value('email'); ?>"/>
+				<span id="available"></span>
 			</p>
 			<div class="clear"></div>
 			<p>

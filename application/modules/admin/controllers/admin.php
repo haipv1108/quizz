@@ -58,40 +58,6 @@ class Admin extends MX_Controller {
 					}
 				}
 				$data['error'] = $error;
-				/*if($u_info['password'] == $passconf){
-					$check_u = $this->madmin->add_user($u_info);
-					if($check_u==0){
-						$userid = $this->db->insert_id();
-						$link_active = base_url()."home/home/active/?userid=".$userid."&key=".md5($salt);
-	  
-						$message  = "Please follow this link to active your acount <br/>";
-						$message .= "Link : <a href=".$link_active.">".$link_active."</a><br/>";
-						$message .= "username : ".$a_Userinfo['username']."<br/>";
-						$message .= "password : ".$this->input->post("password");
-				
-						$mail = array(
-						"to_receiver"   => $a_Userinfo['email'], 
-						"message"       => $message,
-					);
-
-				
-					$this->load->library("email"); 
-					$this->email->config($mail);
-					$this->email->sendmail();
-					redirect(base_url().'admin/view');
-
-					}else{
-						if(isset($a_Userchecking['message_mail_address']))
-						$data['message_mail_address'] = $a_Userchecking['message_mail_address'];
-						if(isset($a_Userchecking['message_user_name']))
-						$data['message_user_name'] = $a_Userchecking['message_user_name'];
-						if(isset($a_Userchecking['message_user_name_furi']))
-						$data['message_user_name_furi'] = $a_Userchecking['message_user_name_furi'];
-						if(isset($a_Userchecking['message_phonenumber']))
-						$data['message_phonenumber'] = $a_Userchecking['message_phonenumber'];
-						
-					}
-				}*/
 			}
 		}
 		$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
@@ -155,66 +121,4 @@ class Admin extends MX_Controller {
 			$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
 		}
 	}
-
-	/*public function manage_page($id){
-			
-		if(check_login(3)){
-
-		// check box
-		if($this->input->post('submit')){
-			$action = $this->input->post('dropdown');
-			$checkbox = $this->input->post('checkbox');
-			if($action=='publish' && is_array($checkbox))
-				$check = $this->madmin->publish($checkbox);
-			else if($action == 'unpublish' && is_array($checkbox))
-				$this->madmin->unpublish($checkbox);
-		}
-
-			$data = array(
-							'user' => $this->session->userdata('user'),
-							'meta_title' => 'Manage Page',
-							'active' => 'admin-manage',
-							'template' => 'backend/home/manage_page',
-							'id'=>$id
-						);
-
-			$check = $this->madmin->manage_page($id);
-			if($check == false){
-				$data['message'] = 'User not found in system';
-				$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
-			}else{
-				$data['view_article'] = $check;
-				$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
-			}
-		}
-	}
-
-
-
-	// public function email(){
-	// 	$this->load->library('email');
-
-	// 	$config = array(
-	// 	'protocol' => 'smtp',
- //        'mailpath' => 'ssl://smtp.gmail.com',
- //        'smtp_port' => '465',
- //        'smtp_user' => 'dodaihoc.abvk@gmail.com',
- //        'smtp_pass' => '01646236194',
- //        'mailtype'  => 'html',
- //        'charset' => 'utf-8',
- //        'wordwrap' => TRUE
- //        );
- //        $this->email->initialize($config);
- //        $this->email->set_newline("\r\n");
-
-	// 	$this->email->from('dodaihoc.abvk@gmail.com', 'Hà');
-	// 	$this->email->to(''); // cái này chú viết mail chú vào nhé
-
-	// 	$this->email->subject('Email Test');
-	// 	$this->email->message('Testing the email class.');	
-
-	// 	$this->email->send();
-
-	// 	echo $this->email->print_debugger();
-	// }*/
 }
