@@ -37,7 +37,8 @@ if(!function_exists('random_quiz')){
 							'subjectid' => rand(1,8),
 							'question'=> mt_rand_str(50),
 							'answer' => $answer,
-							'level' => rand(1,3),
+							'level' => rand(1,40),
+							'score' => rand(1,3),
 							'correct' => rand(1,4),
 							'ans_explained' => mt_rand_str(50)
 		);
@@ -64,23 +65,34 @@ if(!function_exists('random_user')){
 	}
 }
 if(!function_exists('random_quiz_of_test')){
-	function random_quiz_of_test(){
+	function random_quiz_of_test($test_id){
 		$test_info = array(
-							'testid' => rand(1,100),
-							'questionid' => rand(1,9000),
-							'score' => rand(1,10)
+							'testid' => $test_id,
+							'questionid' => rand(1,9000)
 		);
 		return $test_info;
 	}
 }
 if(!function_exists('random_test')){
-	function random_test(){
+	function random_test($id){
 		$test_info = array(
+							'id' => $id,
 							'subjectid' => rand(1,40),
 							'name' => mt_rand_str(4,"ABCDEF"),
+							'time' => rand(30,40),
+							'levelid' => rand(1,40),
 							'decription' => mt_rand_str(50)
 		);
 		return $test_info;
+	}
+}
+if(!function_exists('random_level')){
+	function random_level(){
+		$level_info = array(
+							'categoryid' => rand(1,11),
+							'name' => mt_rand_str(4,"NMA12345"),
+		);
+		return $level_info;
 	}
 }
 if(!function_exists('random_subject')){
