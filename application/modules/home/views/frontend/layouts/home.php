@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo (isset($meta_title))? htmlspecialchars($meta_title): 'Online Examination System';?></title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="template/frontend/tpbootstrap/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="template/frontend/Online Examination System/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="template/frontend/tpbootstrap/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="template/frontend/tpbootstrap/dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="template/frontend/tpbootstrap/documentation/style.css" type="text/css">
+    <link rel="stylesheet" href="template/frontend/Online Examination System/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="template/frontend/Online Examination System/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="template/frontend/Online Examination System/documentation/style.css" type="text/css">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -44,7 +44,7 @@
                       <li><!-- start message -->
                         <a href="#">
                           <div class="pull-left">
-                            <img src="template/frontend/tpbootstrap/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Support Team
@@ -56,7 +56,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="template/frontend/tpbootstrap/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="template/frontend/Online Examination System/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             AdminLTE Design Team
@@ -68,7 +68,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="template/frontend/tpbootstrap/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="template/frontend/Online Examination System/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Developers
@@ -80,7 +80,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="template/frontend/tpbootstrap/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="template/frontend/Online Examination System/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Sales Department
@@ -92,7 +92,7 @@
                       <li>
                         <a href="#">
                           <div class="pull-left">
-                            <img src="template/frontend/tpbootstrap/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                            <img src="template/frontend/Online Examination System/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Reviewers
@@ -220,13 +220,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="template/frontend/tpbootstrap/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                  <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                   <span class="hidden-xs">Zoro Kid</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="template/frontend/tpbootstrap/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                     <p>
                       Zoro Kid - Web Developer
                       <small>Member since Nov. 2012</small>
@@ -259,7 +259,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="template/frontend/tpbootstrap/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>Zoro Kid</p>
@@ -477,11 +477,11 @@
       </aside>
       <div class="control-sidebar-bg"></div>
     </div>
-    <script src="template/frontend/tpbootstrap/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <script src="template/frontend/tpbootstrap/bootstrap/js/bootstrap.min.js"></script>
-    <script src="template/frontend/tpbootstrap/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <script src="template/frontend/tpbootstrap/plugins/fastclick/fastclick.min.js"></script>
-    <script src="template/frontend/tpbootstrap/dist/js/app.min.js"></script>
-    <script src="template/frontend/tpbootstrap/dist/js/demo.js"></script>
+    <script src="template/frontend/Online Examination System/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="template/frontend/Online Examination System/bootstrap/js/bootstrap.min.js"></script>
+    <script src="template/frontend/Online Examination System/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="template/frontend/Online Examination System/plugins/fastclick/fastclick.min.js"></script>
+    <script src="template/frontend/Online Examination System/dist/js/app.min.js"></script>
+    <script src="template/frontend/Online Examination System/dist/js/demo.js"></script>
   </body>
 </html>
