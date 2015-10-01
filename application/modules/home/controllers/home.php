@@ -32,7 +32,7 @@ class Home extends MX_Controller{
 	}
 	function testdetail($testid){
 		$data = array(
-						'test' => $this->mhome->get_test($testid),
+						'test' => $this->mhome->get_test_detail($testid),
 						'meta_title' => 'Test Detail',
 						'template' => 'frontend/home/testdetail'
 					);

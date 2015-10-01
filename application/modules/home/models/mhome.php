@@ -35,7 +35,7 @@ class Mhome extends CI_Model{
 			return $query->row_array();
 		else return false;	
 	}
-	function get_test($id){
+	function get_test_detail($id){
 		$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained')
 				->from('test')
 				->where('test.id',$id)
