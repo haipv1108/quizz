@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /ci/index.php/$1 [L]
+RewriteRule ^index/([a-zA-Z0-9_-]+)-([0-9]+)$.html /user/user/index/$2 [L]
