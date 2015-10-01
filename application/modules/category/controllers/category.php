@@ -52,6 +52,22 @@ class Category extends MX_Controller{
 		}
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
+	/*function setlevel($categoryid){
+		$user = check_login(3);
+		$data = array(
+					'user' => $user,
+					'meta_title' => 'Set Level Subject',
+					'active' => 'cate-add',
+					'template' => 'set_level'
+					);
+		if($this->input->post('submit')){
+			vali_setlevel();//check validate_form using helper
+			if($this->form_validation->run() == TRUE){
+				$level_info() = get_info_setlevel();// get info level using helper
+				$this->mcategory->
+			}
+		}
+	}*/
 	function editcategory($id = 0){
 		// co 1 loi la chua kiem tra name da thay doi roi.
 		$user = check_login(3);
