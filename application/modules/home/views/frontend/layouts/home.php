@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="template/frontend/Online Examination System/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="template/frontend/Online Examination System/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="template/frontend/Online Examination System/documentation/style.css" type="text/css">
+    <link rel="stylesheet" href="template/frontend/Online Examination System/web/style.css" type="text/css">
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
