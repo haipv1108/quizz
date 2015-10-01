@@ -14,7 +14,7 @@
 						<div class="col-md-2 col-sm-4 col-xs-6 margin-bottom">
 						  <div class="col-md-12 no-padding border_col">
 							<a href="<?php echo site_url();?>home/testdetail/<?php echo $val['id'];?>" class="btn2-app">
-							<img alt="Photo" src="../image/bunpou.png" class="img-responsive">
+							<img alt="Photo" src="template/frontend/Online Examination System/image/bunpou.png" class="img-responsive">
 							<span><?php echo $val['name'];?></span>
 						  </a>
 						  </div>
