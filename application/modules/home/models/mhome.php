@@ -33,8 +33,35 @@ class Mhome extends CI_Model{
 		else return false;
 	}
 	function listtest($id){
-		$query = $this->db->select('id, name')->where('subjectid',$id)->get('test');
+		$query = $this->db->select('test.id, test.name, level.name as level')
+				->from('test')
+				->where('subjectid',$id)
+				->join('level','level.id = test.levelid')
+				->group_by(array('level.name', 'test.name'))
+				->get();
 		if($query ->num_rows() >0)
+			return $query->result_array();
+		else return false;
+	}
+	function get_list_level($subjectid){
+		/*$query = $this->db->select('level.id, level.name')
+				->from('level')
+				->join('category','category.id = level.categoryid')
+				->join('subject','subject.categoryid = category.id')
+				->where('subject.id',$subjectid)
+				->group_by('level.name')
+				->get();
+		*/
+		$query = $this->db->query("
+								SELECT level.id, level.name FROM subject, category, level WHERE subject.id = {$subjectid} AND subject.categoryid = category.id AND category.id = level.categoryid 
+								");
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else return false;
+	}
+	function get_list_test($subjectid, $levelid){
+		$query = $this->db->select('id, name')->where('subjectid',$subjectid)->where('levelid', $levelid)->get('test');
+		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;
 	}

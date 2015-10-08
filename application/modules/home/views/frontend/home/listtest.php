@@ -6,23 +6,28 @@
 			<div class="box-header">
 				<h3 class="box-title">Danh sách đề thi trắc nghiệm <?php echo (isset($subject) && !empty($subject))?$subject['name']:'';?></h3>
 			</div>
-			<div class="box-body">
-		<?php 	if(isset($listtest) && !empty($listtest)){?>
-					<p>Lựa chọn đề:</p>
-					<div class="row">
-			<?php	foreach($listtest as $key=>$val){?>
-						<div class="col-md-2 col-sm-4 col-xs-6 margin-bottom">
-						  <div class="col-md-12 no-padding border_col">
-							<a href="<?php echo site_url();?>home/testdetail/<?php echo $val['id'];?>" class="btn2-app">
-							<img alt="Photo" src="template/frontend/Online Examination System/image/bunpou.png" class="img-responsive">
-							<span><?php echo $val['name'];?></span>
-						  </a>
-						  </div>
+			<?php
+				if(isset($level) && !empty($level)){
+					foreach($level as $key=>$val){?>
+						<div class="box-body">
+						<p>Cấp đô: <?php echo $val['name'];?></p>
+				<?php	if(isset($listtest[$val['name']]) && !empty($listtest[$val['name']])){
+							foreach($listtest[$val['name']] as $k=>$v){?>
+								<div class="col-md-2 col-sm-4 col-xs-6 margin-bottom">
+								  <div class="col-md-12 no-padding border_col">
+									<a href="<?php echo site_url();?>home/testdetail/<?php echo $val['id'];?>" class="btn2-app">
+									<img alt="Photo" src="template/frontend/Online Examination System/image/bunpou.png" class="img-responsive">
+									<span><?php echo $v['name'];?></span>
+								  </a>
+								  </div>
+								</div>
+					<?php	}
+						}?>
 						</div>
-			<?php	}?>
-					</div>
-		  <?php	}?>
-			</div>
+			<?php	}
+				}
+			?>
+
 		</div>
 	</div>
 	

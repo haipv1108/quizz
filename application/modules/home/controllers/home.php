@@ -21,9 +21,16 @@ class Home extends MX_Controller{
 		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
 	}
 	function listtest($subjectid){
+		$level = $this->mhome->get_list_level($subjectid);
+		if(isset($level) && !empty($level)){
+			foreach($level as $key=>$val){
+				$listtest[$val['name']] = $this->mhome->get_list_test($subjectid, $val['id']);
+			}
+		}
 		$subject = $this->mhome->get_subject($subjectid);
 		$data = array(
-						'listtest' => $this->mhome->listtest($subjectid),
+						'level' => $level,
+						'listtest' => $listtest,
 						'subject' => $subject,
 						'meta_title' => 'List Test '.$subject['name'],
 						'template' => 'frontend/home/listtest'
