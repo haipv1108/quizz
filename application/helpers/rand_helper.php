@@ -24,12 +24,12 @@ if(!function_exists('mt_rand_mail')){
 		return $s.'@gmail.com';
 	}
 }
-if(!function_exists('random_quiz')){
-	function random_quiz(){
+/*if(!function_exists('random_quistionbank')){
+	function random_quistionbank(){
 		$a_answer = array(
 						'answerA' => mt_rand_str(30),
 						'answerB' => mt_rand_str(30),
-						'answer' => mt_rand_str(30),
+						'answerC' => mt_rand_str(30),
 						'answerD' => mt_rand_str(30)
 						);
 		$answer = json_encode($a_answer);
@@ -73,35 +73,89 @@ if(!function_exists('random_quiz_of_test')){
 		return $test_info;
 	}
 }
-if(!function_exists('random_test')){
-	function random_test($id){
-		$test_info = array(
-							'id' => $id,
-							'subjectid' => rand(1,40),
-							'name' => mt_rand_str(4,"ABCDEF"),
-							'time' => rand(30,40),
-							'levelid' => rand(1,40),
+
+*/
+
+
+
+
+
+if(!function_exists('random_category')){
+	function random_category(){
+		$cate_info = array(
+							'name' => 'CATE_'.mt_rand_str(4,"ABCDEF"),
 							'decription' => mt_rand_str(50)
 		);
-		return $test_info;
+		return $cate_info;
 	}
 }
-if(!function_exists('random_level')){
-	function random_level(){
+
+if(!function_exists('random_level_category')){
+	function random_level_category($cate_id){
 		$level_info = array(
-							'categoryid' => rand(1,11),
-							'name' => mt_rand_str(4,"NMA12345"),
+							'categoryid' => $cate_id,
+							'name' => 'LEVEL_'.mt_rand_str(4,"NA12345"),
 		);
 		return $level_info;
 	}
 }
+
+
 if(!function_exists('random_subject')){
-	function random_subject(){
+	function random_subject($cate_id){
+		$subject_info = array(
+							'categoryid' => $cate_id,
+							'name' => 'SUBJECT_'.mt_rand_str(4,"GHIKLM"),
+							'decription' => 'SUBJECT'.mt_rand_str(50)
+		);
+		return $subject_info;
+	}
+
+}
+
+if(!function_exists('random_test')){
+	function random_test($sub_id, $level_id){
 		$test_info = array(
-							'categoryid' => rand(1,8),
-							'name' => mt_rand_str(4,"GHIKLM"),
+							'subjectid' => $sub_id,
+							'name' => 'TEST_'.mt_rand_str(4,"ABCDEF"),
+							'time' => rand(30,40),
+							'levelid' => $level_id,
 							'decription' => mt_rand_str(50)
 		);
 		return $test_info;
+
+	}
+}
+
+if(!function_exists('random_questionbank')){
+	function random_questionbank($sub_id, $level_id){
+		$a_answer = array(
+						'answerA' => 'ANSWER_'.mt_rand_str(30),
+						'answerB' => 'ANSWER_'.mt_rand_str(30),
+						'answerC' => 'ANSWER_'.mt_rand_str(30),
+						'answerD' => 'ANSWER_'.mt_rand_str(30)
+						);
+		$answer = json_encode($a_answer);
+		$quiz_info = array(
+							'subjectid' => $sub_id,
+							'question'=> 'QUESTION_'.mt_rand_str(50),
+							'answer' => $answer,
+							'level' => $level_id,
+							'score' => rand(1,3),
+							'correct' => rand(1,4),
+							'ans_explained' => 'ANSWER_EXPLAINED_'.mt_rand_str(50)
+		);
+		return $quiz_info;
+	}
+}
+
+
+if(!function_exists('random_question')){
+	function random_question($test_id,$question_id){
+		$question_info = array(
+							'testid' => $test_id,
+							'questionid' => $question_id
+		);
+		return $question_info;
 	}
 }

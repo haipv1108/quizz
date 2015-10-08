@@ -6,22 +6,56 @@ class Mrandom extends CI_Model{
 		parent::__construct();
 		$this->load->database();
 	}
-	function addquestion($quiz_info){
-		$this->db->insert('questionbank', $quiz_info);
-	}
 	function adduser($u_info){
 		$this->db->insert('user', $u_info);
-	}
-	function addtest($test_info){
-		$this->db->insert('test', $test_info);
 	}
 	function addquiz_of_test($quiz_info){
 		$this->db->insert('question', $quiz_info);
 	}
-	function addsubject($subject_info){
-		$this->db->insert('subject', $subject_info);
+	
+	
+	
+	
+	
+	function add_category($cate_info){
+		$this->db->insert('category', $cate_info);
+	}
+	function list_cate(){
+		$query = $this->db->select('id')->get('category');
+		return $query->result_array();
 	}
 	function add_level_category($level_info){
 		$this->db->insert('level', $level_info);
 	}
+	function add_subject($subject_info){
+		$this->db->insert('subject', $subject_info);
+	}
+	function list_subject(){
+		$query = $this->db->select('id')->get('subject');
+		return $query->result_array();
+	}
+	function get_level($sub_id){
+		$query = $this->db->query("
+								SELECT level.id FROM subject, category, level WHERE subject.id = {$sub_id} AND subject.categoryid = category.id AND category.id = level.categoryid 
+								");
+		return $query->result_array();
+	}
+	function add_test($test_info){
+		$this->db->insert('test', $test_info);
+	}
+	function add_questionbank($quiz_info){
+		$this->db->insert('questionbank', $quiz_info);
+	}
+	function list_test(){
+		$query = $this->db->select('id, subjectid')->get('test',211,235);//da den 235/1595 de.
+		return $query->result_array();
+	}
+	function list_questionbank($sub_id){
+		$query = $this->db->select('id')->where('subjectid', $sub_id)->limit(20)->get('questionbank');
+		return $query->result_array();
+	}
+	function add_question($question_info){
+		$this->db->insert('question', $question_info);
+	}
+	
 }
