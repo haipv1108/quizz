@@ -54,4 +54,14 @@ class Msubject extends CI_Model{
 			return true;
 		else return false;
 	}
+	function list_test($sub_id){
+		$query = $this->db->query("	SELECT test.id
+									FROM test, subject
+									WHERE subject.id = {$sub_id}
+									AND subject.id = test.subjectid "
+								);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else return false;
+	}
 }

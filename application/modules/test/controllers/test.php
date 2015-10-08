@@ -3,8 +3,10 @@
 class Test extends MX_Controller{
 	function __construct(){
 		parent::__construct();
-		$this->load->model('mcategory');
+		$this->load->model('mtest');
 		$this->load->helper(array('form_vali'));
 	}
-	
+	function index(){
+		
+	}
 }

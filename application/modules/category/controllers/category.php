@@ -4,6 +4,8 @@ class Category extends MX_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model('mcategory');
+		$this->load->model('subject/msubject');
+		$this->load->model('test/mtest');
 		$this->load->helper(array('form_vali'));
 	}
 	function index(){
@@ -117,6 +119,21 @@ class Category extends MX_Controller{
 				$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
 				if($this->form_validation->run() == TRUE){
 					if($this->input->post('delete')=='yes'){
+						// delete subject
+						$list_subject = $this->mcategory->list_subject($id);
+						if(isset($list_subject) && !empty($list_subject)){
+							foreach($list_subject as $key=>$val){
+								//delete test
+								$l_test = $this->msubject->list_test($val['id']);
+								if(isset($l_test) && !empty($l_test)){
+									foreach($l_test as $k=>$v){
+										$this->mtest->deletetest($v['id']);
+									}
+								}
+								$this->msubject->deletesubject($val['id']);
+							}
+						}
+						//delete category
 						$this->mcategory->deletecategory($id);
 						$success = 'You have successfully deleted.';
 					}else if($this->input->post('delete') =='no'){

@@ -43,4 +43,14 @@ class Mcategory extends CI_Model{
 			return true;
 		else return false;
 	}
+	function list_subject($cate_id){
+		$query = $this->db->query("	SELECT subject.id
+									FROM category, subject
+									WHERE category.id = {$cate_id}
+									AND category.id = subject.categoryid "
+								);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else return false;
+	}
 }
