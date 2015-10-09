@@ -4,7 +4,7 @@
  <head>
 		<title><?php echo (isset($meta_title))? htmlspecialchars($meta_title): 'Controll Panel';?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<base href="http://localhost/ci/">
+		<base href="<?php echo site_url();?>">
 		<link rel="stylesheet" href="template/backend/simpla-admin/resources/css/reset.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="template/backend/simpla-admin/resources/css/style.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="template/backend/simpla-admin/resources/css/invalid.css" type="text/css" media="screen" />	
