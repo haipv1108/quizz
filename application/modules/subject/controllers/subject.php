@@ -4,6 +4,7 @@ class Subject extends MX_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model('msubject');
+		$this->load->model('test/mtest');
 		$this->load->helper(array('form_vali'));
 	}
 	function index(){
@@ -112,6 +113,12 @@ class Subject extends MX_Controller{
 				$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
 				if($this->form_validation->run() == TRUE){
 					if($this->input->post('delete')=='yes'){
+						$list_test = $this->msubject->list_test($id);
+						if(isset($list_test) && !empty($list_test)){
+							foreach($list_test as $key=>$val){
+								$this->mtest->deletequestion($val['id']);
+							}
+						}
 						$this->msubject->deletesubject($id);
 						$success = 'You have successfully deleted.';
 					}else if($this->input->post('delete') =='no'){

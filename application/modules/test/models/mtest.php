@@ -12,4 +12,8 @@ class Mtest extends CI_Model{
 	function deletetest($id){
 		$this->db->where('id', $id)->limit(1)->delete($this->_name);
 	}
+	//Xoa rows from question table
+	function deletequestion($testid){
+		$this->db->where('testid',$testid)->delete('question');
+	}
 }

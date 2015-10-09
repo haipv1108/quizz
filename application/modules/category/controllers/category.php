@@ -127,10 +127,18 @@ class Category extends MX_Controller{
 								$l_test = $this->msubject->list_test($val['id']);
 								if(isset($l_test) && !empty($l_test)){
 									foreach($l_test as $k=>$v){
+										$this->mtest->deletequestion($v['id']);
 										$this->mtest->deletetest($v['id']);
 									}
 								}
 								$this->msubject->deletesubject($val['id']);
+							}
+						}
+						//delete level
+						$list_level = $this->mcategory->list_level($id);
+						if(isset($list_level) && !empty($list_level)){
+							foreach($list_level as $key=>$val){
+								$this->mcategory->delete_level($val['id']);
 							}
 						}
 						//delete category
