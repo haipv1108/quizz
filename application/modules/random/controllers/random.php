@@ -67,7 +67,7 @@ class Random extends MX_Controller{
 	
 	
 	function random_category(){
-		for($i = 1; $i < 15; $i++){
+		for($i = 1; $i < 10; $i++){
 			$cate_info = random_category();
 			$this->mrandom->add_category($cate_info);
 		}
