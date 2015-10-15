@@ -47,7 +47,7 @@ class Mrandom extends CI_Model{
 		$this->db->insert('questionbank', $quiz_info);
 	}
 	function list_test(){
-		$query = $this->db->select('id, subjectid')->get('test',211,235);//da den 235/1595 de.
+		$query = $this->db->select('id, subjectid')->get('test',0,10);//da den tu 0->10 de.
 		return $query->result_array();
 	}
 	function list_questionbank($sub_id){
