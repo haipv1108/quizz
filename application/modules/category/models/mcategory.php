@@ -16,6 +16,14 @@ class Mcategory extends CI_Model{
 			return $query->result_array();
 		else return false;
 	}
+
+	function get_list_category(){
+		$query = $this->db->select('id,name')->get('category');
+		if($query->num_rows()>0)
+			return $query->result_array();
+		 return false;
+	}
+
 	function check_name($name){
 		$query = $this->db->where('name', $name)->get($this->_name);
 		if($query -> row_array()>0)
@@ -62,4 +70,6 @@ class Mcategory extends CI_Model{
 	function delete_level($level_id){
 		$this->db->where('id', $level_id)->limit(1)->delete('level');
 	}
+
+
 }

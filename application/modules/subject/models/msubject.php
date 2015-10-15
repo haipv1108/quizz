@@ -21,12 +21,7 @@ class Msubject extends CI_Model{
 			return $query->result_array();
 		else return false;
 	}
-	function get_list_category(){
-		$query = $this->db->select('id,name')->get('category');
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else return false;
-	}
+
 	function check_name($name){
 		$query = $this->db->where('name', $name)->get($this->_name);
 		if($query -> row_array()>0)
@@ -64,4 +59,16 @@ class Msubject extends CI_Model{
 			return $query->result_array();
 		else return false;
 	}
+
+	function select_subject($category_id) {
+		if ($category_id != NULL) {
+			$query = $this->db->select('id, name')->where('categoryid',$category_id)->get($this->_name);
+			return $query->result_array();
+		}
+
+		$this->db->select('id, name, categoryid');
+		$query = $this->db->get($this->_name);
+			return $query->result_array();
+	}
+
 }

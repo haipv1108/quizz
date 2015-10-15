@@ -4,6 +4,7 @@ class Subject extends MX_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model('msubject');
+		$this->load->model('mcategory');
 		$this->load->model('test/mtest');
 		$this->load->helper(array('form_vali'));
 	}
@@ -40,7 +41,7 @@ class Subject extends MX_Controller{
 					'user' => $user,
 					'meta_title' => 'Add Subject',
 					'active' => 'subject-add',
-					'list_category'=>$this->msubject->get_list_category(),
+					'list_category'=>$this->mcategory->get_list_category(),
 					'template' => 'add_subject'
 					);
 		if($this->input->post('submit')){
