@@ -82,5 +82,10 @@ $route['question/editquestion'] = 'question/editquestion';
 $route['question/deletequestion'] = 'question/deletequestion';
 $route['question/searchquestion'] = 'question/searchquestion';
 
+<<<<<<< HEAD
 //profile
 $route['profile'] = 'profile/index';
+=======
+//create_test
+$route['createtest'] = 'createtest/index';
+>>>>>>> b2339d3080fae34886c48843e976aa22ab88a48a

@@ -71,5 +71,13 @@ class Mcategory extends CI_Model{
 		$this->db->where('id', $level_id)->limit(1)->delete('level');
 	}
 
+<<<<<<< HEAD
 
+=======
+	function get_list_category() {
+		$this->db->select('id, name');
+		$query = $this->db->get($this->_name);
+		return $query->result_array();
+	}
+>>>>>>> b2339d3080fae34886c48843e976aa22ab88a48a
 }
