@@ -81,3 +81,6 @@ $route['question/:num'] = 'question/index/$1';
 $route['question/editquestion'] = 'question/editquestion';
 $route['question/deletequestion'] = 'question/deletequestion';
 $route['question/searchquestion'] = 'question/searchquestion';
+
+//create_test
+$route['createtest'] = 'createtest/index';
