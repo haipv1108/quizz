@@ -61,20 +61,8 @@ class Msubject extends CI_Model{
 	}
 
 	function select_subject($category_id) {
-<<<<<<< HEAD
-		if ($category_id != NULL) {
-			$query = $this->db->select('id, name')->where('categoryid',$category_id)->get($this->_name);
-			return $query->result_array();
-		}
-
-		$this->db->select('id, name, categoryid');
-		$query = $this->db->get($this->_name);
-			return $query->result_array();
-	}
-
-=======
 		$query = $this->db->select('id, name')->where('categoryid',$category_id)->get($this->_name);
 		return $query->result_array();
 	}
->>>>>>> b2339d3080fae34886c48843e976aa22ab88a48a
+
 }
