@@ -71,15 +71,5 @@ class Mhome extends CI_Model{
 			return $query->row_array();
 		else return false;	
 	}
-	function get_test_detail($id){
-		$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained')
-				->from('test')
-				->where('test.id',$id)
-				->join('question','test.id = question.testid')
-				->join('questionbank as q','q.id = question.questionid')
-				->get();
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else return false;
-	}
+
 }

@@ -1,18 +1,43 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Test extends MX_Controller{
+class Mark extends MX_Controller{
 	function __construct(){
 		parent::__construct();
-		$this->load->model('mtest');
+		$this->load->model('mmark');
 		$this->load->helper(array('form_vali'));
 	}
 	function index(){
-		redirect(base_url());
+		
 	}
 
+	function choosetest(){
+		if(!$this->input->post('submitC')){
+			$data = array(
+					'meta_title' => 'Choose test',
+					'template' => 'home/choose_test'
+				);
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+		}else{
+			$made = $this->input->post('made');
+			$dethi = $this->mmark->search($made);
+			if($dethi == NULL){
+				$data = array(
+						'meta_title' => 'Error',
+						'template' => 'home/choose_test',
+						'message' => 'Data not found'
+					);
+				$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			}else{
+
+			}
+		}
+	}
+
+
+/*
+
 	function testdetail($testid){
-		$user = check_login(1);
-		if(!isset($testid)||!is_numeric($testid))
+		if(!isset($testid)||!is_numeric($testid)) 
 			redirect(base_url());
 		$data = array(
 				'test' => $this->mtest->get_test_detail($testid),
@@ -28,25 +53,16 @@ class Test extends MX_Controller{
 			foreach ($data['test'] as $key => $value) {
 				$total_score += $value['score'];
 				$total_question+=1;
-				if( isset($answer[$key]) && $answer[$key] == $value['correct']){
+				if( isset( $answer[$key]) && $answer[$key] == $value['correct']){
 					$score +=$value['score'];
 					$correct_question +=1;
 				}
 			}
-			$answer = json_encode($answer);
-
-			$result_db = array(
-					'userid' => $user['id'],
-					'testid' => $testid,
-					'score' => $score*10/$total_score,
-					'answer_choice' => $answer
-				);
-			$this->mtest->addtest($result_db);
-
 			$result = array(
-					'correct_question' => $correct_question,
+					'correct_question' =>  $correct_question,
 					'total_question' => $total_question,
-					'score' => $score*10/$total_score
+					'score' => $score,
+					'total_score' => $total_score
 				);
 			$this->result($result);
 		}
@@ -56,11 +72,13 @@ class Test extends MX_Controller{
 		if(!$this->input->post('submit_rs')){
 			$data['result'] = $result;
 			$data['meta_title'] = 'result';
-			$data['template'] = 'home/result';			
+			$data['template'] = 'home/result';
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
 			redirect(base_url());
 		}
 	}
 
+
+*/
 }

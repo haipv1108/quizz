@@ -26,19 +26,29 @@
 				<a href="#" title="View the Site">View the Site</a> | <a href="<?php echo base_url();?>verify/logout" title="Sign Out">Sign Out</a>
 			</div>        
 			<ul id="main-nav">  <!-- Accordion Menu -->
-				
-				
 				<li>
-					<a href="#" class="nav-top-item ">
+					<a href="<?php echo base_url()?>" class="">
+						Home page
+					</a>
+				</li>			
+				<li>
+					<a href="<?php echo base_url()."profile/profile/edit/".$user['id'];?>" class="">
 					Edit Profile
 					</a>
 				</li>
+				<?php if(isset($user) && $user['level'] == 1){?>
 				<li>
-					<a href="asdaf" class="nav-top-item ">
+					<a href="<?php echo base_url()."profile/profile/review";?>" class="">
 						Review Test
 					</a>
 				</li>
-				
+				<?php }else if(isset($user) && $user['level'] == 2){?>
+				<li>
+					<a href="<?php echo base_url()."profile/profile/mark";?>" class="">
+						Mark Test
+					</a>
+				</li>
+				<?php }?>	
 				 
 			</ul>
 		</div></div>

@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mtest extends CI_Model{
+class Mmark extends CI_Model{
 	private $_name = 'test';
 	function __construct(){
 		parent::__construct();
@@ -29,9 +29,7 @@ class Mtest extends CI_Model{
 	else return false;
 	}
 
-	function addtest($result){
-		$this->db->insert('responses', $result);
+	function search($made){
+		return NULL;
 	}
-
-
 }
