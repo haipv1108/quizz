@@ -84,3 +84,7 @@ $route['question/searchquestion'] = 'question/searchquestion';
 
 //profile
 $route['profile'] = 'profile/index';
+
+//create_test
+$route['createtest'] = 'createtest/index';
+

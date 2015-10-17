@@ -18,30 +18,9 @@ class Mtest extends CI_Model{
 	function deletequestion($testid){
 		$this->db->where('testid',$testid)->delete('question');
 	}
-<<<<<<< HEAD
-	function get_test_detail($id){
-	$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, q.score')
-			->from('test')
-			->where('test.id',$id)
-			->join('question','test.id = question.testid')
-			->join('questionbank as q','q.id = question.questionid')
-			->limit(20)
-			->get();
-	if($query->num_rows()>0)
-		return $query->result_array();
-	else return false;
-	}
-
-	function addtest($result){
-		$this->db->insert('responses', $result);
-	}
-
-
-=======
 
 	function insert_test($data) {
 		$str_query = $this->db->insert_string($data);
 		$this->db->query($str_query);
 	}
->>>>>>> b931f9eb18fa3246c3d05e5c5b77d07e1d77c1dd
 }
