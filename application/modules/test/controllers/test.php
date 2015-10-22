@@ -17,17 +17,7 @@ class Test extends MX_Controller {
 	}
 
 	function index(){
-<<<<<<< HEAD
 		redirect(base_url());
-=======
-		$data['categories'] = $this->mcategory->get_list_category();
-		$data['subjects'] = $this->msubject->select_subject(NULL);
-		$this->load->view($this->_form_create_test1, $data);
-	}
-
-	function create_test() {
-
->>>>>>> b931f9eb18fa3246c3d05e5c5b77d07e1d77c1dd
 	}
 
 	function testdetail($testid){
@@ -43,6 +33,7 @@ class Test extends MX_Controller {
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
 			$answer = $this->input->post('answer');
+			// print_r($answer);
 			$total_score = 0; $total_question = 0;
 			$score = 0; $correct_question = 0;
 			foreach ($data['test'] as $key => $value) {

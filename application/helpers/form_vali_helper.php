@@ -4,7 +4,7 @@
 if(!function_exists('vali_user')){
 	function vali_user(){
 		$ci = &get_instance();
-		$ci->form_validation->set_rules('username', 'User Name', 'required|min_length[5]|max_length[20]'); 
+		$ci->form_validation->set_rules('username', 'User Name', 'required|min_length[5]|max_length[40]'); 
 		$ci->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$ci->form_validation->set_rules('password', 'Password', 'required|matches[passconf]'); 
 		$ci->form_validation->set_rules('passconf', 'Password Confirmation', 'required'); 
