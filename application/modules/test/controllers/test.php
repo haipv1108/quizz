@@ -15,7 +15,6 @@ class Test extends MX_Controller {
 		$this->load->helper('array');
 
 	}
-
 	function index(){
 		redirect(base_url());
 	}
