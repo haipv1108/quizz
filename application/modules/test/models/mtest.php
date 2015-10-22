@@ -35,10 +35,6 @@ class Mtest extends CI_Model{
 		$this->db->insert('responses', $result);
 	}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e42095a68d8d164b07d8ba6bb6ca4dbcada35c26
 	function insert_test($data) {
 		$str_query = $this->db->insert_string($data);
 		$this->db->query($str_query);
