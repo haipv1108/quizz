@@ -14,6 +14,7 @@
               </div>
             </div>
             <!-- Hiển thị các danh ĐỀ THI của content -->
+        <form action="" method="post">
             <div id="test" class="col-md-8">
               <div class="box box-success">
                 <div class="box-header with-border">
@@ -30,50 +31,54 @@
 							<div class="form-group">
 								<?php if(isset($val['answer']) && !empty($val['answer'])){
 									$answer_choice = json_decode($val['answer'],true);?>
+
 									<?php if(isset($answer_choice['answerA']) && !empty($answer_choice['answerA'])){?>
 										<div class="radio">
 											<label>
-												<input type="radio" checked="" value="1" name="answerA">
+												<input type="radio" value="1" name="answer[<?php echo $key;?>]">
 												<?php echo $answer_choice['answerA'];?>
 											</label>
 										</div>
-							  <?php }?>
+							 		<?php }?>
+
 									<?php if(isset($answer_choice['answerB']) && !empty($answer_choice['answerB'])){?>
 										<div class="radio">
 											<label>
-												<input type="radio" checked="" value="1" name="answerA">
+												<input type="radio"  value="2" name="answer[<?php echo $key;?>]">
 												<?php echo $answer_choice['answerB'];?>
 											</label>
 										</div>
-							  <?php }?>
+							  		<?php }?>
+
 									<?php if(isset($answer_choice['answerC']) && !empty($answer_choice['answerC'])){?>
 										<div class="radio">
 											<label>
-												<input type="radio" checked="" value="1" name="answerC">
+												<input type="radio"  value="3" name="answer[<?php echo $key;?>]">
 												<?php echo $answer_choice['answerC'];?>
 											</label>
 										</div>
-							  <?php }?>
+							  		<?php }?>
+
 									<?php if(isset($answer_choice['answerD']) && !empty($answer_choice['answerD'])){?>
 										<div class="radio">
 											<label>
-												<input type="radio" checked="" value="1" name="answerD">
+												<input type="radio" value="4" name="answer[<?php echo $key;?>]">
 												<?php echo $answer_choice['answerD'];?>
 											</label>
 										</div>
-							  <?php }?>
+							  		<?php }?>
 						  <?php }?>							
 							</div>
 						</div>							  
 			  <?php }
 				}?>
-                  <div class="col-md-4 col-md-offset-4">
-                    <button class="btn btn-block btn-success btn-lg text-center">Nộp bài</button>
-                  </div>
+				<div class="col-md-4 col-md-offset-4">
+                  	 <input type="submit" class="btn btn-block btn-success btn-lg text-center" name="submit" value="Nộp bài">
+     	        </div>
                 </div>
               </div>
             </div> <!-- Test -->
-            
+		</form>  
             <!-- Thống kê các thông tin về user -->
             <div id="thong_ke" class="col-md-3">
               <div class="box box-primary">

@@ -1,24 +1,21 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Mtest extends CI_Model{
+class Mmark extends CI_Model{
 	private $_name = 'test';
 	function __construct(){
 		parent::__construct();
 		$this->load->database();
 	}
-
 	function count_all(){
 		return $this->db->count_all($this->_name);
 	}
-
 	function deletetest($id){
 		$this->db->where('id', $id)->limit(1)->delete($this->_name);
 	}
-
+	//Xoa rows from question table
 	function deletequestion($testid){
 		$this->db->where('testid',$testid)->delete('question');
 	}
-<<<<<<< HEAD
 	function get_test_detail($id){
 	$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, q.score')
 			->from('test')
@@ -32,16 +29,7 @@ class Mtest extends CI_Model{
 	else return false;
 	}
 
-	function addtest($result){
-		$this->db->insert('responses', $result);
+	function search($made){
+		return NULL;
 	}
-
-
-=======
-
-	function insert_test($data) {
-		$str_query = $this->db->insert_string($data);
-		$this->db->query($str_query);
-	}
->>>>>>> b931f9eb18fa3246c3d05e5c5b77d07e1d77c1dd
 }

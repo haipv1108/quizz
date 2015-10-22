@@ -1,38 +1,43 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Test extends MX_Controller {
-	private $_form_create_test1 = 'create_test_1';
-	private $_form_create_test2 = 'create_test_2';
-
+class Mark extends MX_Controller{
 	function __construct(){
 		parent::__construct();
-		$this->load->model('mtest');
-		$this->load->model('category/mcategory');
-		$this->load->model('subject/msubject');
-		$this->load->model('mtest');
+		$this->load->model('mmark');
 		$this->load->helper(array('form_vali'));
-		$this->load->helper('form');
-		$this->load->helper('array');
-
 	}
-
 	function index(){
-<<<<<<< HEAD
-		redirect(base_url());
-=======
-		$data['categories'] = $this->mcategory->get_list_category();
-		$data['subjects'] = $this->msubject->select_subject(NULL);
-		$this->load->view($this->_form_create_test1, $data);
+		
 	}
 
-	function create_test() {
+	function choosetest(){
+		if(!$this->input->post('submitC')){
+			$data = array(
+					'meta_title' => 'Choose test',
+					'template' => 'home/choose_test'
+				);
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+		}else{
+			$made = $this->input->post('made');
+			$dethi = $this->mmark->search($made);
+			if($dethi == NULL){
+				$data = array(
+						'meta_title' => 'Error',
+						'template' => 'home/choose_test',
+						'message' => 'Data not found'
+					);
+				$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			}else{
 
->>>>>>> b931f9eb18fa3246c3d05e5c5b77d07e1d77c1dd
+			}
+		}
 	}
+
+
+/*
 
 	function testdetail($testid){
-		$user = check_login(1);
-		if(!isset($testid)||!is_numeric($testid))
+		if(!isset($testid)||!is_numeric($testid)) 
 			redirect(base_url());
 		$data = array(
 				'test' => $this->mtest->get_test_detail($testid),
@@ -48,25 +53,16 @@ class Test extends MX_Controller {
 			foreach ($data['test'] as $key => $value) {
 				$total_score += $value['score'];
 				$total_question+=1;
-				if( isset($answer[$key]) && $answer[$key] == $value['correct']){
+				if( isset( $answer[$key]) && $answer[$key] == $value['correct']){
 					$score +=$value['score'];
 					$correct_question +=1;
 				}
 			}
-			$answer = json_encode($answer);
-
-			$result_db = array(
-					'userid' => $user['id'],
-					'testid' => $testid,
-					'score' => $score*10/$total_score,
-					'answer_choice' => $answer
-				);
-			$this->mtest->addtest($result_db);
-
 			$result = array(
-					'correct_question' => $correct_question,
+					'correct_question' =>  $correct_question,
 					'total_question' => $total_question,
-					'score' => $score*10/$total_score
+					'score' => $score,
+					'total_score' => $total_score
 				);
 			$this->result($result);
 		}
@@ -76,11 +72,13 @@ class Test extends MX_Controller {
 		if(!$this->input->post('submit_rs')){
 			$data['result'] = $result;
 			$data['meta_title'] = 'result';
-			$data['template'] = 'home/result';			
+			$data['template'] = 'home/result';
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
 			redirect(base_url());
 		}
 	}
 
+
+*/
 }

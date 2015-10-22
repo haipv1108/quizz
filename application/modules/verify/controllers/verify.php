@@ -27,7 +27,8 @@
 				$check = $this->mverify->check_user($u_info); 
 				if($check){
 					$data = array(
-									'name' => $check['name'],
+									'id' => $check['id'],
+ 									'name' => $check['name'],
 									'email' => $check['email'],
 									'level'	=> $check['level'],
 									'logged_in'	=> TRUE

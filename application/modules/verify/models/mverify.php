@@ -7,7 +7,7 @@ class Mverify extends CI_Model{
 		$this->load->database();
 	}
 	public function check_user($u_info){ 
-		$check	= $this->db->select('name, email, level')->where('name', $u_info['name'])->where('password', $u_info['password'])->get($this->_name); 
+		$check	= $this->db->select('id, name, email, level')->where('name', $u_info['name'])->where('password', $u_info['password'])->get($this->_name); 
 		if($check -> row_array() >0){ 
 			return $check->row_array(); 
 		} else {

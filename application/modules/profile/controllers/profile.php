@@ -8,14 +8,17 @@ class Profile extends MX_Controller {
 	 }
 	 
 	function index(){
-		$this->load->view('backend/layouts/home');
+		$user = check_login12(1,2);
+		$data = array(
+				'user' => $user
+			);		
+		$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
 	}
 
-function edit($id = 1){
-		// co 1 loi la chua kiem tra name da thay doi roi.
-		//$user = check_login(2)||check_login(1);
+	function edit($id = 1){
+		$user = check_login12(1,2);
 		$data = array(
-					//'user' => $user,
+					'user' => $user,
 					'meta_title' => 'Manage Profile',
 					'template' => 'backend/home/edit'
 					);
@@ -41,6 +44,12 @@ function edit($id = 1){
 			}
 			$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
 		}
+	}
+
+	function review_test(){
+
+
+
 	}
 	
 }
