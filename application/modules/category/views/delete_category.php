@@ -4,12 +4,7 @@
 		<div class="clear"></div>
 	</div>
 	<div class="content-box-content">
-	<?php 	if(isset($error)){?>
-				<div style="color: red; font-weight: bold"><?php echo $error; die;?></div>
-	<?php } ?>
-	<?php 	if(isset($success)){?>
-				<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
-	<?php } ?>
+			<?php echo validation_errors();?>
 			<form action="" method="post">
 				<fieldset>
 					<legend>You want to delete category <?php if(isset($cate_info)) echo $cate_info['name'];?>?</legend>
