@@ -15,19 +15,8 @@ class Test extends MX_Controller {
 		$this->load->helper('array');
 
 	}
-
 	function index(){
-<<<<<<< HEAD
 		redirect(base_url());
-=======
-		$data['categories'] = $this->mcategory->get_list_category();
-		$data['subjects'] = $this->msubject->select_subject(NULL);
-		$this->load->view($this->_form_create_test1, $data);
-	}
-
-	function create_test() {
-
->>>>>>> b931f9eb18fa3246c3d05e5c5b77d07e1d77c1dd
 	}
 
 	function testdetail($testid){

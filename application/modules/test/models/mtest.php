@@ -18,7 +18,6 @@ class Mtest extends CI_Model{
 	function deletequestion($testid){
 		$this->db->where('testid',$testid)->delete('question');
 	}
-<<<<<<< HEAD
 	function get_test_detail($id){
 	$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, q.score')
 			->from('test')
@@ -36,12 +35,8 @@ class Mtest extends CI_Model{
 		$this->db->insert('responses', $result);
 	}
 
-
-=======
-
 	function insert_test($data) {
 		$str_query = $this->db->insert_string($data);
 		$this->db->query($str_query);
 	}
->>>>>>> b931f9eb18fa3246c3d05e5c5b77d07e1d77c1dd
 }
