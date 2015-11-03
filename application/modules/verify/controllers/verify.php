@@ -16,6 +16,14 @@
 			}
 		} 
 		public function login(){ 
+			// neu da dang nhap roi thi chuyen ve trang home
+			$user = $this->session->userdata('user');
+			if(isset($user) && !empty($user)){
+				if($user['level_id'] ==1)
+					redirect(base_url().'user');
+				else if($user['level_id'] == 3)
+					redirect(base_url().'admin');
+			}
 			$this->form_validation->set_rules('username', 'Username', 'trim|required'); 
 			$this->form_validation->set_rules('password', 'Password', 'required'); 
 			$this->form_validation->set_error_delimiters('<div style="color: red; font-weight: bold">', '</div>');
@@ -34,11 +42,11 @@
 									'logged_in'	=> TRUE
 								);
 					$this->session->set_userdata('user', $data); 
-					if($check['level'] == 3)
-						redirect(base_url().'admin'); 
-					/*else if($check['level'] == 2)
-						redirect(base_url().'member'); */
-					else redirect(site_url());
+					$link = $this->session->userdata('current_url');
+					if(isset($link['current_url']) && !empty($link['current_url']))
+						$current_url = $link['current_url'];
+					else $current_url = base_url();
+					redirect($current_url); 
 				} else{ 
 					$error['error'] = 'Username or Password error.';
 				} 

@@ -8,6 +8,7 @@ class Profile extends MX_Controller {
 	 }
 	 
 	function index(){
+		save_url();// Luu current_url vao session
 		$user = check_login12(1,2);
 		$data = array(
 				'user' => $user
@@ -16,6 +17,7 @@ class Profile extends MX_Controller {
 	}
 
 	function edit($id = 1){
+		save_url();// Luu current_url vao session
 		$user = check_login12(1,2);
 		$data = array(
 					'user' => $user,

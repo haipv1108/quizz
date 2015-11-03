@@ -10,6 +10,7 @@ class Subject extends MX_Controller{
 		$this->load->helper(array('form_vali'));
 	}
 	function index(){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		// config pagination
 		$total = $this->msubject->count_all();
@@ -37,6 +38,7 @@ class Subject extends MX_Controller{
 			Thi van co the tao muc: Subject trong tieng nhat
 			Nhu vay co van de trong ham check_name
 		*/
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
@@ -63,6 +65,7 @@ class Subject extends MX_Controller{
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function editsubject($id = 0){
+		save_url();// Luu current_url vao session
 		// co 1 loi la chua kiem tra name da thay doi roi.
 		$user = check_login(3);
 		$data = array(
@@ -96,6 +99,7 @@ class Subject extends MX_Controller{
 		/*
 			Ham search co van de. Neu nhu cho 3 category co cung ten subject
 		*/
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
