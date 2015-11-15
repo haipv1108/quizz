@@ -88,3 +88,5 @@ $route['profile'] = 'profile/index';
 //create_test
 $route['createtest'] = 'createtest/index';
 
+$route['level/managelevel'] = 'level/managelevel/index';
+

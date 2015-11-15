@@ -502,3 +502,4 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+$config['javascript_location'] = 'http://localhost/ci/js/jquery-2.0.0.min.js';
