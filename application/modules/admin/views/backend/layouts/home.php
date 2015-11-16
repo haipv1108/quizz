@@ -59,7 +59,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'quiz'))?'current':'';?>">
+					<a href="<?php echo base_url();?>" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'quiz'))?'current':'';?>">
 						Question
 					</a>
 					<ul>
