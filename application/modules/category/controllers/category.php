@@ -9,6 +9,7 @@ class Category extends MX_Controller{
 		$this->load->helper(array('form_vali'));
 	}
 	function index(){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		// config pagination
 		$total = $this->mcategory->count_all();
@@ -30,6 +31,7 @@ class Category extends MX_Controller{
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function addcategory(){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
@@ -71,6 +73,7 @@ class Category extends MX_Controller{
 		}
 	}*/
 	function editcategory($id = 0){
+		save_url();// Luu current_url vao session
 		// co 1 loi la chua kiem tra name da thay doi roi.
 		$user = check_login(3);
 		$data = array(
@@ -100,6 +103,7 @@ class Category extends MX_Controller{
 		}
 	}
 	function deletecategory($id = 0){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,

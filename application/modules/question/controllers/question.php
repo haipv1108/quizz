@@ -7,6 +7,7 @@ class Question extends MX_Controller{
 		$this->load->helper(array('form_vali'));
 	}
 	function index(){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		// config pagination
 		$total = $this->mquestion->count_all();
@@ -28,6 +29,7 @@ class Question extends MX_Controller{
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function addquestion(){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
@@ -48,6 +50,7 @@ class Question extends MX_Controller{
 	}
 	function editquestion($id = 0){
 		// co 1 loi la chua kiem tra name da thay doi roi.
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
@@ -76,6 +79,7 @@ class Question extends MX_Controller{
 		}
 	}
 	function deletequestion($id = 0){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,

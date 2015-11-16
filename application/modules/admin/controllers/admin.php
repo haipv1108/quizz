@@ -10,6 +10,7 @@ class Admin extends MX_Controller {
 	 
 	function index()
 	{
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		// config pagination
 		$total = $this->madmin->count_all();
@@ -31,6 +32,7 @@ class Admin extends MX_Controller {
 		$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function adduser(){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
@@ -63,6 +65,7 @@ class Admin extends MX_Controller {
 		$this->load->view('backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function edituser($id = 0){
+		save_url();// Luu current_url vao session
 		// co 1 loi la chua kiem tra name da thay doi roi.
 		$user = check_login(3);
 		$data = array(
@@ -92,6 +95,7 @@ class Admin extends MX_Controller {
 		}
 	}
 	function deleteuser($id = 0){
+		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
