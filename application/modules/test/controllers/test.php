@@ -28,7 +28,7 @@ class Test extends MX_Controller {
 				'meta_title' => 'Test Detail',
 			);
 		if(!$this->input->post('submit')&&!$this->input->post('submit_rs')){
-			$data['template'] = 'home/frontend/home/testdetail'; 
+			$data['template'] = 'home/testdetail'; 
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
 			$answer = $this->input->post('answer');

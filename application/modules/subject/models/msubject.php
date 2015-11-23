@@ -13,6 +13,7 @@ class Msubject extends CI_Model{
 	function viewsubject($per_page, $offset){
 		$query = $this->db->select('subject.id, subject.name as subject_name, category.name as category_name, subject.decription')
 				->from($this->_name)
+				->order_by('subject.id','desc')
 				->join('category','category.id = subject.categoryid')
 				->limit($per_page, $offset)
 				->group_by(array('category_name','subject_name'))

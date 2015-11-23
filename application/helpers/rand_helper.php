@@ -24,60 +24,6 @@ if(!function_exists('mt_rand_mail')){
 		return $s.'@gmail.com';
 	}
 }
-/*if(!function_exists('random_quistionbank')){
-	function random_quistionbank(){
-		$a_answer = array(
-						'answerA' => mt_rand_str(30),
-						'answerB' => mt_rand_str(30),
-						'answerC' => mt_rand_str(30),
-						'answerD' => mt_rand_str(30)
-						);
-		$answer = json_encode($a_answer);
-		$quiz_info = array(
-							'subjectid' => rand(1,8),
-							'question'=> mt_rand_str(50),
-							'answer' => $answer,
-							'level' => rand(1,40),
-							'score' => rand(1,3),
-							'correct' => rand(1,4),
-							'ans_explained' => mt_rand_str(50)
-		);
-		return $quiz_info;
-	}
-}
-if(!function_exists('random_user')){
-	function random_user(){
-		$json_string = array(
-						'birthday' => mt_rand_date(),
-						'gender' => rand(0,1),
-						'address' => mt_rand_str(50)
-						);
-		$extra_info = json_encode($json_string);
-		$quiz_info = array(
-							'name' => mt_rand_username(10),
-							'email' => mt_rand_mail(rand(7,10)),
-							'password' => md5(mt_rand_str(rand(7,15))),
-							'level' => rand(1,3),
-							'active' =>1,
-							'extra_info' => $extra_info
-		);
-		return $quiz_info;
-	}
-}
-if(!function_exists('random_quiz_of_test')){
-	function random_quiz_of_test($test_id){
-		$test_info = array(
-							'testid' => $test_id,
-							'questionid' => rand(1,9000)
-		);
-		return $test_info;
-	}
-}
-
-*/
-
-
-
 
 
 if(!function_exists('random_category')){
@@ -118,8 +64,10 @@ if(!function_exists('random_test')){
 		$test_info = array(
 							'subjectid' => $sub_id,
 							'name' => 'TEST_'.mt_rand_str(4,"ABCDEF"),
+							'madethi'=>'MADE_'.$sub_id.mt_rand_str(3,'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'),
 							'time' => rand(30,40),
 							'levelid' => $level_id,
+							'sl' => rand(10, 12),
 							'decription' => mt_rand_str(50)
 		);
 		return $test_info;
@@ -128,22 +76,33 @@ if(!function_exists('random_test')){
 }
 
 if(!function_exists('random_questionbank')){
-	function random_questionbank($sub_id, $level_id){
-		$a_answer = array(
-						'answerA' => 'ANSWER_'.mt_rand_str(30),
-						'answerB' => 'ANSWER_'.mt_rand_str(30),
-						'answerC' => 'ANSWER_'.mt_rand_str(30),
-						'answerD' => 'ANSWER_'.mt_rand_str(30)
-						);
+	function random_questionbank($sub_id, $cate_id, $level_id){
+		$number_answer = rand(3, 7);
+		$a_answer = array();
+		for($i = 1; $i<= $number_answer; $i++ ){
+			$a_answer[$i] = 'ANSWER_'.mt_rand_str(30);
+		}
 		$answer = json_encode($a_answer);
+		$correct;
+		if($i > 5){
+			$correct = array(
+							'1'=>rand(1,3),
+							'2'=>rand(4,$i)
+							);
+		}else{
+			$correct = array(
+							'1' => rand(1, $i)
+							);
+		}
+		$dapan = json_encode($correct);
 		$quiz_info = array(
-							'subjectid' => $sub_id,
+							'categoryid'=>$cate_id,
 							'question'=> 'QUESTION_'.mt_rand_str(50),
 							'answer' => $answer,
 							'level' => $level_id,
-							'score' => rand(1,3),
-							'correct' => rand(1,4),
-							'ans_explained' => 'ANSWER_EXPLAINED_'.mt_rand_str(50)
+							'correct' => $dapan,
+							'ans_explained' => 'ANSWER_EXPLAINED_'.mt_rand_str(50),
+							'subjectid' => $sub_id
 		);
 		return $quiz_info;
 	}
@@ -154,7 +113,8 @@ if(!function_exists('random_question')){
 	function random_question($test_id,$question_id){
 		$question_info = array(
 							'testid' => $test_id,
-							'questionid' => $question_id
+							'questionid' => $question_id,
+							'score' => rand(1, 3)
 		);
 		return $question_info;
 	}

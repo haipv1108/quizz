@@ -11,7 +11,8 @@ class Mcategory extends CI_Model{
 	}
 	// Lay du lieu rieng theo tung phan
 	function viewcategory($per_page, $offset){
-		$query = $this->db->get($this->_name, $per_page, $offset);
+		$query = $this->db->order_by('id','desc')
+				->get($this->_name, $per_page, $offset);
 		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;

@@ -19,15 +19,6 @@ class Mhome extends CI_Model{
 				->join('test','test.subjectid = subject.id')
 				-> group_by(array('subject.id','subject.name'))
 				->get();
-		/*$query = $this->db->query("
-									select subject.id,subject.name, count(test.id) as sl
-									from category, subject, test
-									where category.id = 1
-									and category.id = subject.categoryid
-									and subject.id = test.subjectid
-									group by subject.id, subject.name
-								");
-		*/
 		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;

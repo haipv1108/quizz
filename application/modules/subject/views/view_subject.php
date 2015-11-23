@@ -11,7 +11,6 @@
 		<table>
 			<thead>
 				<tr>
-				   <th><input class="check-all" type="checkbox" /></th>
 				   <th>Subject</th>
 				   <th>Category</th>
 				   <th>Decription</th>
@@ -21,15 +20,6 @@
 			<tfoot>
 				<tr>
 					<td colspan="6">
-						<div class="bulk-actions align-left">
-							<select name="dropdown">
-								<option value="option1">Choose an action...</option>
-								<option value="option2">Edit</option>
-								<option value="option3">Delete</option>
-							</select>
-							<a class="button" href="#">Apply to selected</a>
-						</div>
-						
 						<div class="pagination">
 							<?php if(isset($paginator) && !empty($paginator)) echo $paginator;?>
 						</div> <!-- End .pagination -->
@@ -42,7 +32,6 @@
 		<?php	if(isset($view_subject) && !empty($view_subject)){
 					foreach($view_subject as $key=>$val){?>
 						<tr>
-							<td><input type="checkbox" value = '<?php echo $val['id'];?>'/></td>
 							<td><?php echo $val['subject_name'];?></td>
 							<td><?php echo $val['category_name'];?></td>
 							<td><?php echo $val['decription'];?></td>

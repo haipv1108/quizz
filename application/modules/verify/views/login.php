@@ -3,7 +3,7 @@
 
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<base href="http://localhost/ci/">
+		<base href="<?php echo base_url();?>">
 		<title>Control Panel| Sign In</title>
 		<link rel="stylesheet" href="template/backend/simpla-admin/resources/css/reset.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="template/backend/simpla-admin/resources/css/style.css" type="text/css" media="screen" />
@@ -21,7 +21,7 @@
 			
 				<h1>Control Panel Login</h1>
 				<!-- Logo (221px width) -->
-				<img id="logo" href="template/backend/simpla-admin/resources/images/logo.png" alt="Simpla Admin logo" />
+				<a href=""><img id="logo" href="template/backend/simpla-admin/resources/images/logo.png" alt="Simpla Admin logo" /></a>
 			</div> <!-- End #logn-top -->
 			
 			<div id="login-content">

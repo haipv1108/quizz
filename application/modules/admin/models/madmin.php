@@ -11,7 +11,9 @@ class Madmin extends CI_Model{
 	}
 	// Lay du lieu rieng theo tung phan
 	function viewuser($per_page, $offset){
-		$query = $this->db->limit($per_page,$offset)->get($this->_name);
+		$query = $this->db->limit($per_page,$offset)
+				->order_by('id','desc')
+				->get($this->_name);
 		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;

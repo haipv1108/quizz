@@ -4,7 +4,6 @@ class Subject extends MX_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model('msubject');
-		$this->load->model('mcategory');
 		$this->load->model('test/mtest');
 		$this->load->model('category/mcategory');
 		$this->load->helper(array('form_vali'));
