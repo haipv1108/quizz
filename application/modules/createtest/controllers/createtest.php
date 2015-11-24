@@ -11,7 +11,6 @@ class CreateTest extends MX_Controller {
 		$this->load->model('mtest');
 		$this->load->model('category/mcategory');
 		$this->load->model('subject/msubject');
-		$this->load->model('mtest');
 		$this->load->model('level/mlevel');
 		$this->load->model('question/mquestion');
 		$this->load->helper(array('form_vali'));
