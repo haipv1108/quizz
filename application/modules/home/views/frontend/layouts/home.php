@@ -36,15 +36,21 @@
         <section class="sidebar">
           <!-- Sidebar user panel -->
           <div class="user-panel">
-            <div class="pull-left image">
-              <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-				<?php 	$user_info = $this->session->userdata('user');
-						if($user_info['logged_in']) echo ucwords($user_info['name']);
-						else echo "Guest";
-				?>
-            </div>
+		  <?php $user_info = $this->session->userdata('user'); 
+				if(!empty($user_info)){?>
+					<div class="pull-left image">
+					  <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+					</div>
+					<div class="pull-left info">
+						<?php 	$user_info = $this->session->userdata('user');
+								if($user_info['logged_in']) echo ucwords($user_info['name']);
+						?>
+						<br/><br/>
+						<a href="verify/logout">Logout</a>
+					</div>
+		<?php	}else{?>
+					<h3><div style="color:red;"><a href="verify/login">Login</a></div></h3>
+		<?php }?>
           </div>
           <!-- search form -->
           <form action="home/search" method="post" class="sidebar-form">
