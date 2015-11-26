@@ -1,4 +1,4 @@
-﻿<div class="content-box-content">
+<div class="content-box-content">
 	<div class="tab-content default-tab"> 
 	<?php if(isset($total) && !empty($total)){?>
 		<div class="notification success png_bg">
