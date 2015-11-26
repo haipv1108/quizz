@@ -36,15 +36,21 @@
         <section class="sidebar">
           <!-- Sidebar user panel -->
           <div class="user-panel">
-            <div class="pull-left image">
-              <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-            </div>
-            <div class="pull-left info">
-				<?php 	$user_info = $this->session->userdata('user');
-						if($user_info['logged_in']) echo ucwords($user_info['name']);
-						else echo "Guest";
-				?>
-            </div>
+		  <?php $user_info = $this->session->userdata('user'); 
+				if(!empty($user_info)){?>
+					<div class="pull-left image">
+					  <img src="template/frontend/Online Examination System/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+					</div>
+					<div class="pull-left info">
+						<?php 	$user_info = $this->session->userdata('user');
+								if($user_info['logged_in']) echo ucwords($user_info['name']);
+						?>
+						<br/><br/>
+						<a href="profile">Profile</a>| <a href="verify/logout">Logout</a>
+					</div>
+		<?php	}else{?>
+					<h3><div style="color:red;"><a href="verify/login">Login</a></div></h3>
+		<?php }?>
           </div>
           <!-- search form -->
           <form action="home/search" method="post" class="sidebar-form">
@@ -228,15 +234,10 @@
         <section class="content-header">
 		<a href = "<?php echo site_url();?>">
           <h1>
-            OnlineExaminationSystem
+            QuizzOnline
             <small>.com</small>
           </h1>
 		</a>
-          <ol class="breadcrumb">
-            <li class="active">
-              <i class="fa fa-dashboard"></i>Home
-            </li>
-          </ol>
         </section> <!-- Content Header -->
 		<?php if(isset($template) && !empty($template)) $this->load->view($template, isset($data)?$data:NULL);?>
       </div><!-- /.content-wrapper -->

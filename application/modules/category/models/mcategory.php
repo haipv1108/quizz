@@ -71,6 +71,4 @@ class Mcategory extends CI_Model{
 	function delete_level($level_id){
 		$this->db->where('id', $level_id)->limit(1)->delete('level');
 	}
-
-
 }

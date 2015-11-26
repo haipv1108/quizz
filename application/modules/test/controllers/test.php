@@ -10,7 +10,7 @@ class Test extends MX_Controller {
 		$this->load->model('category/mcategory');
 		$this->load->model('subject/msubject');
 		$this->load->model('mtest');
-		$this->load->helper(array('form_vali'));
+		$this->load->helper();
 		$this->load->helper('form');
 		$this->load->helper('array');
 	}
@@ -38,11 +38,10 @@ class Test extends MX_Controller {
 					"userid" => $user['id'],
 					"testid" => $testid,
 				);
-			// print_r($result);
 			$this->result($result,$responses);
 		}
 	}
-// One True All Score
+// One True All Score <tyrpe = 1>
 	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
 		foreach ($answer_choice as $key => $value) {
 			if(!in_array($value, $answer_true))
@@ -50,7 +49,7 @@ class Test extends MX_Controller {
 		}
 		return 1;
 	}
-// Part True Part Score
+// Part True Part Score <type = 2>
 	private function markScoreForAQuestionPTPS($answer_choice,$answer_true){
 		$total_anstrue = 0;
 		$total_choice = 0;
@@ -65,7 +64,7 @@ class Test extends MX_Controller {
 		}
 		return $total_choice/$total_anstrue;
 	}
-// All True All Score
+// All True All Score <type = 3>
 	private function markScoreForAQuestionATAS($answer_choice,$answer_true){
 		$total_anstrue = 0;
 		$total_choice = 0;
@@ -92,7 +91,12 @@ class Test extends MX_Controller {
 		foreach ($result['test'] as $key => $value) {
 			$true_ans = json_decode($value['correct'],true);
 			if(!empty($result['answer'][$key])){
-				$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
+				if($value['type'] == 1)
+					$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
+				else if($value['type'] == 2)
+					$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
+				else
+					$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
 				$Score += $partScore*$value['score'];
 			}
 			$totalScore += $value['score'];

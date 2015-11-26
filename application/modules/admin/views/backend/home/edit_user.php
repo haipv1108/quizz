@@ -72,4 +72,4 @@
 				</form>
 			</div> <!-- End #login-content -->     
 		</div> <!-- End .content-box-content -->
-</div> <!-- End .content-box -->
+	
