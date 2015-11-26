@@ -92,6 +92,7 @@ class Test extends MX_Controller {
 		foreach ($result['test'] as $key => $value) {
 			$true_ans = json_decode($value['correct'],true);
 			if(!empty($result['answer'][$key])){
+				print_r($value);
 				$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
 				$Score += $partScore*$value['score'];
 			}
@@ -101,15 +102,15 @@ class Test extends MX_Controller {
 			$responses['answer_choice'] = json_encode($result['answer']);
 			$this->mtest->addtest($responses);
 
-		if(!$this->input->post('submit_rs')){
-			$data['totalScore'] = $totalScore;
-			$data['score'] = $Score;
-			$data['meta_title'] = 'result';
-			$data['template'] = 'home/result';			
-			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
-		}else{
-			redirect(base_url());
-		}
+		// if(!$this->input->post('submit_rs')){
+		// 	$data['totalScore'] = $totalScore;
+		// 	$data['score'] = $Score;
+		// 	$data['meta_title'] = 'result';
+		// 	$data['template'] = 'home/result';			
+		// 	$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+		// }else{
+		// 	redirect(base_url());
+		// }
 	}
 
 }
