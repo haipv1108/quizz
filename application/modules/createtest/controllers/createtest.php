@@ -65,12 +65,20 @@ class CreateTest extends MX_Controller {
 		$input_data['test_des']= $_POST['test_des'];
 		$input_data['category']= $_POST['category'];
 		$input_data['level'] = $_POST['level'];
-
+		$max_question = $_POST['max_question'];
+		$current_num_question = 0;
 		$input_data['subjects'] = array();
+
 		foreach($data as $key => $value) {
 			array_push($input_data['subjects'],
 				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion));
+			$current_num_question += $value->numQuestion;
 		}
+
+		if ($current_num_question == $max_question) {
+			echo "MAX";
+		}
+
 
 		$this->create_test($input_data);
 
@@ -79,7 +87,9 @@ class CreateTest extends MX_Controller {
 	function create_test($input_data) {
 		$questionbank = array();
 		foreach($input_data['subjects'] as $key => $value) {
-			array_push($questionbank, $this->mquestion->get_questions_with_subject_level($input_data['subjects'][0]['id'], $input_data['level']));
+			$result = $this->mquestion->get_questions_with_subject_level($input_data['subjects'][0]['id'], $input_data['level']);
+			if ($result != null)
+			array_push($questionbank, $result);
 		}
 		echo "<pre>";
 		print_r($questionbank);

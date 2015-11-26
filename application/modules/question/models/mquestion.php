@@ -30,4 +30,20 @@ class Mquestion extends CI_Model{
 			return $query->row_array();
 		else return false;
 	}
+
+	function get_questions_with_subject_level($subject_id, $level_id) {
+		$this->db->select('id');
+		$query = $this->db->where('subjectid', $subject_id)->where('level', $level_id)->get($this->_name);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		return null;
+	}
+
+	function get_question_with_category($categoryid) {
+		$this->db->select('id');
+		$query = $this->db->where('categoryid', $categoryid)->get($this->_name);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		return null;
+	}
 }
