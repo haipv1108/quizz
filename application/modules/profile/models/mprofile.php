@@ -53,19 +53,15 @@ class Mprofile extends CI_Model{
 	}
 
 	function get_test_detail_from_testname($name){
-		$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, q.score')
-					->from('test')
-					->where('test.name',$name)
-					->join('question','test.id = question.testid')
-					->join('questionbank as q','q.id = question.questionid')
-					->limit(20)
-					->get();
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else
-			return false;
+			$query = $this->db->select('q.type, q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, question.score')
+			->from('test')
+			->where('test.name',$name)
+			->join('question','test.id = question.testid')
+			->join('questionbank as q','q.id = question.questionid')
+			->limit(20)
+			->get();
+	if($query->num_rows()>0)
+		return $query->result_array();
+	else return false;
 	}
-
-
-
 }

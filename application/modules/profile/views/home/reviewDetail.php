@@ -24,7 +24,7 @@
                   <p class="text-center" style="color:red">Huong dan lam bai</p>
                 </div>
                 <div class="box-body">
-        Tổng điểm bài thi: <?php echo $score;?>
+        Tổng điểm bài thi: <?php echo $score*10;?>
         <?php if(isset($test) && !empty($test)){
           $number_question = 1;
           foreach($test as $key=>$val){?>
