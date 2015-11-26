@@ -37,7 +37,7 @@
 												<?php if(isset($answer_choice[$choice]) && !empty($answer_choice[$choice])){?>
 												<div class="radio">
 													<label>
-														<input type="radio" value="1" name="answer[<?php echo $key;?>]">
+														<input type="checkbox" value="<?php echo $choice;?>" name="answer[<?php echo $key;?>][]">
 														<?php echo $answer_choice[$choice];?>
 													</label>
 												</div>
