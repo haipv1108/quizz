@@ -25,55 +25,31 @@
                 </div>
                 <div class="box-body">
 				<?php if(isset($test) && !empty($test)){
+					$number_question = 1;
 					foreach($test as $key=>$val){?>
 						<div class="clearfix cauhoi-wrap">
-							<span class="cauhoi">1. <?php echo $val['question'];?></span>
+							<span class="cauhoi"><?php echo $number_question++;?>. <?php echo $val['question'];?></span>
 							<div class="form-group">
 								<?php if(isset($val['answer']) && !empty($val['answer'])){
 									$answer_choice = json_decode($val['answer'],true);?>
-
-									<?php if(isset($answer_choice['answerA']) && !empty($answer_choice['answerA'])){?>
-										<div class="radio">
-											<label>
-												<input type="radio" value="1" name="answer[<?php echo $key;?>]">
-												<?php echo $answer_choice['answerA'];?>
-											</label>
-										</div>
-							 		<?php }?>
-
-									<?php if(isset($answer_choice['answerB']) && !empty($answer_choice['answerB'])){?>
-										<div class="radio">
-											<label>
-												<input type="radio"  value="2" name="answer[<?php echo $key;?>]">
-												<?php echo $answer_choice['answerB'];?>
-											</label>
-										</div>
-							  		<?php }?>
-
-									<?php if(isset($answer_choice['answerC']) && !empty($answer_choice['answerC'])){?>
-										<div class="radio">
-											<label>
-												<input type="radio"  value="3" name="answer[<?php echo $key;?>]">
-												<?php echo $answer_choice['answerC'];?>
-											</label>
-										</div>
-							  		<?php }?>
-
-									<?php if(isset($answer_choice['answerD']) && !empty($answer_choice['answerD'])){?>
-										<div class="radio">
-											<label>
-												<input type="radio" value="4" name="answer[<?php echo $key;?>]">
-												<?php echo $answer_choice['answerD'];?>
-											</label>
-										</div>
-							  		<?php }?>
+									<?php $number_choice = count($answer_choice);
+											for($choice = 1; $choice<= $number_choice; $choice++){?>
+												<?php if(isset($answer_choice[$choice]) && !empty($answer_choice[$choice])){?>
+												<div class="radio">
+													<label>
+														<input type="checkbox" value="<?php echo $choice;?>" name="answer[<?php echo $key;?>][]">
+														<?php echo $answer_choice[$choice];?>
+													</label>
+												</div>
+											<?php }?>
+									<?php	}?>
 						  <?php }?>							
 							</div>
 						</div>							  
 			  <?php }
 				}?>
 				<div class="col-md-4 col-md-offset-4">
-                  	 <input type="submit" class="btn btn-block btn-success btn-lg text-center" name="submit_mark" value="Nộp bài">
+                  	 <input type="submit" class="btn btn-block btn-success btn-lg text-center" name="submit" value="Nộp bài">
      	        </div>
                 </div>
               </div>
