@@ -4,7 +4,7 @@ class Question extends MX_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->model('mquestion');
-		$this->load->helper(array('form_vali'));
+		$this->load->helper('question');
 	}
 	function index(){
 		save_url();// Luu current_url vao session

@@ -46,7 +46,7 @@
 								if($user_info['logged_in']) echo ucwords($user_info['name']);
 						?>
 						<br/><br/>
-						<a href="verify/logout">Logout</a>
+						<a href="profile">Profile</a>| <a href="verify/logout">Logout</a>
 					</div>
 		<?php	}else{?>
 					<h3><div style="color:red;"><a href="verify/login">Login</a></div></h3>
@@ -234,17 +234,10 @@
         <section class="content-header">
 		<a href = "<?php echo site_url();?>">
           <h1>
-            OnlineExaminationSystem
+            QuizzOnline
             <small>.com</small>
           </h1>
 		</a>
-          <ol class="breadcrumb">
-            <li class="active">
-            <a href="<?php echo site_url();?>/profile/profile/index">
-              <i class="fa fa-dashboard"></i>Home
-            </a>
-            </li>
-          </ol>
         </section> <!-- Content Header -->
 		<?php if(isset($template) && !empty($template)) $this->load->view($template, isset($data)?$data:NULL);?>
       </div><!-- /.content-wrapper -->

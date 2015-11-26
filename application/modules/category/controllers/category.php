@@ -3,6 +3,7 @@
 class Category extends MX_Controller{
 	function __construct(){
 		parent::__construct();
+		$this->load->helper('category';
 		$this->load->model('mcategory');
 		$this->load->model('subject/msubject');
 		$this->load->model('test/mtest');

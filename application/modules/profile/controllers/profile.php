@@ -4,14 +4,15 @@ class Profile extends MX_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('mprofile');
-		$this->load->helper(array('form_vali'));
+		$this->load->helper('profile');
 	 }
 	 
 	function index(){
 		save_url();// Luu current_url vao session
 		$user = check_login12(1,2);
 		$data = array(
-				'user' => $user
+				'user' => $user,
+				'template' => 'home/index'
 			);		
 		$this->load->view('layouts/home',isset($data)?$data:NULL);
 	}
@@ -34,11 +35,8 @@ class Profile extends MX_Controller {
 			if($this->input->post('submit')){
 				profile();
 				if($this->form_validation->run() == TRUE){
-					$u_info = get_info_user();
+					$u_info = info_user();
 					$u_info['id'] = $id;
-					$u_info['name'] = $user_info['name'];
-					$u_info['level'] = $user_info['level'];
-					print_r($u_info);
 					$this->mprofile->updateuser($u_info);
 					$message = 'Edit user successfully.';
 					$data['success'] = $message;
