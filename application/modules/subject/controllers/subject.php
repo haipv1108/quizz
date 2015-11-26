@@ -7,7 +7,6 @@ class Subject extends MX_Controller{
 		$this->load->model('msubject');
 		$this->load->model('test/mtest');
 		$this->load->model('category/mcategory');
-		$this->load->helper(array('form_vali'));
 	}
 	function index(){
 		save_url();// Luu current_url vao session
