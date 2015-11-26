@@ -80,6 +80,7 @@
 
     <input type="submit" value = "Submit">
     <?php echo form_close()?>
+
 <script>
     function include(arr, id) {
         for (var i = 0; i < arr.length; ++i) {

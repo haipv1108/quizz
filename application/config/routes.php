@@ -39,4 +39,3 @@ $route['profile'] = 'profile/index';
 
 //create_test
 $route['createtest'] = 'createtest/index';
-

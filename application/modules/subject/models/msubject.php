@@ -65,5 +65,4 @@ class Msubject extends CI_Model{
 		$query = $this->db->select('id, name')->where('categoryid',$category_id)->get($this->_name);
 		return $query->result_array();
 	}
-
 }
