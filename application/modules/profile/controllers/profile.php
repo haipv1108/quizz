@@ -17,9 +17,12 @@ class Profile extends MX_Controller {
 		$this->load->view('layouts/home',isset($data)?$data:NULL);
 	}
 
-	function edit($id = 1){
+	function edit($id = 0){
 		save_url();// Luu current_url vao session
 		$user = check_login12(1,2);
+		// print_r($user);
+		if($id!=$user['id'])
+			redirect(base_url());
 		$data = array(
 					'user' => $user,
 					'meta_title' => 'Manage Profile',
@@ -29,8 +32,7 @@ class Profile extends MX_Controller {
 		if(!$user_info){
 			$data['error'] = 'User not found in database.';
 			$this->load->view('layouts/home',isset($data)?$data:NULL);
-		}
-		else{
+		}else{
 			$data['user_info']= $user_info;
 			if($this->input->post('submit')){
 				profile();

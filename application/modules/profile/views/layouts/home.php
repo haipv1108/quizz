@@ -72,7 +72,7 @@
               </a>
 			<?php if(isset($user)){?>
 				<li class="treeview">
-					<a href="profile/edit/<?php $user['id'];?>">
+					<a href="profile/edit/<?php echo $user['id'];?>">
 					<i class="fa fa-share"></i> <span>Edit Profile</span>
 					</a>
 				</li>
