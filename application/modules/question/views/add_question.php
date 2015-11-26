@@ -19,12 +19,14 @@
 				<div class="clear"></div>
 			<p> 
 				<label>Answer</label>
-				<tr>
-					<td>A:	<input class="text-input medium-input datepicker" type="text" name="answerA" value="<?php echo set_value('answerA');?>"/></td><br/><br/>
-					<td>B:	<input class="text-input medium-input datepicker" type="text" name="answerB" value="<?php echo set_value('answerB');?>"/></td><br/><br/>
-					<td>C:	<input class="text-input medium-input datepicker" type="text" name="answerC" value="<?php echo set_value('answerC');?>"/></td><br/><br/>
-					<td>D:	<input class="text-input medium-input datepicker" type="text" name="answerD" value="<?php echo set_value('answerD');?>"/></td><br/><br/>
-				</tr>
+
+				<input type = hidden id = 'answers'>
+				<input class="text-input medium-input datepicker" type="text" id="answer" name = "answer"></td>
+				<input type = button id = btn_add value = ADD>
+				<br/><br/>
+				<div id = 'answer_view'>
+
+				</div>
 			</p>
 			<div class="clear"></div>
 			<p>
@@ -58,3 +60,38 @@
 		</form>
 	</div>
 </div>
+
+<script language="javascript" src="/CI/js/jquery-2.0.0.min.js"></script>
+
+
+<script>
+	var answers = [];
+
+	function updateView() {
+		var str= "";
+		var value;
+		var key = 0;
+
+		for (var i in answers) {
+			if (answers.hasOwnProperty(i)) {
+				value = answers[i];
+				key = parseInt(i) + 1;
+				str = str + "<td>" + key + ":	<input class='text-input medium-input datepicker' type='text' name="+ key + " value=" + value + "></td><br/><br/>";
+			}
+		}
+
+		document.getElementById("answer_view").innerHTML = str;
+		document.getElementById("answers").value = JSON.stringify(answer);
+	}
+
+	function addAnswer() {
+		var newAnswer = $('#answer').val();
+		answers.push(newAnswer);
+		updateView();
+	}
+
+	$(document).ready(function(){
+		document.getElementById("btn_add").addEventListener('click',addAnswer);
+	})
+
+</script>
