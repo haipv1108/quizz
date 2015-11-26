@@ -62,5 +62,15 @@ class Mhome extends CI_Model{
 			return $query->row_array();
 		else return false;	
 	}
+	// tim kiem de test theo ten hoac ma de this-
+	function search_test($search){
+		$query = $this->db->select('id, name, madethi, decription')
+				->like('name', $search)
+				->or_not_like('madethi', $search)
+				->get('test');
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else return false;
+	}
 
 }

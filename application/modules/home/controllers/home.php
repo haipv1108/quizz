@@ -6,6 +6,7 @@ class Home extends MX_Controller{
 		parent::__construct();
 	}
 	function index(){
+		save_url();
 		$list_cate = $this->mhome->get_list_cate();
 		if(isset($list_cate) && !empty($list_cate)){
 			foreach($list_cate as $key=>$val){
@@ -42,6 +43,26 @@ class Home extends MX_Controller{
 						'test' => $this->mhome->get_test_detail($testid),
 						'meta_title' => 'Test Detail',
 						'template' => 'frontend/home/testdetail'
+					);
+		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
+	}
+	// tim kiem de thi
+	function search(){
+		save_url();// Luu current_url vao session
+		if($this->input->post('submit')){
+			$this->form_validation->set_rules('search', 'Mã đề hoặc Tên đề', 'required'); 
+			if($this->form_validation->run() == TRUE){
+				$search = $this->input->post('search');
+				$data['search'] = $search;
+				$search_test = $this->mhome->search_test($search);
+				if(!$search_test){
+					$data['error'] = 'Không có đề thi trong hệ thống';
+				}
+				$data['search_test'] = $search_test;
+			}
+		}
+		$data = array(
+					'template' => 'frontend/home/search'
 					);
 		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
 	}

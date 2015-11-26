@@ -19,6 +19,7 @@ class Test extends MX_Controller {
 	}
 
 	function testdetail($testid){
+		save_url();
 		$user = check_login(1);
 		if(!isset($testid)||!is_numeric($testid))
 			redirect(base_url());

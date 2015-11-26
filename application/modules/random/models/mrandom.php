@@ -27,7 +27,12 @@ class Mrandom extends CI_Model{
 	function add_subject($subject_info){
 		$this->db->insert('subject', $subject_info);
 	}
-	function list_subject($cate_id){
+	function list_subject(){
+		$query = $this->db->select('id')
+				->get('subject');
+		return $query->result_array();
+	}
+	function list_subject_by_cate($cate_id){
 		$query = $this->db->select('id')
 				->where('categoryid', $cate_id)
 				->get('subject');

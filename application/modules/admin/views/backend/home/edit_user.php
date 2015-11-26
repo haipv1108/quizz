@@ -61,8 +61,8 @@
 						<label>Level</label>
 						<select name="level">
 								<option value = '1' <?php if($user_info['level'] == 1) echo "selected='selected'";?>>1</option>
-								<option value = '2' <?php if($user_info['level'] == 1) echo "selected='selected'";?>>2</option>
-								<option value = '3' <?php if($user_info['level'] == 1) echo "selected='selected'";?>>3</option>
+								<option value = '2' <?php if($user_info['level'] == 2) echo "selected='selected'";?>>2</option>
+								<option value = '3' <?php if($user_info['level'] == 3) echo "selected='selected'";?>>3</option>
 						</select>
 					</div>
 					<div class="clear"></div>

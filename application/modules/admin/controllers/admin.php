@@ -44,7 +44,6 @@ class Admin extends MX_Controller {
 			vali_user();// check validate_form su dung helper
 			if($this->form_validation->run() == TRUE){
 				$u_info = get_info_user();//get info user using helper
-				$u_info['active'] = 0;
 				$error = '';
 				$check_name = $this->madmin->check_name($u_info['name']);
 				if(!$check_name){
@@ -66,7 +65,6 @@ class Admin extends MX_Controller {
 	}
 	function edituser($id = 0){
 		save_url();// Luu current_url vao session
-		// co 1 loi la chua kiem tra name da thay doi roi.
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,

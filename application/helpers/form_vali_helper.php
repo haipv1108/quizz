@@ -41,6 +41,7 @@ if(!function_exists('get_info_user')){
 							'email' => $ci->input->post('email'),
 							'password' => md5($ci->input->post('password')),
 							'level' => $ci->input->post('level'),
+							'active' => 1,
 							'extra_info' => $extra_info
 						);
 		return $u_info;

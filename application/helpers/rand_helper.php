@@ -65,6 +65,7 @@ if(!function_exists('random_test')){
 							'subjectid' => $sub_id,
 							'name' => 'TEST_'.mt_rand_str(4,"ABCDEF"),
 							'madethi'=>'MADE_'.$sub_id.mt_rand_str(3,'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'),
+							'cachcham' => rand(1,3),
 							'time' => rand(30,40),
 							'levelid' => $level_id,
 							'sl' => rand(10, 12),
@@ -84,14 +85,14 @@ if(!function_exists('random_questionbank')){
 		}
 		$answer = json_encode($a_answer);
 		$correct;
-		if($i > 5){
+		if($number_answer > 4){
 			$correct = array(
 							'1'=>rand(1,3),
-							'2'=>rand(4,$i)
+							'2'=>rand(4,$number_answer)
 							);
 		}else{
 			$correct = array(
-							'1' => rand(1, $i)
+							'1' => rand(1, $number_answer)
 							);
 		}
 		$dapan = json_encode($correct);
