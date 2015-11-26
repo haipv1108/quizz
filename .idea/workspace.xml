@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9c616eae-488a-4cf3-a4c9-d614973c9e18" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/modules/createtest/controllers/createtest.php" afterPath="$PROJECT_DIR$/application/modules/createtest/controllers/createtest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/modules/createtest/views/create_test.php" afterPath="$PROJECT_DIR$/application/modules/createtest/views/create_test.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/modules/question/models/mquestion.php" afterPath="$PROJECT_DIR$/application/modules/question/models/mquestion.php" />
-    </list>
+    <list default="true" id="9c616eae-488a-4cf3-a4c9-d614973c9e18" name="Default" comment="" />
     <ignored path="CI.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
