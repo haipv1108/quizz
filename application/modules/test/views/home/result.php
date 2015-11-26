@@ -1,5 +1,6 @@
-<div>	Số câu trả lời đúng: <?php echo $result['correct_question'];?>    trên tổng số câu: <?php echo $result['total_question'];?></div>
-<div>	Số điểm quy đổi: <?php echo $result['score']?></div>
+<div> Diem dat duoc: <?php echo $score;?>         Tren tong diem: <?php echo $totalScore;?></div>
+<div> Diem quy doi: <?php echo $score/$totalScore*10;?></div>
+
 <form method="post" action="">
 	<input type="submit" value="Trở về" name="submit_rs">
 </form>

@@ -31,40 +31,79 @@ class Test extends MX_Controller {
 			$data['template'] = 'home/testdetail'; 
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
-			$answer = $this->input->post('answer');
-			// print_r($answer);
-			$total_score = 0; $total_question = 0;
-			$score = 0; $correct_question = 0;
-			foreach ($data['test'] as $key => $value) {
-				$total_score += $value['score'];
-				$total_question+=1;
-				if( isset($answer[$key]) && $answer[$key] == $value['correct']){
-					$score +=$value['score'];
-					$correct_question +=1;
-				}
-			}
-			$answer = json_encode($answer);
+			$result['answer'] = $this->input->post('answer');
+			$result['test'] = $data['test'];
 
-			$result_db = array(
-					'userid' => $user['id'],
-					'testid' => $testid,
-					'score' => $score*10/$total_score,
-					'answer_choice' => $answer
+			$responses = array(
+					"userid" => $user['id'],
+					"testid" => $testid,
 				);
-			$this->mtest->addtest($result_db);
-
-			$result = array(
-					'correct_question' => $correct_question,
-					'total_question' => $total_question,
-					'score' => $score*10/$total_score
-				);
-			$this->result($result);
+			// print_r($result);
+			$this->result($result,$responses);
 		}
 	}
+// One True All Score
+	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
+		foreach ($answer_choice as $key => $value) {
+			if(!in_array($value, $answer_true))
+				return 0;
+		}
+		return 1;
+	}
+// Part True Part Score
+	private function markScoreForAQuestionPTPS($answer_choice,$answer_true){
+		$total_anstrue = 0;
+		$total_choice = 0;
+		$score = 0;
+		foreach ($answer_true as $key => $value) {
+			$total_anstrue+=1;
+		}
+		foreach ($answer_choice as $key => $value) {
+			if(!in_array($value, $answer_true))
+				return 0;
+			$total_choice +=1;
+		}
+		return $total_choice/$total_anstrue;
+	}
+// All True All Score
+	private function markScoreForAQuestionATAS($answer_choice,$answer_true){
+		$total_anstrue = 0;
+		$total_choice = 0;
+		$score = 0;
+		foreach ($answer_true as $key => $value) {
+			$total_anstrue+=1;
+		}
+		foreach ($answer_choice as $key => $value) {
+			if(!in_array($value, $answer_true))
+				return 0;
+			$total_choice +=1;
+		}
+		if($total_anstrue == $total_choice)
+			return 1;
+		else
+			return 0;
+	}
 
-	function result($result){
+
+	function result($result,$responses){			
+		$Score = 0;
+		$totalScore = 0;
+		$ans;
+		foreach ($result['test'] as $key => $value) {
+			$true_ans = json_decode($value['correct'],true);
+			if(!empty($result['answer'][$key])){
+				$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
+				$Score += $partScore*$value['score'];
+			}
+			$totalScore += $value['score'];
+		}
+			$responses['score'] =  $Score/ $totalScore;
+			$responses['answer_choice'] = json_encode($result['answer']);
+			$this->mtest->addtest($responses);
+
 		if(!$this->input->post('submit_rs')){
-			$data['result'] = $result;
+			$data['totalScore'] = $totalScore;
+			$data['score'] = $Score;
 			$data['meta_title'] = 'result';
 			$data['template'] = 'home/result';			
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
