@@ -7,7 +7,6 @@ class Category extends MX_Controller{
 		$this->load->model('mcategory');
 		$this->load->model('subject/msubject');
 		$this->load->model('test/mtest');
-		$this->load->helper(array('category'));
 	}
 	function index(){
 		save_url();// Luu current_url vao session

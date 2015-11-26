@@ -24,49 +24,32 @@
                   <p class="text-center" style="color:red">Huong dan lam bai</p>
                 </div>
                 <div class="box-body">
+        Tổng điểm bài thi: <?php echo $score*10;?>
         <?php if(isset($test) && !empty($test)){
+          $number_question = 1;
           foreach($test as $key=>$val){?>
             <div class="clearfix cauhoi-wrap">
-              <span class="cauhoi">1. <?php echo $val['question'];?></span>
+              <span class="cauhoi"><?php echo $number_question++;?>. <?php echo $val['question'];?></span>
               <div class="form-group">
                 <?php if(isset($val['answer']) && !empty($val['answer'])){
                   $answer_choice = json_decode($val['answer'],true);?>
-
-                  <?php if(isset($answer_choice['answerA']) && !empty($answer_choice['answerA'])){?>
-                    <div class="radio">
-                      <label>
-                        <input type="checkbox" value="1" name="answer[<?php echo $key;?>][]">
-                        <?php echo $answer_choice['answerA'];?>
-                      </label>
-                    </div>
+                  <?php //print_r($answer_choosen)?>
+                  <?php $number_choice = count($answer_choice);
+                  if(isset($answer_choosen[$key]))
+        /**/            $answer_true = json_decode($val['correct'],true);
+                      for($choice = 1; $choice<= $number_choice; $choice++){?>
+                        <?php if(isset($answer_choice[$choice]) && !empty($answer_choice[$choice])){?>
+                        <div class="radio">
+                          <label>
+                            <input                             
+                            <?php if(isset($answer_choosen[$key])&&in_array($choice, $answer_choosen[$key])) echo "class = \"chosen\" checked";?> 
+                            <?php if(isset($answer_true)&&in_array($choice, $answer_true)) echo "class = \"true\"";?>
+                            type="checkbox" value="<?php echo $choice;?>" name="answer[<?php echo $key;?>][]">
+                            <?php echo $answer_choice[$choice];?>
+                          </label>
+                        </div>
+                      <?php }?>
                   <?php }?>
-
-                  <?php if(isset($answer_choice['answerB']) && !empty($answer_choice['answerB'])){?>
-                    <div class="radio">
-                      <label>
-                        <input type="checkbox"  value="2" name="answer[<?php echo $key;?>][]">
-                        <?php echo $answer_choice['answerB'];?>
-                      </label>
-                    </div>
-                    <?php }?>
-
-                  <?php if(isset($answer_choice['answerC']) && !empty($answer_choice['answerC'])){?>
-                    <div class="radio">
-                      <label>
-                        <input type="checkbox"  value="3" name="answer[<?php echo $key;?>][]">
-                        <?php echo $answer_choice['answerC'];?>
-                      </label>
-                    </div>
-                    <?php }?>
-
-                  <?php if(isset($answer_choice['answerD']) && !empty($answer_choice['answerD'])){?>
-                    <div class="radio">
-                      <label>
-                        <input type="checkbox" value="4" name="answer[<?php echo $key;?>][]">
-                        <?php echo $answer_choice['answerD'];?>
-                      </label>
-                    </div>
-                    <?php }?>
               <?php }?>             
               </div>
             </div>                
@@ -93,36 +76,3 @@
           </div><!-- Row-->
         </section>
 
-
-
-
-
-
-
-
-
-
-
-
-<!--  <?php if(isset($test) && !empty($test)){
-          foreach($test as $key=>$val){?>
-          <?php echo $val['correct'];?>
-            <div class="clearfix cauhoi-wrap">
-              <span class="cauhoi">1. <?php echo $val['question'];?></span>
-              <div class="form-group">
-                <?php if(isset($val['answer']) && !empty($val['answer'])){
-                  $answer_choice = json_decode($val['answer'],true);?>
-
-                  <?php if(isset($answer_choice['answerA']) && !empty($answer_choice['answerA'])){?>
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox" value="1" 
-                          <?php 
-                            if(isset($answer[$key])&&isset($val['correct']&&$answer[$key]==$val['correct']==1)) echo "class = \"true\" checked";
-                            if(isset($answer[$key])&&$answer[$key] == 1) echo "class = \"chosen\" checked";
-                          ?> 
-                          name="answer[<?php echo $key;?>]">
-                        <?php echo $answer_choice['answerA'];?>
-                      </label>
-                    </div>
-                  <?php }?> -->
