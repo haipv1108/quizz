@@ -18,7 +18,7 @@ class Mprofile extends CI_Model{
 	}
 
 	function gettests($user_id){
-		$query = $this->db->select('testid')->where('userid',$user_id)->get('responses');
+		$query = $this->db->select('testid, id')->where('userid',$user_id)->get('responses');
 		if($query->result_array()>0)
 			return $query->result_array();
 		else return false;
@@ -26,7 +26,7 @@ class Mprofile extends CI_Model{
 
 
 	function get_test_detail($id){
-			$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, question.score')
+			$query = $this->db->select('q.type, q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, question.score')
 			->from('test')
 			->where('test.id',$id)
 			->join('question','test.id = question.testid')
@@ -39,7 +39,7 @@ class Mprofile extends CI_Model{
 	}
 
 	function get_answer($id){
-		$query = $this->db->select('answer_choice')->where('testid',$id)->limit(1)->get('responses');
+		$query = $this->db->select('answer_choice, testid, score')->where('id',$id)->get('responses');
 		if($query->num_rows()>0)
 			return $query->row_array();
 		else return false;

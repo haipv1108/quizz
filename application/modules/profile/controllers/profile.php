@@ -60,18 +60,19 @@ class Profile extends MX_Controller {
 		$this->load->view('layouts/home',isset($data)?$data:NULL);
 	}
 
-	function detailtest($testid){
+	function detailtest($responses_id){
 		$user = check_login(1);
-		if(!isset($testid)||!is_numeric($testid))
+		if(!isset($responses_id)||!is_numeric($responses_id))
 			redirect(base_url());
-		$answer = $this->mprofile->get_answer($testid);
-		$test = $this->mprofile->get_test_detail($testid);
+		$responses = $this->mprofile->get_answer($responses_id);
+		$test = $this->mprofile->get_test_detail($responses['testid']);
 		$data = array(
-			'test' => $test,
-			'answer' => json_decode($answer['answer_choice']),
+			'test' =>$test,
+			'score' => $responses['score'],
+			'answer_choosen' => json_decode($responses['answer_choice']),
 			'meta_title' => 'Review Test Detail',
 			'template' => 'home/reviewDetail'
-		);
+			);
 		$this->load->view('layouts/home',isset($data)?$data:NULL);
 	}
 
