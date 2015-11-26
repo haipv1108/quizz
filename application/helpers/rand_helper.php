@@ -65,7 +65,6 @@ if(!function_exists('random_test')){
 							'subjectid' => $sub_id,
 							'name' => 'TEST_'.mt_rand_str(4,"ABCDEF"),
 							'madethi'=>'MADE_'.$sub_id.mt_rand_str(3,'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'),
-							'cachcham' => rand(1,3),
 							'time' => rand(30,40),
 							'levelid' => $level_id,
 							'sl' => rand(10, 12),
@@ -102,6 +101,7 @@ if(!function_exists('random_questionbank')){
 							'answer' => $answer,
 							'level' => $level_id,
 							'correct' => $dapan,
+							'type' => rand(1,3),
 							'ans_explained' => 'ANSWER_EXPLAINED_'.mt_rand_str(50),
 							'subjectid' => $sub_id
 		);

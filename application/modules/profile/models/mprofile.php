@@ -26,7 +26,7 @@ class Mprofile extends CI_Model{
 
 
 	function get_test_detail($id){
-	$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, q.score')
+			$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, question.score')
 			->from('test')
 			->where('test.id',$id)
 			->join('question','test.id = question.testid')

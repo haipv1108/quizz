@@ -234,7 +234,9 @@
 		</a>
           <ol class="breadcrumb">
             <li class="active">
+            <a href="<?php echo site_url();?>/profile/profile/index">
               <i class="fa fa-dashboard"></i>Home
+            </a>
             </li>
           </ol>
         </section> <!-- Content Header -->
