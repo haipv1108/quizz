@@ -10,7 +10,7 @@ class Test extends MX_Controller {
 		$this->load->model('category/mcategory');
 		$this->load->model('subject/msubject');
 		$this->load->model('mtest');
-		$this->load->helper(array('form_vali'));
+		$this->load->helper();
 		$this->load->helper('form');
 		$this->load->helper('array');
 	}
@@ -38,7 +38,6 @@ class Test extends MX_Controller {
 					"userid" => $user['id'],
 					"testid" => $testid,
 				);
-			// print_r($result);
 			$this->result($result,$responses);
 		}
 	}
