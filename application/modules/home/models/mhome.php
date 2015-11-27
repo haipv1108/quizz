@@ -49,7 +49,7 @@ class Mhome extends CI_Model{
 		else return false;
 	}
 	function get_subject($id){
-		$query = $this->db->select('name')->where('id',$id)->get('subject');
+		$query = $this->db->select('name, decription')->where('id',$id)->get('subject');
 		if($query -> row_array()>0)
 			return $query->row_array();
 		else return false;	

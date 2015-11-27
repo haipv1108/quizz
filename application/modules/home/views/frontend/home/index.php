@@ -1,3 +1,4 @@
+<!-- Main Content -->
 <section class="content">
 	<div class='row'>
 	<?php 	if(isset($list_cate) && !empty($list_cate)){

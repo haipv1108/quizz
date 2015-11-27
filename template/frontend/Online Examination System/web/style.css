@@ -4,6 +4,16 @@ body {
     font-size: 14px;
     line-height: 1.42857;
 }
+
+.row-category{
+    margin: 0 20px 20px 0;
+    padding: 10px;
+}
+
+.margin-left-right{
+    margin: 0 10px;
+}
+
 .btn-app{
     min-width: 91px;
 }
@@ -47,6 +57,25 @@ body {
     font-size: 20px;
     font-weight: 400;
 }
+
+/* Index */
+.info-box-icon{
+    line-height: 84px;
+    /*  width: 150px !important;*/
+}
+.info-box-icon img {
+    height: 90px;
+    width: 120px;
+}
+.info-box-content {
+    margin-left: 130px;
+}
+
+.nav-stacked>li {
+    float: left;
+    width: 50%;
+}
+
 
 /*  Trang trac nghiem */
 

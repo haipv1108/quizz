@@ -5,6 +5,7 @@ class Home extends MX_Controller{
 		$this->load->model('mhome');
 		parent::__construct();
 	}
+
 	function index(){
 		save_url();
 		$list_cate = $this->mhome->get_list_cate();
