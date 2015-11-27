@@ -3,19 +3,28 @@
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script language="javascript" src="js/jquery-2.0.0.min.js"></script>
+    <script language="javascript" src="/CI/js/jquery-2.0.0.min.js"></script>
 
 </head>
 <body>
 <form action = 'createtest/get_input' method = 'post' name = 'form' id = 'form'>
-    Name Of Test
+    Ten de thi
     <input type=text name="test_name"><br>
-    Time
+    Thoi gian
     <input type = text name = "test_time"><br>
-    Description
+    Mo ta
     <input type = text name = "test_des" ><br>
+    Ma de thi
+    <input type = text name = "madethi"><br>
+    Cach cham
+    <select name = "cachcham">
+        <option value="1">Cham theo.....1</option>
+        <option value="2">Cham theo.....2</option>
+        <option value="3">Cham theo.....3</option>
 
-    Category
+    </select>
+    </br>
+    Mon hoc
     <select id = "category" name = "category">
         <option selected value = 'non_select'>Select Category</option>
         <?php
@@ -28,7 +37,7 @@
 
    <input type = "hidden" id = "data" name = "data">
 
-    Level<br>
+    Do kho<br>
     <select id = "level" name = "level">
         <option selected value = 'non_select'>Select Level</option>
         <?php
@@ -43,7 +52,10 @@
     </select>
     <br>
 
-    Subject
+    Tong so luong cau hoi
+    <input type = text id = max_question name = max_question>
+    </br>
+    Phan hoc
     <select id = "subject">
         <option selected value = 'non_select'>Select Subject</option>
         <?php
@@ -57,8 +69,8 @@
         ?>
     </select>
 
-    Number Of Question
-    <input type = text id = "num_question" >
+    So luong cau hoi<input type = text id = "num_question" >
+    Diem cho phan nay<input type = text id = "score_question">
     <input type = button id = "btn_add" name = "btn_add" value="Add">
     <br>
 
@@ -79,7 +91,7 @@
     </table>
 
     <input type="submit" value = "Submit">
-    <?php echo form_close()?>
+</form>
 
 <script>
     function include(arr, id) {
@@ -90,21 +102,26 @@
     }
 
     var subjectsSelected =[];
+    var currentNumQuestion = 0;
 
     function updateView() {
         var str = "";
         var str1= "";
-        var subjectName, subjectID, numQuestion;
+        var subjectName, subjectID, numQuestion, scoreQuestion;
 
         for (var i in subjectsSelected) {
             if (subjectsSelected.hasOwnProperty(i)) {
                 subjectName = subjectsSelected[i]['name'];
                 subjectID = subjectsSelected[i]['id'];
                 numQuestion = subjectsSelected[i]['numQuestion'];
+                scoreQuestion = subjectsSelected[i]['scoreQuestion'];
+                level = subjectsSelected[i]['level'];
                 str = str +
                     "<tr>" +
                     "<td>"+subjectName+"</td>" +
-                    "<td> <input type = text id = text" + subjectID + " value=" +numQuestion +"></td>" +
+                    "<td><input type = text id = text" + subjectID + " value=" +numQuestion +"></td>" +
+                    "<td>"+scoreQuestion+"</td>" + 
+                    "<td>"+level+"</td>" + 
                     "<td> <button type = 'button' onclick='updateSubject(" + subjectID + ")'>Update</button></td>" +
                     "<td> <button type = 'button' onclick='removeSubject(" + subjectID + ")'>Remove</button></td>" +
                     "</tr>";
@@ -115,25 +132,45 @@
         document.getElementById("data").value = JSON.stringify(subjectsSelected);
     }
 
-
-
     function addSubject() {
         var subjectName = $("#subject option:selected").text();
         var subjectID = $('#subject').val();
         var numQuestion = $('#num_question').val();
         var subjectObject ={};
+        var maxQuestion = $('#max_question').val();
+        var scoreQuestion = $('#score_question').val();
+        var level = $('#level').val();
 
+        alert(level);
 
-        if (subjectID == 'non_select' || $('#level').val() == 'non_select' || $('#category').val() == 'non_select')
-            return;
-        if (include(subjectsSelected, subjectID)) {
-            alert("Subject existed!");
+        if (currentNumQuestion + parseInt(numQuestion) > maxQuestion) {
+            alert("Qua nhieu cau hoi trong phan hoc nay");
             return;
         }
+        if (subjectID == 'non_select' || $('#level').val() == 'non_select' || $('#category').val() == 'non_select') {
+            alert("Xin hay chon mon hoc, do kho va phan hoc");
+            return;
+        }
+        if (include(subjectsSelected, subjectID)) {
+            alert("Mon hoc da ton tai!");
+            return;
+        }
+        if (numQuestion < 1) {
+            alert("Xin hay nhap so luong cau hoi");
+            return;
+        }
+        if (scoreQuestion <= 0) {
+            alert("Xin nhap diem la 1 so lon hon 0");
+            return;
+        }
+
         subjectObject['id'] = subjectID;
         subjectObject['name'] = subjectName;
         subjectObject['numQuestion'] = numQuestion;
+        subjectObject['scoreQuestion'] = scoreQuestion;
+        subjectObject['level'] = level;
         subjectsSelected.push(subjectObject);
+        currentNumQuestion += parseInt(numQuestion);
         updateView();
     }
 
@@ -191,8 +228,7 @@
                     }
                 });
             });
-
-
+            
             document.getElementById("btn_add").addEventListener('click',addSubject);
 
         });
