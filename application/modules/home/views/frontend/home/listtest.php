@@ -3,8 +3,11 @@
 	<!-- Hiển thị các danh ĐỀ THI của content -->
 	<div id="test" class="col-md-9">
 		<div class="box box-danger">
-			<div class="box-header">
-				<h3 class="box-title">Danh sách đề thi trắc nghiệm <?php echo (isset($subject) && !empty($subject))?$subject['name']:'';?></h3>
+			<div class="box-header with-border">
+				<h3 class="box-title">Danh sách đề thi trắc nghiệm <b><?php echo (isset($subject) && !empty($subject))?$subject['name']:'';?></b></h3>
+			</div>
+			<div class="box-header with-border">
+				<h3 class="box-title"><i><?php echo (isset($subject) && !empty($subject))?$subject['decription']:'';?></i></h3>
 			</div>
 			<?php
 				if(isset($level) && !empty($level)){

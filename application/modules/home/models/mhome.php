@@ -6,7 +6,7 @@ class Mhome extends CI_Model{
 		$this->load->database();
 	}
 	function get_list_cate(){
-		$query = $this->db->select('id,name')->get('category');
+		$query = $this->db->select('id,name,decription')->get('category');
 		if($query ->num_rows() >0)
 			return $query->result_array();
 		else return false;
@@ -57,7 +57,7 @@ class Mhome extends CI_Model{
 		else return false;
 	}
 	function get_subject($id){
-		$query = $this->db->select('name')->where('id',$id)->get('subject');
+		$query = $this->db->select('name, decription')->where('id',$id)->get('subject');
 		if($query -> row_array()>0)
 			return $query->row_array();
 		else return false;	
