@@ -20,7 +20,7 @@ class Mtest extends CI_Model{
 	}
 
 	function insert_test($data) {
-		$str_query = $this->db->insert_string($data);
+		$str_query = $this->db->insert_string($data, $this->_name);
 		$this->db->query($str_query);
 	}
 }

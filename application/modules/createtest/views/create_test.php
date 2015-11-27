@@ -51,6 +51,7 @@
         ?>
     </select>
     <br>
+
     Tong so luong cau hoi
     <input type = text id = max_question name = max_question>
     </br>
@@ -68,8 +69,8 @@
         ?>
     </select>
 
-    So luong cau hoi
-    <input type = text id = "num_question" >
+    So luong cau hoi<input type = text id = "num_question" >
+    Diem cho phan nay<input type = text id = "score_question">
     <input type = button id = "btn_add" name = "btn_add" value="Add">
     <br>
 
@@ -106,17 +107,21 @@
     function updateView() {
         var str = "";
         var str1= "";
-        var subjectName, subjectID, numQuestion;
+        var subjectName, subjectID, numQuestion, scoreQuestion;
 
         for (var i in subjectsSelected) {
             if (subjectsSelected.hasOwnProperty(i)) {
                 subjectName = subjectsSelected[i]['name'];
                 subjectID = subjectsSelected[i]['id'];
                 numQuestion = subjectsSelected[i]['numQuestion'];
+                scoreQuestion = subjectsSelected[i]['scoreQuestion'];
+                level = subjectsSelected[i]['level'];
                 str = str +
                     "<tr>" +
                     "<td>"+subjectName+"</td>" +
-                    "<td> <input type = text id = text" + subjectID + " value=" +numQuestion +"></td>" +
+                    "<td><input type = text id = text" + subjectID + " value=" +numQuestion +"></td>" +
+                    "<td>"+scoreQuestion+"</td>" + 
+                    "<td>"+level+"</td>" + 
                     "<td> <button type = 'button' onclick='updateSubject(" + subjectID + ")'>Update</button></td>" +
                     "<td> <button type = 'button' onclick='removeSubject(" + subjectID + ")'>Remove</button></td>" +
                     "</tr>";
@@ -127,14 +132,16 @@
         document.getElementById("data").value = JSON.stringify(subjectsSelected);
     }
 
-
-
     function addSubject() {
         var subjectName = $("#subject option:selected").text();
         var subjectID = $('#subject').val();
         var numQuestion = $('#num_question').val();
         var subjectObject ={};
         var maxQuestion = $('#max_question').val();
+        var scoreQuestion = $('#score_question').val();
+        var level = $('#level').val();
+
+        alert(level);
 
         if (currentNumQuestion + parseInt(numQuestion) > maxQuestion) {
             alert("Qua nhieu cau hoi trong phan hoc nay");
@@ -152,9 +159,16 @@
             alert("Xin hay nhap so luong cau hoi");
             return;
         }
+        if (scoreQuestion <= 0) {
+            alert("Xin nhap diem la 1 so lon hon 0");
+            return;
+        }
+
         subjectObject['id'] = subjectID;
         subjectObject['name'] = subjectName;
         subjectObject['numQuestion'] = numQuestion;
+        subjectObject['scoreQuestion'] = scoreQuestion;
+        subjectObject['level'] = level;
         subjectsSelected.push(subjectObject);
         currentNumQuestion += parseInt(numQuestion);
         updateView();
@@ -214,8 +228,7 @@
                     }
                 });
             });
-
-
+            
             document.getElementById("btn_add").addEventListener('click',addSubject);
 
         });
