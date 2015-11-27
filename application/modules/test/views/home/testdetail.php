@@ -22,6 +22,10 @@
                     NGU PHAP
                   </h3>
                   <p class="text-center" style="color:red">Huong dan lam bai</p>
+					<form>
+						<input type="button" value="Print this page" onClick="window.print()">
+						<a href="test/printTest/<?php if(isset($testid) && !empty($testid)) echo $testid;?>">Print this test</a>
+					</form>
                 </div>
                 <div class="box-body">
 				<?php if(isset($test) && !empty($test)){

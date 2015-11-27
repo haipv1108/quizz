@@ -46,7 +46,7 @@
 								if($user_info['logged_in']) echo ucwords($user_info['name']);
 						?>
 						<br/><br/>
-						<a href="profile">Profile</a>| <a href="verify/logout">Logout</a>
+						<?php if($user_info['level'] !=3) echo "<a href='profile'>Profile| </a>";?> <a href="verify/logout">Logout</a>
 					</div>
 		<?php	}else{?>
 					<h3><div style="color:red;"><a href="verify/login">Login</a></div></h3>
@@ -244,7 +244,7 @@
 
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-			<a href = 'admin'><b>Control Panel</b></a>
+			<?php if($user_info['level'] ==3) echo "<a href = 'admin'><b>Control Panel</b></a>";?>
         </div>
         <strong>Copyright &copy; 2015-2016 <a href="">Tứ Đại Cường Nhân</a>.</strong> All rights reserved.
       </footer>

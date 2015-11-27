@@ -6,12 +6,12 @@ class Mhome extends CI_Model{
 		$this->load->database();
 	}
 	function get_list_cate(){
-		$query = $this->db->select('id,name')->get('category');
+		$query = $this->db->select('id,name, decription')->get('category');
 		if($query ->num_rows() >0)
 			return $query->result_array();
 		else return false;
 	}
-	function get_list_subject($cate_id){
+	/*function get_list_subject($cate_id){
 		$query = $this->db->select('subject.id,subject.name, count(test.id) as sl')
 				->from('subject')
 				->where('categoryid',$cate_id)
@@ -22,7 +22,7 @@ class Mhome extends CI_Model{
 		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;
-	}
+	}*/
 	function listtest($id){
 		$query = $this->db->select('test.id, test.name, level.name as level')
 				->from('test')
@@ -35,14 +35,6 @@ class Mhome extends CI_Model{
 		else return false;
 	}
 	function get_list_level($subjectid){
-		/*$query = $this->db->select('level.id, level.name')
-				->from('level')
-				->join('category','category.id = level.categoryid')
-				->join('subject','subject.categoryid = category.id')
-				->where('subject.id',$subjectid)
-				->group_by('level.name')
-				->get();
-		*/
 		$query = $this->db->query("
 								SELECT level.id, level.name FROM subject, category, level WHERE subject.id = {$subjectid} AND subject.categoryid = category.id AND category.id = level.categoryid 
 								");

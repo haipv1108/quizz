@@ -44,7 +44,6 @@
 					<p>
 						<input class="button" type="submit" name="submit" value="Sign In" />
 					</p>
-					<p><a href='<?php echo base_url();?>user/register'>Register</a><br/><a href='<?php echo base_url();?>user/forgot'>Forgot Password</a></p>
 				</form>
 			</div> <!-- End #login-content -->
 		</div> <!-- End #login-wrapper -->

@@ -18,7 +18,7 @@ class Test extends MX_Controller {
 		redirect(base_url());
 	}
 
-	function testdetail($testid){
+	function testdetail($testid = 1){
 		save_url();
 		$user = check_login(1);
 		if(!isset($testid)||!is_numeric($testid))
@@ -26,6 +26,7 @@ class Test extends MX_Controller {
 		$data = array(
 				'test' => $this->mtest->get_test_detail($testid),
 				'meta_title' => 'Test Detail',
+				'testid' => $testid
 			);
 		if(!$this->input->post('submit')&&!$this->input->post('submit_rs')){
 			$data['template'] = 'home/testdetail'; 
@@ -115,5 +116,19 @@ class Test extends MX_Controller {
 			redirect(base_url());
 		}
 	}
-
+	
+	function printTest($testid){
+		// kiem tra testid co ton tai khong?
+		$check_test = $this->mtest->check_testid($testid);
+		if(!$check_test){
+			$data['error'] = 'Không có đề thi trong hệ thống.';
+		}else{
+				$data_test = $this->mtest->get_test_detail($testid);// lay du lieu de test
+				$data['test'] = $data_test;
+				$data['test_info'] = $this->mtest->get_test_info($testid);
+		}
+		$this->load->view('home/printTest',isset($data)?$data:NULL);
+	}
+	
+	
 }
