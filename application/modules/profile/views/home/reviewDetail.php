@@ -1,18 +1,4 @@
-
        <section class="content">
-          <div class="row">
-            <!-- Time -->
-            <div id="time" class="col-md-1 fixed">
-              <div class="bg-yellow fixed" >
-                <div class="description-block padding-bottom" style="margin-top: 0px;">
-                  <div class="sparkbar pad text-center" data-color="#fff">
-                    <i class="fa fa-clock-o" style="display: inline-block; width: 34px; height: 30px; vertical-align: top; font-size: 30px;" width="34" height="30"></i>
-                  </div>
-                  <span class="description-text"><b>55:12</b></span>
-                  <div class="pad"></div>
-                </div>
-              </div>
-            </div>
             <!-- Hiển thị các danh ĐỀ THI của content -->
         <form action="" method="post">
             <div id="test" class="col-md-8">
@@ -42,8 +28,8 @@
                         <div class="radio">
                           <label>
                             <input                             
-                            <?php if(isset($answer_choosen[$key])&&in_array($choice, $answer_choosen[$key])) echo "class = \"chosen\" checked";?> 
-                            <?php if(isset($answer_true)&&in_array($choice, $answer_true)) echo "class = \"true\"";?>
+                            <?php if(isset($answer_choosen[$key])&&in_array($choice, $answer_choosen[$key])) echo "class = \"color: bg-red\" checked";?> 
+                            <?php if(isset($answer_true)&&in_array($choice, $answer_true)) echo "class = \"color:bg-green\"";?>
                             type="checkbox" value="<?php echo $choice;?>" name="answer[<?php echo $key;?>][]">
                             <?php echo $answer_choice[$choice];?>
                           </label>
@@ -55,9 +41,7 @@
             </div>                
         <?php }
         }?>
-        <div class="col-md-4 col-md-offset-4">
-                     <input type="submit" class="btn btn-block btn-success btn-lg text-center" name="submit" value="Nộp bài">
-              </div>
+
                 </div>
               </div>
             </div> <!-- Test -->
