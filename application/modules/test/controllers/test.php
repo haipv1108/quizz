@@ -84,26 +84,28 @@ class Test extends MX_Controller {
 	}
 
 
-	function result($result,$responses){			
-		$Score = 0;
-		$totalScore = 0;
-		$ans;
-		foreach ($result['test'] as $key => $value) {
-			$true_ans = json_decode($value['correct'],true);
-			if(!empty($result['answer'][$key])){
-				if($value['type'] == 1)
-					$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
-				else if($value['type'] == 2)
-					$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
-				else
-					$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
-				$Score += $partScore*$value['score'];
+	function result($result,$responses){		
+			$Score = 0;
+			$totalScore = 0;
+			$ans;
+			foreach ($result['test'] as $key => $value) {
+				$true_ans = json_decode($value['correct'],true);
+				if(!empty($result['answer'][$key])){
+					if($value['type'] == 1)
+						$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
+					else if($value['type'] == 2)
+						$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
+					else
+						$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
+					$Score += $partScore*$value['score'];
+				}
+				$totalScore += $value['score'];
 			}
-			$totalScore += $value['score'];
-		}
-			$responses['score'] =  $Score/ $totalScore;
-			$responses['answer_choice'] = json_encode($result['answer']);
-			$this->mtest->addtest($responses);
+				$responses['score'] =  $Score/ $totalScore;
+				$responses['answer_choice'] = json_encode($result['answer']);
+				if(isset($responses['answer_choice']))
+					$this->mtest->addtest($responses);
+
 
 		if(!$this->input->post('submit_rs')){
 			$data['totalScore'] = $totalScore;
