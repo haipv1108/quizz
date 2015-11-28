@@ -141,8 +141,6 @@
         var scoreQuestion = $('#score_question').val();
         var level = $('#level').val();
 
-        alert(level);
-
         if (currentNumQuestion + parseInt(numQuestion) > maxQuestion) {
             alert("Qua nhieu cau hoi trong phan hoc nay");
             return;

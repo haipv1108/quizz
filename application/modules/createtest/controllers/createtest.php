@@ -109,7 +109,7 @@ class CreateTest extends MX_Controller {
 
 		//random lay cau hoi
 		foreach ($input_data['subjects'] as $key => $value) { // voi moi phan hoc
-			$num_question = $input_data['current_num_question']; //lay so luong cau hoi trong moi phan
+			$num_question = $value['num_question']; //lay so luong cau hoi trong moi phan
 			$input_data['subjects'][$key]['result'] = array();
 			while ($num_question > 0) { //trong khi so luong cau hoi > 0
 				$question_index = rand(0,sizeof($value['questions']) - 1); //lay random tu 0 den so luong cau hoi trong phan hoc - 1
@@ -121,7 +121,6 @@ class CreateTest extends MX_Controller {
 		}
 
 		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
-		$input_data['general_question'] = array();
 
 		//cau hoi tong hop
 		$avg_score = 0;
@@ -129,30 +128,26 @@ class CreateTest extends MX_Controller {
 			$avg_score += $value['score_question'] / sizeof($input_data['subjects']);
 		}
 
+
 		while ($num_general_question > 0) {
 			$question_index = rand(0, sizeof($input_data['general_question_bank']) - 1);
 			$question_id = $input_data['general_question_bank'][$question_index];
-			array_push($test_question, array('question_id' => $question_id, 'score' => $avg_score));
+			array_push($test_question, array('questionid' => $question_id['id'], 'score' => $avg_score));
 			array_slice($input_data['general_question_bank'], $question_index);
 			--$num_general_question;
 		}
 
-	
-		echo "<pre>";
-		print_r($test_question);
-		
+		//save to database
 		$data['test_info']['name'] = $input_data['test_name'];
 		$data['test_info']['time'] = $input_data['test_time'];
-		$data['test_info']['description']= $input_data['test_des'];
+		$data['test_info']['decription']= $input_data['test_des'];
 		$data['test_info']['sl'] = $input_data['max_question'];
 		$data['test_info']['madethi'] = $input_data['madethi'];
 		$data['test_question'] = $test_question;
 
-		$this->save_to_database($data);
+		$this->mtest->insert_test($data);
 	}
 
-	private function save_to_database($data) {
-		$this->mtest->insert_test($data['test_info']);
-	}
+
 }
 
