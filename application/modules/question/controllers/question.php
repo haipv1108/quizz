@@ -5,6 +5,9 @@ class Question extends MX_Controller{
 		parent::__construct();
 		$this->load->model('mquestion');
 		$this->load->helper('question');
+		$this->load->model('category/mcategory');
+		$this->load->model('level/mlevel');
+		$this->load->model('subject/msubject');
 	}
 	function index(){
 		save_url();// Luu current_url vao session
@@ -24,7 +27,7 @@ class Question extends MX_Controller{
 						'total' => $total,
 						'active' => 'quiz-view',
 						'paginator' => $this->pagination->create_links(),
-						'template' => 'view_question',
+						'template' => 'view_question'
 					);
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
@@ -35,7 +38,8 @@ class Question extends MX_Controller{
 					'user' => $user,
 					'meta_title' => 'Add Question',
 					'active' => 'quiz-add',
-					'template' => 'add_question'
+					'template' => 'add_question',
+					'categories' => $this->mcategory->get_list_category()
 					);
 		if($this->input->post('submit')){
 			vali_question();// check validate_form su dung helper
@@ -108,6 +112,39 @@ class Question extends MX_Controller{
 				}
 			}
 			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+		}
+	}
+	
+	function get_subject() {
+		if (isset($_POST['cat_id']) && strcmp($_POST['cat_id'],'non_select') != 0)
+		{
+			$subjects = $this->msubject->select_subject($_POST['cat_id']);
+		}
+		print "<option value=\"non_select\">Select Subject</option>\n";
+		if (strcmp($_POST['cat_id'],'non_select') == 0) {
+			return;
+		}
+		foreach($subjects as $key => $value) {
+			$id = $value['id'];
+			$name = $value['name'];
+			print "<option value=\"$id\">$name</option>\n";
+		}
+	}
+
+	function get_level() {
+		if (isset($_POST['cat_id']) && strcmp($_POST['cat_id'],'non_select') != 0) {
+			$sub_id = $_POST['cat_id'];
+			$levels = $this->mlevel->get_level($sub_id);
+		}
+		print "<option value = \"non_select\">Select Level</option>\n";
+		if (strcmp($_POST['cat_id'],'non_select') == 0) {
+			return;
+		}
+
+		foreach($levels as $key => $value) {
+			$id = $value['id'];
+			$name = $value['name'];
+			print "<option value = \"$id\">$name</option>\n";
 		}
 	}
 }

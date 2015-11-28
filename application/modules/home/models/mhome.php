@@ -58,7 +58,7 @@ class Mhome extends CI_Model{
 	function search_test($search){
 		$query = $this->db->select('id, name, madethi, decription')
 				->like('name', $search)
-				->or_not_like('madethi', $search)
+				->or_like('madethi', $search)
 				->get('test');
 		if($query->num_rows()>0)
 			return $query->result_array();
