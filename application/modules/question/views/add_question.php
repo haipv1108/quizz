@@ -16,26 +16,60 @@
 				<label>Question Content</label>
 				<textarea class="text-input textarea wysiwyg" name="question" cols="79" rows="3" ><?php echo set_value('question'); ?></textarea>
 			</p>
-				<div class="clear"></div>
+			
+			</span>Chọn môn học:</span>
+			<select id = "category" name = "category">
+				<option selected value = 'non_select'>Select Category</option>
+				<?php
+				if (isset($categories))
+				foreach($categories as $key => $value) {
+					?>
+						<option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
+						<?php
+				 } ?>
+			</select>
+			<br>
+			<span>Chọn phần học: </span>
+			<select id = "subject">
+				<option selected value = 'non_select'>Select Subject</option>
+				<?php
+				if (isset($subjects)) {
+					foreach($subjects as $key => $value) {
+						$id = $value['id'];
+						$name = $value['name'];
+						print "<option value=\"$id\">$name</option>\n";
+					}
+				}
+				?>
+			</select>
+			<br>
+			<span>Chọn độ khó:   </span>
+			<select id = "level" name = "level">
+				<option selected value = 'non_select'>Select Level</option>
+				<?php
+				if (isset($levels)) {
+					foreach($levels as $key => $value) {
+						$id = $value['id'];
+						$name = $value['name'];
+						print "<option value = \"$id\">$name</option>";
+					}
+				}
+				?>
+			</select>
+			<br>			
+			
 			<p> 
 				<label>Answer</label>
 
-				<input type = hidden id = 'answers'>
-				<input class="text-input medium-input datepicker" type="text" id="answer" name = "answer"></td>
 				<input type = button id = btn_add value = ADD>
 				<br/><br/>
+				
+				<ol id = answer>
+				
+				</ol>
 				<div id = 'answer_view'>
 
 				</div>
-			</p>
-			<div class="clear"></div>
-			<p>
-				<label>Level</label>
-				<select name="level">
-					<option value = '1'>Easy</option>
-					<option value = '2'>Medium</option>
-					<option value = '3'>Hard</option>
-				</select>
 			</p>
 			<div class="clear"></div>
 
@@ -65,33 +99,41 @@
 
 
 <script>
-	var answers = [];
-
-	function updateView() {
-		var str= "";
-		var value;
-		var key = 0;
-
-		for (var i in answers) {
-			if (answers.hasOwnProperty(i)) {
-				value = answers[i];
-				key = parseInt(i) + 1;
-				str = str + "<td>" + key + ":	<input class='text-input medium-input datepicker' type='text' name="+ key + " value=" + value + "></td><br/><br/>";
-			}
-		}
-
-		document.getElementById("answer_view").innerHTML = str;
-		document.getElementById("answers").value = JSON.stringify(answer);
-	}
-
-	function addAnswer() {
-		var newAnswer = $('#answer').val();
-		answers.push(newAnswer);
-		updateView();
-	}
+	var currentIndex = 0;
 
 	$(document).ready(function(){
-		document.getElementById("btn_add").addEventListener('click',addAnswer);
+		//document.getElementById("btn_add").addEventListener('click',addAnswer);
+		$('#btn_add').click(function(){
+			++currentIndex;
+			$('#answer').append("Đáp án " + currentIndex + ": <input type = text name = answer[]><br/><br/>");
+		});
+		
+		$('#category').on('change', function(){
+                var selected = $('#category').val()
+                $.ajax({
+                    url: "<?php site_url();?>question/get_subject",
+                    type: 'POST',
+                    data: {cat_id : selected},
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#subject').html(response);
+                    }
+                });
+            });
+
+
+		$('#category').on('change', function(){
+			var selected = $('#category').val()
+			$.ajax({
+				url: "<?php site_url();?>question/get_level",
+				type: 'POST',
+				data: {cat_id : selected},
+				dataType: 'html',
+				success: function(response) {
+					$('#level').html(response);
+				}
+			});
+		});
 	})
 
 </script>

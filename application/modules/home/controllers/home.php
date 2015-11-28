@@ -49,6 +49,9 @@ class Home extends MX_Controller{
 	// tim kiem de thi
 	function search(){
 		save_url();// Luu current_url vao session
+		$data = array(
+					'template' => 'frontend/home/search'
+					);
 		if($this->input->post('submit')){
 			$this->form_validation->set_rules('search', 'Mã đề hoặc Tên đề', 'required'); 
 			if($this->form_validation->run() == TRUE){
@@ -61,9 +64,6 @@ class Home extends MX_Controller{
 				$data['search_test'] = $search_test;
 			}
 		}
-		$data = array(
-					'template' => 'frontend/home/search'
-					);
 		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
 	}
 }
