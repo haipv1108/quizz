@@ -49,8 +49,12 @@
 									<?php	}?>
 						  <?php }?>							
 							</div>
-						</div>							  
-			  <?php }
+						</div>	
+            <?php 
+          if($val['type']==3) echo "<div><strong>Phải trả lời hết các đáp án đúng</strong></div>";
+          elseif($val['type']==2) echo "<div><strong>Điểm sẽ được chia đều cho các đáp án đúng</strong></div>";
+          else echo "<div><strong>Chỉ cần chọn một câu trả lời đúng</strong><div>";						  
+			  }
 				}?>
 				<div class="col-md-4 col-md-offset-4">
                   	 <input type="submit" class="btn btn-block btn-success btn-lg text-center" name="submit" value="Nộp bài">

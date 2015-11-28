@@ -13,29 +13,28 @@
         Tổng điểm bài thi: <?php echo $score*10;?>
         <?php if(isset($test) && !empty($test)){
           $number_question = 1;
-          foreach($test as $key=>$val){?>
+          foreach($test as $key=>$val){?> <!--moi cau hoi-->
             <div class="clearfix cauhoi-wrap">
               <span class="cauhoi"><?php echo $number_question++;?>. <?php echo $val['question'];?></span>
               <div class="form-group">
                 <?php if(isset($val['answer']) && !empty($val['answer'])){
                   $answer_choice = json_decode($val['answer'],true);?>
-                  <?php //print_r($answer_choosen)?>
+
                   <?php $number_choice = count($answer_choice);
-                  if(isset($answer_choosen[$key]))
-        /**/            $answer_true = json_decode($val['correct'],true);
+        /**/          $answer_true = json_decode($val['correct'],true);
                       for($choice = 1; $choice<= $number_choice; $choice++){?>
-                        <?php if(isset($answer_choice[$choice]) && !empty($answer_choice[$choice])){?>
                         <div class="radio">
-                          <label>
-                            <input                             
-                            <?php if(isset($answer_choosen[$key])&&in_array($choice, $answer_choosen[$key])) echo "class = \"color: bg-red\" checked";?> 
-                            <?php if(isset($answer_true)&&in_array($choice, $answer_true)) echo "class = \"color:bg-green\"";?>
+                          <label   
+                            <?php if(isset($answer_true)&&in_array($choice, $answer_true)) echo "class = \"color: bg-green\"";?>
+                            <?php if(isset($answer_choosen[$key])&&in_array($choice, $answer_choosen[$key])) echo "class = \"color: bg-red\" ";?> 
+                          >
+                            <input
+                            <?php if(isset($answer_choosen[$key])&&in_array($choice, $answer_choosen[$key])) echo " checked";?>                              
                             type="checkbox" value="<?php echo $choice;?>" name="answer[<?php echo $key;?>][]">
                             <?php echo $answer_choice[$choice];?>
                           </label>
                         </div>
                       <?php }?>
-                  <?php }?>
               <?php }?>             
               </div>
             </div>                
