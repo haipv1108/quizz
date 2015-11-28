@@ -105,7 +105,7 @@
 		//document.getElementById("btn_add").addEventListener('click',addAnswer);
 		$('#btn_add').click(function(){
 			++currentIndex;
-			$('#answer').append("Đáp án " + currentIndex + ": <input type = text name = answer[]><br/><br/>");
+			$('#answer').append("Đáp án " + currentIndex + ": <input type = text name = answer[]>" + "<input type = checkbox name = correct_answer[]><br/><br/>");
 		});
 		
 		$('#category').on('change', function(){
