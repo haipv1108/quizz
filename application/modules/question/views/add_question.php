@@ -12,11 +12,6 @@
 					<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
 			<?php } ?>
 		<form action="" method="post">
-			<p>
-				<label>Question Content</label>
-				<textarea class="text-input textarea wysiwyg" name="question" cols="79" rows="3" ><?php echo set_value('question'); ?></textarea>
-			</p>
-			
 			</span>Chọn môn học:</span>
 			<select id = "category" name = "category">
 				<option selected value = 'non_select'>Select Category</option>
@@ -30,7 +25,7 @@
 			</select>
 			<br>
 			<span>Chọn phần học: </span>
-			<select id = "subject">
+			<select id = "subject" name = "subject">
 				<option selected value = 'non_select'>Select Subject</option>
 				<?php
 				if (isset($subjects)) {
@@ -57,11 +52,14 @@
 				?>
 			</select>
 			<br>			
-			
+			<p>
+				<label>Nội dung câu hỏi: </label>
+				<textarea class="text-input textarea wysiwyg" name="question" cols="79" rows="3" ><?php echo set_value('question'); ?></textarea>
+			</p>
 			<p> 
-				<label>Answer</label>
+				<label>Các câu trả lời: </label>
 
-				<input type = button id = btn_add value = ADD>
+				<input type = 'button' id = 'btn_add' value = 'ADD' >
 				<br/><br/>
 				
 				<ol id = answer>
@@ -74,17 +72,17 @@
 			<div class="clear"></div>
 
 			<p>
-				<label>Correct</label>
-				<select name="correct">
-					<option value = '1'>A</option>
-					<option value = '2'>B</option>
-					<option value = '3'>C</option>
-					<option value = '4'>D</option>
+				<label>Loại câu hỏi:</label>
+				<select name="type">
+					<option selected value = 'non_select'>Chọn loại câu hỏi</option>
+					<option value = '1' <?php if(set_value('type') == 1) echo 'selected';?>>Chỉ cần chọn một câu trả lời đúng</option>
+					<option value = '2' <?php if(set_value('type') == 2) echo 'selected';?>>Điểm sẽ được chia đều cho các đáp án đúng</option>
+					<option value = '3' <?php if(set_value('type') == 3) echo 'selected';?>>Phải trả lời hết các đáp án đúng</option>
 				</select>
 			</p>
 			<div class="clear"></div>
 			<p>
-				<label>Answer Explained</label>
+				<label>Hướng dẫn trả lời</label>
 				<textarea class="text-input textarea wysiwyg" name="ans_explained" cols="79" rows="3" ><?php echo set_value('ans_explained'); ?></textarea>
 			</p>
 			<div class="clear"></div>
@@ -104,8 +102,9 @@
 	$(document).ready(function(){
 		//document.getElementById("btn_add").addEventListener('click',addAnswer);
 		$('#btn_add').click(function(){
+			index = currentIndex;
 			++currentIndex;
-			$('#answer').append("Đáp án " + currentIndex + ": <input type = text name = answer[]>" + "<input type = checkbox name = correct_answer[]><br/><br/>");
+			$('#answer').append("Đáp án " + currentIndex + ": <input type = text name = answer[]>" + "<input type = checkbox name = correct[] value = " + index +"><br/><br/>");
 		});
 		
 		$('#category').on('change', function(){

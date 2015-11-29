@@ -4,6 +4,7 @@ class Profile extends MX_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('mprofile');
+		$this->load->model('test/mtest');
 		$this->load->helper('profile');
 	 }
 	 
@@ -14,41 +15,42 @@ class Profile extends MX_Controller {
 				'user' => $user,
 				'template' => 'home/index'
 			);		
-		$this->load->view('layouts/home',isset($data)?$data:NULL);
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 
-	function edit($id = 0){
+	function edit(){
 		save_url();// Luu current_url vao session
 		$user = check_login12(1,2);
-		// print_r($user);
-		if($id!=$user['id'])
-			redirect(base_url());
 		$data = array(
 					'user' => $user,
 					'meta_title' => 'Manage Profile',
 					'template' => 'home/edit'
 					);
-		$user_info = $this->mprofile->search_user($id);
+		$user_info = $this->mprofile->search_user($user['id']);
 		if(!$user_info){
 			$data['error'] = 'User not found in database.';
-			$this->load->view('layouts/home',isset($data)?$data:NULL);
-		}else{
-			$data['user_info']= $user_info;
-			if($this->input->post('submit')){
-				profile();
-				if($this->form_validation->run() == TRUE){
-					$u_info = info_user();
-					$u_info['id'] = $id;
-					$this->mprofile->updateuser($u_info);
-					$message = 'Edit user successfully.';
-					$data['success'] = $message;
-				}
-			}
-			$this->load->view('layouts/home',isset($data)?$data:NULL);
+			$data['template'] = 'home/notify';
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
 		}
+		$data['user_info']= $user_info;
+		if($this->input->post('submit')){
+			profile();
+			if($this->form_validation->run() == TRUE){
+				$u_info = info_user();
+				$u_info['id'] = $user['id'];
+				$this->mprofile->updateuser($u_info);
+				$data['success'] = 'Cập nhật thông tin tài khoản thành công';
+				$data['template'] = 'home/notify';
+				$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+				return;
+			}
+		}
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 
 	function review_test(){
+		save_url();// Luu current_url vao session
 		$user = check_login(1);
 		$tests = $this->mprofile->gettests($user['id']);
 		$data = array(
@@ -57,66 +59,103 @@ class Profile extends MX_Controller {
 			'template' => 'home/review',
 			'tests' => $tests,
 			);
-		$this->load->view('layouts/home',isset($data)?$data:NULL);
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 
-	function detailtest($responses_id){
+	function detailtest($responses_id= 0){
+		save_url();// Luu current_url vao session
 		$user = check_login(1);
-		if(!isset($responses_id)||!is_numeric($responses_id))
-			redirect(base_url());
-		$responses = $this->mprofile->get_answer($responses_id);
-		$test = $this->mprofile->get_test_detail($responses['testid']);
 		$data = array(
-			'user' => $user,
-			'test' =>$test,
-			'score' => $responses['score'],
-			'answer_choosen' => json_decode($responses['answer_choice']),
-			'meta_title' => 'Review Test Detail',
-			'template' => 'home/reviewDetail'
-			);
-		$this->load->view('layouts/home',isset($data)?$data:NULL);
+				'user' => $user,
+				'meta_title' => 'Review Test Detail',
+				'template' => 'home/reviewDetail'
+				);
+		$responses = $this->mprofile->check_testid_by_user($responses_id, $user['id']);
+		if(!$responses){
+			$data['error'] = 'Bạn chưa làm bài test này. ';
+			$data['template'] = 'home/notify';
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
+		}
+		$test = $this->mprofile->get_test_detail($responses['testid']);
+		$data['test'] = $test;
+		$data['score'] = $responses['score'];
+		$data['answer_choosen'] = json_decode($responses['answer_choice']);
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 
 	function choose_test(){
+		save_url();// Luu current_url vao session
 		$user = check_login(2);
 		$data = array(
 			'user' => $user,
 			'meta_title' => 'Choose Test',
 			'template' => 'home/choose_test'
 			);
-		if(!$this->input->post('submit_choosetest')&&!$this->input->post('submit_mark')){
-		}else{
-			$this->form_validation->set_rules('choose','choose','required|min_length[5]|max_length[10]');
+		if($this->input->post('submit')){
+			$this->form_validation->set_rules('test','Test Name','required|min_length[1]|max_length[10]');
 			if($this->form_validation->run() == TRUE){
-				if($this->mprofile->find_testid($this->input->post('choose')) == TRUE)
-					redirect(base_url()."profile/profile/mark/".$this->input->post('choose'));
-				else {
-					$data['message'] = "test name is not exists";
-				}
+				$test = $this->input->post('test'); //id, ma de thi, name
+				$test_result = $this->mprofile->find_test($test);
+				if(!$test_result){
+					$data['message'] = "Không có đề nào trong hệ thống.";
+				}else{
+					$data['listtest'] = $test_result;
+				}				
 			}
 		}
-		$this->load->view('layouts/home',isset($data)?$data:NULL);
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 
-	function mark($test_name){		
-		save_url();
+	function mark($testid){	
+		save_url();// Luu current_url vao session
 		$user = check_login(2);
 
 		$data = array(
 			'user' =>$user,
 			'meta_title' => 'Mark',
-			'test' => $this->mprofile->get_test_detail_from_testname($test_name)
+			'test' => $this->mtest->get_test_detail($testid)
 			);
-		
-		if(!$this->input->post('submit')&&!$this->input->post('submit_rs')){
-			$data['template'] = 'home/mark';	
-			$this->load->view('layouts/home',isset($data)?$data:NULL);
-		}else{
+		if($this->input->post('submit')){
 			$result['answer'] = $this->input->post('answer');
 			$result['test'] = $data['test'];
 			$this->displayResult($result);
 		}
-	}	
+		$data['template'] = 'home/mark';	
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+	}
+	
+	function displayResult($result){
+		save_url();// Luu current_url vao session
+		$user = check_login(2);
+		$score = 0;
+		$totalScore =0;
+		foreach ($result['test'] as $key => $value) {
+			$true_ans = json_decode($value['correct'],true);
+			if(!empty($result['answer'][$key])){
+				if($value['type'] == 1)
+					$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
+				else if($value['type'] == 2)
+					$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
+				else
+					$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
+				$score += $partScore*$value['score'];
+			}
+			$totalScore += $value['score'];
+		}
+		if(!$this->input->post('submit_rs')){
+			$data = array(
+					'user' => $user,
+					'totalScore' => $totalScore,
+					'score' => $score,
+					'meta_title' => 'Result',
+					'template' => 'home/result'
+				);			
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+		}else{
+			redirect(base_url());
+		}
+	}
 	
 // One True All Score <tyrpe = 1>
 	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
@@ -159,38 +198,4 @@ class Profile extends MX_Controller {
 		else
 			return 0;
 	}
-	
-	function displayResult($result){
-		$user = check_login(2);
-		$score = 0;
-		$totalScore =0;
-		foreach ($result['test'] as $key => $value) {
-			$true_ans = json_decode($value['correct'],true);
-			if(!empty($result['answer'][$key])){
-				if($value['type'] == 1)
-					$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
-				else if($value['type'] == 2)
-					$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
-				else
-					$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
-				$score += $partScore*$value['score'];
-			}
-			$totalScore += $value['score'];
-		}
-		if(!$this->input->post('submit_rs')){
-			$data = array(
-					'user' => $user,
-					'totalScore' => $totalScore,
-					'score' => $score,
-					'meta_title' => 'Result',
-					'template' => 'home/result'
-				);			
-			$this->load->view('layouts/home',isset($data)?$data:NULL);
-		}else{
-			redirect(base_url());
-		}
-	}
-
-
-
 }

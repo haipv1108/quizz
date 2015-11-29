@@ -18,28 +18,34 @@ class Test extends MX_Controller {
 		redirect(base_url());
 	}
 
-	function testdetail($testid = 1){
+	function testdetail($testid = 0){
 		save_url();
-		$user = check_login(1);
-		if(!isset($testid)||!is_numeric($testid))
-			redirect(base_url());
+		$user = check_login12(1,2);
 		$data = array(
-				'test' => $this->mtest->get_test_detail($testid),
+				'user' => $user,
 				'meta_title' => 'Test Detail',
-				'testid' => $testid
-			);
-		if(!$this->input->post('submit')&&!$this->input->post('submit_rs')){
+				);
+		$test = $this->mtest->get_test_detail($testid);
+		if(!$test){
+			$data['error'] = 'Không có đề thi trong hệ thống';
+			$data['template'] = 'home/notify'; 
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
+		}else{
+			$data['test'] = $test;
+			$data['test_info'] = $this->mtest->get_test_info($testid);
+			if($this->input->post('submit')&&!$this->input->post('submit_rs')){
+				$result['answer'] = $this->input->post('answer');
+				$result['test'] = $data['test'];
+
+				$responses = array(
+						"userid" => $user['id'],
+						"testid" => $testid,
+					);
+				$this->result($result,$responses);
+			}
 			$data['template'] = 'home/testdetail'; 
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
-		}else{
-			$result['answer'] = $this->input->post('answer');
-			$result['test'] = $data['test'];
-
-			$responses = array(
-					"userid" => $user['id'],
-					"testid" => $testid,
-				);
-			$this->result($result,$responses);
 		}
 	}
 // One True All Score <tyrpe = 1>

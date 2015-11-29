@@ -59,11 +59,11 @@ class Mrandom extends CI_Model{
 		$this->db->insert('questionbank', $quiz_info);
 	}
 	function list_test(){
-		$query = $this->db->select('id, subjectid, sl')->get('test');
+		$query = $this->db->select('id, categoryid, sl')->get('test');
 		return $query->result_array();
 	}
-	function list_questionbank($sub_id){
-		$query = $this->db->select('id')->where('subjectid', $sub_id)->limit(20)->get('questionbank');
+	function list_questionbank($cate_id){
+		$query = $this->db->select('id')->where('categoryid', $cate_id)->limit(20)->get('questionbank');
 		return $query->result_array();
 	}
 	function add_question($question_info){

@@ -33,13 +33,13 @@ class Mtest extends CI_Model{
 
 	// lay thong tin de testid
 	function get_test_info($testid){
-		$query = $this->db->select('t.madethi, t.time, t.sl')
-				->from('test as t')
-				->where('t.id', $testid)
+		$query = $this->db->select('id, name, madethi, time, sl')
+				->from('test')
+				->where('id', $testid)
 				->limit(1)
 				->get();
 		if($query->num_rows()>0)
-			return $query->result_array();
+			return $query->row_array();
 		else return false;
 	}
 	function check_testid($testid){

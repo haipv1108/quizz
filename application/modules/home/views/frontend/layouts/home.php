@@ -46,7 +46,7 @@
 								if($user_info['logged_in']) echo ucwords($user_info['name']);
 						?>
 						<br/><br/>
-						<?php if($user_info['level'] !=3) echo "<a href='profile'>Profile| </a>";?> <a href="verify/logout">Logout</a>
+						<?php if($user_info['level'] != 3) echo "<a href='profile'>Profile</a> | ";?><a href="verify/logout">Logout</a>
 					</div>
 		<?php	}else{?>
 					<h3><div style="color:red;"><a href="verify/login">Login</a></div></h3>
@@ -66,162 +66,33 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
 
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-share"></i> <span>Tiếng Nhật</span>
-                <i class="fa fa-angle-left pull-right"></i>
+              <li class="treeview">
+              <a href="<?php echo base_url()?>">
+                <i class="fa fa-share"></i> <span>Home page</span>
               </a>
-              <ul class="treeview-menu">
+			<?php if(isset($user_info['level']) && $user_info['level'] != 3){?>
+				<li class="treeview">
+					<a href="profile/edit">
+					<i class="fa fa-share"></i> <span>Edit Profile</span>
+					</a>
+				</li>
+			<?php }?>
+			<?php if(isset($user_info['level']) && $user_info['level'] == 1){?>
+				<li class="treeview">
+					<a href="profile/review_test/">
+					<i class="fa fa-share"></i> <span>Review Test</span>
+					</a>
+				</li>
+			<?php }?>
+			<?php if(isset($user_info['level']) && $user_info['level'] == 2){?>
 
-                <li>
-                  <a href="#">
-                    <i class="fa fa-circle-o"></i> Ngữ pháp 
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Sơ cấp
-                        <small class="label pull-right bg-yellow">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Trung cấp
-                        <small class="label pull-right bg-primary">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Cao cấp
-                        <small class="label pull-right bg-green">12</small>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fa fa-circle-o"></i> Từ vựng 
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Sơ cấp
-                        <small class="label pull-right bg-yellow">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Trung cấp
-                        <small class="label pull-right bg-primary">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Cao cấp
-                        <small class="label pull-right bg-green">12</small>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fa fa-circle-o"></i> Hán tự 
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Sơ cấp
-                        <small class="label pull-right bg-yellow">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Trung cấp
-                        <small class="label pull-right bg-primary">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Cao cấp
-                        <small class="label pull-right bg-green">12</small>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+				<li class="treeview">
+					<a href="profile/choose_test">
+					<i class="fa fa-share"></i> <span>Mark Test</span>
+					</a>
+				</li>
 
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-share"></i> <span>Tiếng Anh</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-
-                <li>
-                  <a href="#">
-                    <i class="fa fa-circle-o"></i> Ngữ pháp 
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Sơ cấp
-                        <small class="label pull-right bg-yellow">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Trung cấp
-                        <small class="label pull-right bg-primary">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Cao cấp
-                        <small class="label pull-right bg-green">12</small>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="#">
-                    <i class="fa fa-circle-o"></i> Từ vựng
-                    <i class="fa fa-angle-left pull-right"></i>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Sơ cấp
-                        <small class="label pull-right bg-yellow">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Trung cấp
-                        <small class="label pull-right bg-primary">12</small>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="fa fa-circle-o"></i> Cao cấp
-                        <small class="label pull-right bg-green">12</small>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-              </ul>
-            </li>
-            <li>
-              <a href="mailbox/mailbox.html">
-                <i class="fa fa-envelope"></i> <span>Somethings</span>
-                <small class="label pull-right bg-yellow">12</small>
-              </a>
-            </li>
+				<?php }?>	
             
           </ul>
         </section>
