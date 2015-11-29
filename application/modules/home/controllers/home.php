@@ -48,7 +48,6 @@ class Home extends MX_Controller{
 			$this->form_validation->set_rules('search', 'Mã đề hoặc Tên đề', 'required'); 
 			if($this->form_validation->run() == TRUE){
 				$search = $this->input->post('search');
-				$data['search'] = $search;
 				// lay danh sach theo category
 				$list_cate = $this->mhome->get_list_cate();
 				foreach($list_cate as $key=>$val){
@@ -56,10 +55,12 @@ class Home extends MX_Controller{
 				}
 				if(!$listtest){
 					$data['error'] = 'Không có đề thi trong hệ thống';
-				}else{
-					$data['listtest'] = $listtest;
-					$data['listcate'] = $list_cate;
+					$data['template'] = 'home/notify';
+					$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
+					return;
 				}
+				$data['listtest'] = $listtest;
+				$data['listcate'] = $list_cate;
 			}
 		}
 		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
