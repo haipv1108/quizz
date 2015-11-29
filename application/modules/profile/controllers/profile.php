@@ -5,6 +5,7 @@ class Profile extends MX_Controller {
 		parent::__construct();
 		$this->load->model('mprofile');
 		$this->load->model('test/mtest');
+		$this->load->model('test/mtest');
 		$this->load->helper('profile');
 	 }
 	 
@@ -114,7 +115,8 @@ class Profile extends MX_Controller {
 		$data = array(
 			'user' =>$user,
 			'meta_title' => 'Mark',
-			'test' => $this->mtest->get_test_detail($testid)
+			'test' => $this->mtest->get_test_detail($testid),
+			'test_info' => $this->mtest->get_test_info($testid)
 			);
 		if($this->input->post('submit')){
 			$result['answer'] = $this->input->post('answer');

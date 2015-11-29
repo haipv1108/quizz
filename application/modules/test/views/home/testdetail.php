@@ -16,7 +16,7 @@
 							?>
 						  </h3>
 							<?php if(isset($user) && $user['level'] == 2){?>
-									<a class="btn btn-block btn-success btn-lg text-center" href="test/printTest/<?php if(isset($test_info['id']) && !empty($test_info['id'])) echo $test_info['id'];?>">
+									<a class="btn btn-block btn-success btn-lg text-center" href="test/printTest/<?php if(isset($test_info) && !empty($test_info)) echo $test_info['id'];?>">
 										Print this test
 									</a>
 							<?php }?>
