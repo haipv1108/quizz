@@ -66,30 +66,5 @@
 					</form>  
 				</div>
 
-				<!-- Time -->
-				<div id="time" class="col-md-1 fixed">
-		          <div class="bg-yellow fixed" >
-		            <div class="description-block padding-bottom" style="margin-top: 0px;">
-		              <div class="sparkbar pad text-center" data-color="#fff">
-		                <i class="fa fa-clock-o" style="display: inline-block; width: 34px; height: 30px; vertical-align: top; font-size: 30px;" width="34" height="30"></i>
-		              </div>
-		              <span class="description-text"><b>55:12</b></span>
-		              <div class="pad"></div>
-		            </div>
-		          </div>
-		        </div>
           	</div><!-- Row-->
         </section>
-
-        <!-- Time -->
-        <!-- <div id="time" class="col-md-1 fixed">
-          <div class="bg-yellow fixed" >
-            <div class="description-block padding-bottom" style="margin-top: 0px;">
-              <div class="sparkbar pad text-center" data-color="#fff">
-                <i class="fa fa-clock-o" style="display: inline-block; width: 34px; height: 30px; vertical-align: top; font-size: 30px;" width="34" height="30"></i>
-              </div>
-              <span class="description-text"><b>55:12</b></span>
-              <div class="pad"></div>
-            </div>
-          </div>
-        </div> -->
