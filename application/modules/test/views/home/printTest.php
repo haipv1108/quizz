@@ -19,8 +19,6 @@
       <!-- Content Wrapper. Contains page content -->
       <div>
 		    <section class="content">
-
-
           <div class="row">
             <!-- Hiển thị các danh ĐỀ THI của content -->
             <div id="test" class="col-md-10 col-md-offset-1">
