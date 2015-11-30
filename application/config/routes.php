@@ -17,6 +17,12 @@ $route['admin/adduser'] = 'admin/adduser';
 $route['admin/edituser'] = 'admin/edituser';
 $route['admin/deleteuser'] = 'admin/deleteuser';
 
+//managetest
+$route['managetest'] = 'managetest';
+$route['managetest/:num'] = 'managetest/index/$1';
+$route['managetest/add'] = 'managetest/add';
+$route['managetest/delete'] = 'managetest/delete'; 
+
 //category
 $route['category'] = 'category';
 $route['category/:num'] = 'category/index/$1';
