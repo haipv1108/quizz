@@ -42,6 +42,7 @@ class Test extends MX_Controller {
 					"testid" => $testid,
 				);
 			$this->result($result,$responses);
+			return;
 		}
 		$data['template'] = 'home/testdetail'; 
 		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
