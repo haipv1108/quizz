@@ -15,7 +15,7 @@
 					?>
 						<option value="<?php echo $value['id']; ?>" <?php if($quiz_info['categoryid'] == $value['id']) echo 'selected';?>><?php echo $value['name']; ?></option>
 						<?php
-				 } ?>
+				} ?>
 			</select>
 			<br>
 			<span>Chọn phần học: </span>

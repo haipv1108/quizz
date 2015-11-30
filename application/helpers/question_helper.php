@@ -42,7 +42,7 @@ if(!function_exists('array_for_json')){
 		$array = array();
 		$j = 1;
 		for ($i = 0; $i < sizeof($array_string); ++$i) {
-			array_push($array, array($j++  => $array_string[$i]));
+			$array[$j++] = $array_string[$i];
 		}
 		$arr_json = json_encode($array);
 		return $arr_json;

@@ -93,7 +93,7 @@ class CreateTest extends MX_Controller {
 			if ($result != null)
 				$input_data['subjects'][$key]['questions'] = $result;
 			else {
-				echo "Khong du cau hoi";
+				echo "Không đủ câu hỏi.";
 				return;
 			}
 		}
@@ -101,7 +101,7 @@ class CreateTest extends MX_Controller {
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
 			$result = $this->mquestion->get_questions_with_category($input_data['category']);
 			if ($result == null) {
-				echo "Khong du cau hoi tong hop";
+				echo "Không đủ câu hỏi tổng hợp";
 				return;
 			}
 			$input_data['general_question_bank'] = $result;
