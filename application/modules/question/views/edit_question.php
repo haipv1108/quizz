@@ -64,9 +64,9 @@
 										break;
 								}
 								if ($k <= sizeof($cor)) {
-									echo "<input type = checkbox name = correct[] checked";
+									echo "<input type = checkbox name = correct[] checked value = $key ";
 								} else {
-									echo "<input type = checkbox name = correct[]>";
+									echo "<input type = checkbox name = correct[] value = $key >";
 								}
 						
 					?>
