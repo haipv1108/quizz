@@ -21,7 +21,7 @@
 			
 				<h1>Control Panel Login</h1>
 				<!-- Logo (221px width) -->
-				<a href=""><img id="logo" href="template/backend/simpla-admin/resources/images/logo.png" alt="Simpla Admin logo" /></a>
+				<h3><a href="">TRANG CHỦ</a></3>
 			</div> <!-- End #logn-top -->
 			
 			<div id="login-content">
@@ -44,7 +44,6 @@
 					<p>
 						<input class="button" type="submit" name="submit" value="Sign In" />
 					</p>
-					<p><a href='<?php echo base_url();?>user/register'>Register</a><br/><a href='<?php echo base_url();?>user/forgot'>Forgot Password</a></p>
 				</form>
 			</div> <!-- End #login-content -->
 		</div> <!-- End #login-wrapper -->

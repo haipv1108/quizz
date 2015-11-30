@@ -10,61 +10,112 @@ class Test extends MX_Controller {
 		$this->load->model('category/mcategory');
 		$this->load->model('subject/msubject');
 		$this->load->model('mtest');
-		$this->load->helper(array('form_vali'));
+		$this->load->helper();
 		$this->load->helper('form');
 		$this->load->helper('array');
-
 	}
 	function index(){
 		redirect(base_url());
 	}
 
-	function testdetail($testid){
-		$user = check_login(1);
-		if(!isset($testid)||!is_numeric($testid))
-			redirect(base_url());
+	function testdetail($testid = 0){
+		save_url();
+		$user = check_login12(1,2);
 		$data = array(
-				'test' => $this->mtest->get_test_detail($testid),
+				'user' => $user,
 				'meta_title' => 'Test Detail',
-			);
-		if(!$this->input->post('submit')&&!$this->input->post('submit_rs')){
-			$data['template'] = 'home/testdetail'; 
+				);
+		$test = $this->mtest->get_test_detail($testid);
+		if(!$test){
+			$data['error'] = 'Không có đề thi trong hệ thống';
+			$data['template'] = 'home/notify'; 
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
-		}else{
-			$answer = $this->input->post('answer');
-			// print_r($answer);
-			$total_score = 0; $total_question = 0;
-			$score = 0; $correct_question = 0;
-			foreach ($data['test'] as $key => $value) {
-				$total_score += $value['score'];
-				$total_question+=1;
-				if( isset($answer[$key]) && $answer[$key] == $value['correct']){
-					$score +=$value['score'];
-					$correct_question +=1;
-				}
-			}
-			$answer = json_encode($answer);
-
-			$result_db = array(
-					'userid' => $user['id'],
-					'testid' => $testid,
-					'score' => $score*10/$total_score,
-					'answer_choice' => $answer
-				);
-			$this->mtest->addtest($result_db);
-
-			$result = array(
-					'correct_question' => $correct_question,
-					'total_question' => $total_question,
-					'score' => $score*10/$total_score
-				);
-			$this->result($result);
+			return;
 		}
+		$data['test'] = $test;
+		$data['test_info'] = $this->mtest->get_test_info($testid);
+		if($this->input->post('submit')){
+			$result['answer'] = $this->input->post('answer');
+			$result['test'] = $data['test'];
+			$responses = array(
+					"userid" => $user['id'],
+					"testid" => $testid,
+				);
+			$this->result($result,$responses);
+			return;
+		}
+		$data['template'] = 'home/testdetail'; 
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+	}
+// One True All Score <tyrpe = 1>
+	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
+		foreach ($answer_choice as $key => $value) {
+			if(!in_array($value, $answer_true))
+				return 0;
+		}
+		return 1;
+	}
+// Part True Part Score <type = 2>
+	private function markScoreForAQuestionPTPS($answer_choice,$answer_true){
+		$total_anstrue = 0;
+		$total_choice = 0;
+		$score = 0;
+		foreach ($answer_true as $key => $value) {
+			$total_anstrue+=1;
+		}
+		foreach ($answer_choice as $key => $value) {
+			if(!in_array($value, $answer_true))
+				return 0;
+			$total_choice +=1;
+		}
+		return $total_choice/$total_anstrue;
+	}
+// All True All Score <type = 3>
+	private function markScoreForAQuestionATAS($answer_choice,$answer_true){
+		$total_anstrue = 0;
+		$total_choice = 0;
+		$score = 0;
+		foreach ($answer_true as $key => $value) {
+			$total_anstrue+=1;
+		}
+		foreach ($answer_choice as $key => $value) {
+			if(!in_array($value, $answer_true))
+				return 0;
+			$total_choice +=1;
+		}
+		if($total_anstrue == $total_choice)
+			return 1;
+		else
+			return 0;
 	}
 
-	function result($result){
+
+	function result($result,$responses){		
+			$Score = 0;
+			$totalScore = 0;
+			$ans;
+			foreach ($result['test'] as $key => $value) {
+				$true_ans = json_decode($value['correct'],true);
+				if(!empty($result['answer'][$key])){
+					if($value['type'] == 1)
+						$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
+					else if($value['type'] == 2)
+						$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
+					else
+						$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
+					$Score += $partScore*$value['score'];
+				}
+				$totalScore += $value['score'];
+			}
+				$responses['score'] =  $Score/ $totalScore;
+				$responses['answer_choice'] = json_encode($result['answer']);
+				if(isset($responses['answer_choice']))
+					$this->mtest->addtest($responses);
+
+
 		if(!$this->input->post('submit_rs')){
-			$data['result'] = $result;
+			$data['totalScore'] = $totalScore;
+			$data['score'] = $Score;
 			$data['meta_title'] = 'result';
 			$data['template'] = 'home/result';			
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
@@ -72,5 +123,20 @@ class Test extends MX_Controller {
 			redirect(base_url());
 		}
 	}
-
+	
+	function printTest($testid = 0){
+		// kiem tra testid co ton tai khong?
+		$check_test = $this->mtest->get_test_detail($testid);
+		if(!$check_test){
+			$data['error'] = 'Không có đề thi trong hệ thống.';
+			$data['template'] = 'home/notify'; 
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
+		}
+		$data['test'] = $check_test;
+		$data['test_info'] = $this->mtest->get_test_info($testid);
+		$this->load->view('home/printTest',isset($data)?$data:NULL);
+	}
+	
+	
 }

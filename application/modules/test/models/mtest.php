@@ -19,7 +19,7 @@ class Mtest extends CI_Model{
 		$this->db->where('testid',$testid)->delete('question');
 	}
 	function get_test_detail($id){
-	$query = $this->db->select('q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, question.score')
+	$query = $this->db->select('q.type, q.question, q.answer, test.id, test.name, test.madethi, q.level, q.correct, q.ans_explained, question.score')
 			->from('test')
 			->where('test.id',$id)
 			->join('question','test.id = question.testid')
@@ -31,6 +31,17 @@ class Mtest extends CI_Model{
 	else return false;
 	}
 
+	// lay thong tin de testid
+	function get_test_info($testid){
+		$query = $this->db->select('id, name, madethi, time, sl')
+				->where('id', $testid)
+				->limit(1)
+				->get('test');
+		if($query->num_rows()>0)
+			return $query->row_array();
+		else return false;
+	}
+	
 	function addtest($result){
 		$this->db->insert('responses', $result);
 	}

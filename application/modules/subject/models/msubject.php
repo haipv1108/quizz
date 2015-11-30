@@ -65,5 +65,10 @@ class Msubject extends CI_Model{
 		$query = $this->db->select('id, name')->where('categoryid',$category_id)->get($this->_name);
 		return $query->result_array();
 	}
-
+	function get_list_subject(){
+		$query = $this->db->select('id,name')->get($this->_name);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		 return false;
+	}
 }

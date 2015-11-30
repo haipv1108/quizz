@@ -1,3 +1,4 @@
+
 ﻿<div class="content-box-content">
 	<div class="tab-content default-tab" id="tab1">
 	<?php if(isset($total) && !empty($total)){?>
@@ -47,4 +48,3 @@
 			</tbody>
 		</table>
 	</div>   
-</div>

@@ -60,18 +60,17 @@ if(!function_exists('random_subject')){
 }
 
 if(!function_exists('random_test')){
-	function random_test($sub_id, $level_id){
+	function random_test($cate_id){
 		$test_info = array(
-							'subjectid' => $sub_id,
+							'categoryid' => $cate_id,
 							'name' => 'TEST_'.mt_rand_str(4,"ABCDEF"),
-							'madethi'=>'MADE_'.$sub_id.mt_rand_str(3,'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'),
+							'madethi'=>'MADE_'.$cate_id.mt_rand_str(3,'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'),
+							'type' => rand(1,3),
 							'time' => rand(30,40),
-							'levelid' => $level_id,
 							'sl' => rand(10, 12),
 							'decription' => mt_rand_str(50)
 		);
 		return $test_info;
-
 	}
 }
 
@@ -84,25 +83,26 @@ if(!function_exists('random_questionbank')){
 		}
 		$answer = json_encode($a_answer);
 		$correct;
-		if($i > 5){
+		if($number_answer > 4){
 			$correct = array(
 							'1'=>rand(1,3),
-							'2'=>rand(4,$i)
+							'2'=>rand(4,$number_answer)
 							);
 		}else{
 			$correct = array(
-							'1' => rand(1, $i)
+							'1' => rand(1, $number_answer)
 							);
 		}
 		$dapan = json_encode($correct);
 		$quiz_info = array(
 							'categoryid'=>$cate_id,
+							'subjectid' => $sub_id,
+							'type' => rand(1,3),
 							'question'=> 'QUESTION_'.mt_rand_str(50),
 							'answer' => $answer,
 							'level' => $level_id,
 							'correct' => $dapan,
-							'ans_explained' => 'ANSWER_EXPLAINED_'.mt_rand_str(50),
-							'subjectid' => $sub_id
+							'ans_explained' => 'ANSWER_EXPLAINED_'.mt_rand_str(50)
 		);
 		return $quiz_info;
 	}

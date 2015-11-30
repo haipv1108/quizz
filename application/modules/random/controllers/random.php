@@ -37,36 +37,21 @@ class Random extends MX_Controller{
 		echo 'Thanh cmn cong';
 	}
 	function random_test(){
-		$list_sub = $this->mrandom->list_subject();
-		foreach($list_sub as $key=>$val){
-			$list_level = $this->mrandom->get_level($val['id']);
+		$list_cate = $this->mrandom->list_cate();
+		foreach($list_cate as $key=>$val){
 			for($i = 0; $i < rand(3, 4); $i++){
-				foreach($list_level as $k=>$v){
-					$test_info = random_test($val['id'], $v['id']);
+					$test_info = random_test($val['id']);
 					$this->mrandom->add_test($test_info);
 				}
 			}
-		}
 		echo 'Thanh cmn cong';
 	}
 	function random_questionbank(){
 		set_time_limit(600);
-		/*$list_sub = $this->mrandom->list_subject();
-		foreach($list_sub as $key=>$val){
-			$list_level = $this->mrandom->get_level($val['id']);
-			$cate_id = $this->mrandom->get_categoryid($val['id']);
-			for($i = 0; $i < 10; $i++){
-				foreach($list_level as $k=>$v){
-					$questionbank_info = random_questionbank($val['id'], $cate_id['id'], $v['id']);
-					$this->mrandom->add_questionbank($questionbank_info);
-				}
-			}
-		}
-		echo 'Thanh cmn cong';*/
 		for($j = 0; $j < 30; $j++){
 			$list_cate = $this->mrandom->list_cate();
 			foreach($list_cate as $key=>$val){
-				$list_sub = $this->mrandom->list_subject($val['id']);// lay cac subject cua category
+				$list_sub = $this->mrandom->list_subject_by_cate($val['id']);// lay cac subject cua category
 				foreach($list_sub as $k=>$v){
 					$list_level = $this->mrandom->get_level($val['id']);// lay cac level cua category
 					for($i = 0; $i < 10; $i++){
@@ -87,7 +72,7 @@ class Random extends MX_Controller{
 
 		$list_test = $this->mrandom->list_test();
 		foreach($list_test as $key=>$val){
-			$list_questionbank = $this->mrandom->list_questionbank($val['subjectid']);
+			$list_questionbank = $this->mrandom->list_questionbank($val['categoryid']);
 			$i = 1;
 			foreach($list_questionbank as $k=>$v){
 				if($i <= $val['sl']){
