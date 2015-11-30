@@ -1,0 +1,8 @@
+diff a/application/modules/home/views/frontend/home/index.php b/application/modules/home/views/frontend/home/index.php	(rejected hunks)
+@@ -2,5 +2,4 @@
+ <!-- Main Content -->
+ <section class="content">
+-									<a href="<?php echo site_url();?>home/listtest/<?php echo $v['id'];?>"><?php echo $v['name'];?>
+\ No newline at end of file
+   <?php if( isset($list_cate) && !empty($list_cate)){
+             foreach ($list_cate as $key => $val) { ?>
