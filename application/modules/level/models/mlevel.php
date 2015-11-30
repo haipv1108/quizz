@@ -27,4 +27,11 @@ Class Mlevel extends CI_Model {
         $str = "DELETE FROM " . $this->_table_name . " WHERE id = " . $id;
         $this->db->query($str);
     }
+	
+	function get_list_level(){
+		$query = $this->db->select('id,name')->get($this->_table_name);
+		if($query->num_rows()>0)
+			return $query->result_array();
+		 return false;
+	}
 }
