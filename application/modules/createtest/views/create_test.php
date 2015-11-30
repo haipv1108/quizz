@@ -119,9 +119,9 @@
                 str = str +
                     "<tr>" +
                     "<td>"+subjectName+"</td>" +
+                    "<td>"+level+"</td>" + 
                     "<td><input type = text id = text" + subjectID + " value=" +numQuestion +"></td>" +
                     "<td>"+scoreQuestion+"</td>" + 
-                    "<td>"+level+"</td>" + 
                     "<td> <button type = 'button' onclick='updateSubject(" + subjectID + ")'>Update</button></td>" +
                     "<td> <button type = 'button' onclick='removeSubject(" + subjectID + ")'>Remove</button></td>" +
                     "</tr>";

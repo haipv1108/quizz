@@ -53,12 +53,23 @@
 				<br/><br/>
 				
 				<ol id = answer>
-					<?php 	$answer = json_decode($quiz_info['answer'], true);
-							$correct = json_decode($quiz_info['correct'], true);
+					<?php 	$ans = json_decode($quiz_info['answer'], true);
+							$cor = json_decode($quiz_info['correct'], true);
 							$i = 0;
-							foreach($answer as $key=>$val){ $i++;?>
-								Đáp án <?php echo $key;?>: 	<input type = 'text' name = 'answer[]' value = '<?php echo $val;?>'>
-															<input type = 'checkbox' name = 'correct[]' value = "<?php echo $i;?>">
+							foreach($ans as $key=>$val){ 
+								echo "Đáp án" . $key. "<input type = text name = answer[]  value=$val>";
+								$k = 0;
+								for($k = 1; $k <= sizeof($cor); ++$k) {
+									if ($key == $cor[$k])
+										break;
+								}
+								if ($k <= sizeof($cor)) {
+									echo "<input type = checkbox name = correct[] checked";
+								} else {
+									echo "<input type = checkbox name = correct[]>";
+								}
+						
+					?>
 								<br></br>
 								<div class="clear"></div>
 					<?php	}?>

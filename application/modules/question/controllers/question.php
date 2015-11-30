@@ -31,6 +31,7 @@ class Question extends MX_Controller{
 					);
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
+
 	function addquestion(){
 		save_url();// Luu current_url vao session
 		$user = check_login(3);
@@ -82,7 +83,9 @@ class Question extends MX_Controller{
 				$this->mquestion->updatequestion($edit_quiz);
 				$data['success'] = 'Sửa câu hỏi thành công';
 				$data['template'] = 'notify';
-				$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+				echo "<pre>";
+								print_r($correct);
+				//$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 				return;
 			}
 		}
