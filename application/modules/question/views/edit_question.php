@@ -15,7 +15,7 @@
 					?>
 						<option value="<?php echo $value['id']; ?>" <?php if($quiz_info['categoryid'] == $value['id']) echo 'selected';?>><?php echo $value['name']; ?></option>
 						<?php
-				 } ?>
+				} ?>
 			</select>
 			<br>
 			<span>Chọn phần học: </span>
@@ -57,7 +57,7 @@
 							$correct = json_decode($quiz_info['correct'], true);
 							$i = 0;
 							foreach($answer as $key=>$val){ $i++;?>
-								Đáp án <?php echo $key;?>: 	<input type = 'text' name = 'answer[]' value = '<?php echo $val;?>'>
+								Đáp án <?php echo $key;?>: 	<input type = 'text' name = answer[] value = '<?php echo $val;?>'>
 															<input type = 'checkbox' name = 'correct[]' value = "<?php echo $i;?>">
 								<br></br>
 								<div class="clear"></div>

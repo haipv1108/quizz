@@ -14,7 +14,7 @@ class Mquestion extends CI_Model{
 	}
 
 	function viewquestion($per_page, $offset){
-		$query = $this->db->get($this->_name, $per_page, $offset);
+		$query = $this->db->order_by('id','desc')->get($this->_name, $per_page, $offset);
 		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;
