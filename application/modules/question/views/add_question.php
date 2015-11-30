@@ -5,14 +5,8 @@
 	</div>
 	<div class="content-box-content">
 		<?php echo validation_errors();?>
-		<?php 	if(isset($error)){?>
-					<div style="color: red; font-weight: bold"><?php echo $error;?></div>
-			<?php } ?>
-			<?php 	if(isset($success)){?>
-					<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
-			<?php } ?>
 		<form action="" method="post">
-			</span>Chọn môn học:</span>
+			<span>Chọn môn học:</span>
 			<select id = "category" name = "category">
 				<option selected value = 'non_select'>Select Category</option>
 				<?php

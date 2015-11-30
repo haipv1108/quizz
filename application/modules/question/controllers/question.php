@@ -55,14 +55,16 @@ class Question extends MX_Controller{
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function editquestion($id = 0){
-		// co 1 loi la chua kiem tra name da thay doi roi.
 		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
 					'meta_title' => 'Edit Question',
 					'active' => 'quiz-edit',
-					'template' => 'edit_question'
+					'template' => 'edit_question',
+					'category' => $this->mcategory->get_list_category(),
+					'subject' => $this->msubject->get_list_subject(),
+					'level' => $this->mlevel->get_list_level(),
 					);
 		$quiz_info = $this->mquestion->search_question($id);
 		if(!$quiz_info){
