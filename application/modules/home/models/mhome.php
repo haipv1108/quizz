@@ -6,23 +6,11 @@ class Mhome extends CI_Model{
 		$this->load->database();
 	}
 	function get_list_cate(){
-		$query = $this->db->select('id,name, decription')->get('category');
+		$query = $this->db->select('id, name, decription')->get('category');
 		if($query ->num_rows() >0)
 			return $query->result_array();
 		else return false;
 	}
-	/*function get_list_subject($cate_id){
-		$query = $this->db->select('subject.id,subject.name, count(test.id) as sl')
-				->from('subject')
-				->where('categoryid',$cate_id)
-				->join('category','category.id = subject.categoryid')
-				->join('test','test.subjectid = subject.id')
-				-> group_by(array('subject.id','subject.name'))
-				->get();
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else return false;
-	}*/
 	function listtest($id){
 		$query = $this->db->select('test.id, test.name, level.name as level')
 				->from('test')
@@ -34,17 +22,11 @@ class Mhome extends CI_Model{
 			return $query->result_array();
 		else return false;
 	}
-	function get_list_level($subjectid){
-		$query = $this->db->query("
-								SELECT level.id, level.name FROM subject, category, level WHERE subject.id = {$subjectid} AND subject.categoryid = category.id AND category.id = level.categoryid 
-								");
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else return false;
-	}
-	function get_list_test($subjectid, $levelid){
-		$query = $this->db->select('id, name')->where('subjectid',$subjectid)->where('levelid', $levelid)->get('test');
-		if($query->num_rows()>0)
+	function get_listtest_by_categoryid($categoryid){
+		$query = $this->db->select('id, name, madethi, time, sl, decription')
+				->where('categoryid', $categoryid)
+				->get('test');
+		if($query ->num_rows() >0)
 			return $query->result_array();
 		else return false;
 	}
@@ -55,11 +37,14 @@ class Mhome extends CI_Model{
 		else return false;	
 	}
 	// tim kiem de test theo ten hoac ma de this-
-	function search_test($search){
-		$query = $this->db->select('id, name, madethi, decription')
-				->like('name', $search)
-				->or_like('madethi', $search)
-				->get('test');
+	function search_test($search, $cateid){
+		$query = $this->db->select('t.id, t.name, t.madethi, t.decription')
+				->from('test as t')
+				->like('t.name', $search)
+				->or_like('t.madethi', $search)
+				->join('category as c','c.id = t.categoryid')
+				->where('c.id',$cateid)
+				->get();
 		if($query->num_rows()>0)
 			return $query->result_array();
 		else return false;

@@ -18,7 +18,11 @@ class Mprofile extends CI_Model{
 	}
 
 	function gettests($user_id){
-		$query = $this->db->select('testid, id')->where('userid',$user_id)->get('responses');
+		$query = $this->db->select('r.id, t.madethi')
+				->from('responses as r')
+				->where('userid',$user_id)
+				->join('test as t', 't.id = r.testid')
+				->get();
 		if($query->result_array()>0)
 			return $query->result_array();
 		else return false;
@@ -37,19 +41,27 @@ class Mprofile extends CI_Model{
 		return $query->result_array();
 	else return false;
 	}
-
-	function get_answer($id){
-		$query = $this->db->select('answer_choice, testid, score')->where('id',$id)->get('responses');
+	
+	// Kiem tra xem test id do nguoi dung da lam chua
+	function check_testid_by_user($responses_id, $userid){
+		$query = $this->db->select('answer_choice, testid, score')
+				->where('id', $responses_id)
+				->where('userid', $userid)
+				->get('responses');
 		if($query->num_rows()>0)
 			return $query->row_array();
 		else return false;
 	}
 
-	function find_testid($test_name){
-		$query = $this->db->select('name')->where('name',$test_name)->get('test');
+	function find_test($test){//id, ma de, name
+		$query = $this->db->select('id, name, madethi, time, sl, decription')
+				->like('id', $test)
+				->or_like('madethi', $test)
+				->or_like('name', $test)
+				->get('test');
 		if($query->num_rows()>0)
-			return TRUE;
-		else return FALSE;
+			return $query->result_array();
+		else return false;
 	}
 
 	function get_test_detail_from_testname($name){

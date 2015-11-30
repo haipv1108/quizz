@@ -46,8 +46,10 @@ class Question extends MX_Controller{
 			if($this->form_validation->run() == TRUE){
 				$quiz_info = get_info_question();//get info user using helper
 				$this->mquestion->addquestion($quiz_info);
-				$success = 'Add Question in Question Bank successfully.';
-				$data['success'] = $success;
+				$data['success'] = 'Thêm câu hỏi thành công';
+				$data['template'] = 'notify';
+				$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+				return;
 			}
 		}
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
@@ -65,22 +67,24 @@ class Question extends MX_Controller{
 		$quiz_info = $this->mquestion->search_question($id);
 		if(!$quiz_info){
 			$data['error'] = 'Question not found in database.';
+			$data['template'] = 'notify';
 			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+			return;
 		}
-		else{
-			$data['quiz_info']= $quiz_info;
-			if($this->input->post('submit')){
-				vali_question();// check validate_form using helper
-				if($this->form_validation->run() == TRUE){
-					$edit_quiz = get_info_question();//get info user using helper
-					$edit_quiz['id'] = $id;
-					$this->mquestion->updatequestion($edit_quiz);
-					$message = 'Edit Question successfully.';
-					$data['success'] = $message;
-				}
+		$data['quiz_info']= $quiz_info;
+		if($this->input->post('submit')){
+			vali_question();// check validate_form using helper
+			if($this->form_validation->run() == TRUE){
+				$edit_quiz = get_info_question();//get info user using helper
+				$edit_quiz['id'] = $id;
+				$this->mquestion->updatequestion($edit_quiz);
+				$data['success'] = 'Sửa câu hỏi thành công';
+				$data['template'] = 'notify';
+				$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+				return;
 			}
-			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 		}
+		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function deletequestion($id = 0){
 		save_url();// Luu current_url vao session
@@ -94,25 +98,26 @@ class Question extends MX_Controller{
 		$quiz_info = $this->mquestion->search_question($id);
 		if(!$quiz_info){
 			$data['error'] = 'Question not found in database.';
+			$data['template'] = 'notify';
 			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+			return;
 		}
-		else{
-			$data['quiz_info']= $quiz_info;
-			if($this->input->post('submit')){
-				$this->form_validation->set_rules('delete', 'Delete Radio', 'required'); 
-				$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
-				if($this->form_validation->run() == TRUE){
-					if($this->input->post('delete')=='yes'){
-						$this->mquestion->deletequestion($id);
-						$success = 'You have successfully deleted.';
-					}else if($this->input->post('delete') =='no'){
-						$success = 'I also think you should not delete user';
-					}
-					$data['success'] = $success;
+		$data['quiz_info']= $quiz_info;
+		if($this->input->post('submit')){
+			$this->form_validation->set_rules('delete', 'Delete Radio', 'required'); 
+			$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
+			if($this->form_validation->run() == TRUE){
+				if($this->input->post('delete')=='yes'){
+					$this->mquestion->deletequestion($id);
+					$success = 'Bạn đã xóa câu hỏi thành công.';
+				}else if($this->input->post('delete') =='no'){
+					$success = 'Tôi cũng nghĩ bạn không nên xóa câu hỏi này.';
 				}
+				$data['success'] = $success;
 			}
-			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 		}
+		$data['template'] = 'notify';
+		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	
 	function get_subject() {

@@ -18,29 +18,33 @@ class Test extends MX_Controller {
 		redirect(base_url());
 	}
 
-	function testdetail($testid = 1){
+	function testdetail($testid = 0){
 		save_url();
-		$user = check_login(1);
-		if(!isset($testid)||!is_numeric($testid))
-			redirect(base_url());
+		$user = check_login12(1,2);
 		$data = array(
-				'test' => $this->mtest->get_test_detail($testid),
+				'user' => $user,
 				'meta_title' => 'Test Detail',
-				'testid' => $testid
-			);
-		if(!$this->input->post('submit')&&!$this->input->post('submit_rs')){
-			$data['template'] = 'home/testdetail'; 
+				);
+		$test = $this->mtest->get_test_detail($testid);
+		if(!$test){
+			$data['error'] = 'Không có đề thi trong hệ thống';
+			$data['template'] = 'home/notify'; 
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
-		}else{
+			return;
+		}
+		$data['test'] = $test;
+		$data['test_info'] = $this->mtest->get_test_info($testid);
+		if($this->input->post('submit')){
 			$result['answer'] = $this->input->post('answer');
 			$result['test'] = $data['test'];
-
 			$responses = array(
 					"userid" => $user['id'],
 					"testid" => $testid,
 				);
 			$this->result($result,$responses);
 		}
+		$data['template'] = 'home/testdetail'; 
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 // One True All Score <tyrpe = 1>
 	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
@@ -118,16 +122,17 @@ class Test extends MX_Controller {
 		}
 	}
 	
-	function printTest($testid){
+	function printTest($testid = 0){
 		// kiem tra testid co ton tai khong?
-		$check_test = $this->mtest->check_testid($testid);
+		$check_test = $this->mtest->get_test_detail($testid);
 		if(!$check_test){
 			$data['error'] = 'Không có đề thi trong hệ thống.';
-		}else{
-				$data_test = $this->mtest->get_test_detail($testid);// lay du lieu de test
-				$data['test'] = $data_test;
-				$data['test_info'] = $this->mtest->get_test_info($testid);
+			$data['template'] = 'home/notify'; 
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
 		}
+		$data['test'] = $check_test;
+		$data['test_info'] = $this->mtest->get_test_info($testid);
 		$this->load->view('home/printTest',isset($data)?$data:NULL);
 	}
 	

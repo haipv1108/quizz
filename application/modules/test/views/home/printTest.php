@@ -31,11 +31,10 @@
                   </div>
                   <div class="col-md-6 col-md-offset-1">
                     <p class="text-center" style="font-size: 16px;"><b>
-                   <?php if(isset($test_info) && !empty($test_info)) 
-                    foreach($test_info as $key=>$val){
-                      echo 'Mã đề thi: '.$val['madethi'].'<br/>';
-                      echo 'Thời gian: '.$val['time'].' phút'.'<br/>';
-                      echo 'Số lượng câu: '.$val['sl'].'<br/>';
+                   <?php if(isset($test_info) && !empty($test_info)){
+                      echo 'Mã đề thi: '.$test_info['madethi'].'<br/>';
+                      echo 'Thời gian: '.$test_info['time'].' phút'.'<br/>';
+                      echo 'Số lượng câu: '.$test_info['sl'].'<br/>';
                     }?>
                     </b>    
                   </p>
@@ -45,7 +44,8 @@
                 <div class="box-header">
                   <p class="pull-right">Lưu ý: Một câu hỏi có thể có nhiều hơn một đáp án đúng.</p>
                   <form>
-                    <input type="button" value="Print this page" onClick="window.print()">
+                    <!-- <input type="button" value="Print this page" onClick="window.print()"> -->
+                    <a href="" class="btn btn-primary" onClick="window.print()">Print this test</a>
                   </form>
                 </div>
                 <div class="box-body">

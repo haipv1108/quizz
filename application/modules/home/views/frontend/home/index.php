@@ -8,7 +8,7 @@
 					<div class="col-md-3">
 						<div class="box <?php if($i <5) echo 'box-success'; else if($i < 9) echo 'box-danger'; else echo 'box-info';?> box-solid">
 							<div class="box-header with-border">
-								<a href='listtest/'><h3 class="box-title"><?php echo $val['name'];?></h3></a>
+								<a href='home/listtest/<?php echo $val['id'];?>'><h3 class="box-title"><?php echo $val['name'];?></h3></a>
 								<div class="box-tools pull-right">
 									<button class="btn btn-box-tool" data-widget="collapse">
 										<i class="fa fa-minus"></i>

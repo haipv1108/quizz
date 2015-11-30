@@ -7,13 +7,6 @@
 			
 			<div class="content-box-content">
 				<?php echo validation_errors();?>
-
-				<?php 	if(isset($error)){?>
-						<div style="color: red; font-weight: bold"><?php echo $error; die;?></div>
-				<?php } ?>
-				<?php 	if(isset($success)){?>
-						<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
-				<?php } ?>
 				<div>
 					<form action="" method="post" class="form-horizontal">
 						<div class="box-body">
