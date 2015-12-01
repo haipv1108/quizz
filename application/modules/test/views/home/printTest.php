@@ -44,8 +44,7 @@
                 <div class="box-header">
                   <p class="pull-right">Lưu ý: Một câu hỏi có thể có nhiều hơn một đáp án đúng.</p>
                   <form>
-                    <!-- <input type="button" value="Print this page" onClick="window.print()"> -->
-                    <a href="" class="btn btn-primary" onClick="window.print()">Print this test</a>
+                    <input class="btn btn-primary" type="button" value="Print this Test" onClick="window.print()">
                   </form>
                 </div>
                 <div class="box-body">
