@@ -212,10 +212,9 @@
         var maxQuestion = $('#max_question').val();
         var scoreQuestion = $('#score_question').val();
         var level = $('#level').val();
-<<<<<<< HEAD
-=======
+
         var levelName = $("#level option:selected").text();
->>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
+
 
         if (currentNumQuestion + parseInt(numQuestion) > maxQuestion) {
             alert("Qua nhieu cau hoi trong phan hoc nay");
@@ -225,11 +224,9 @@
             alert("Xin hãy chọn môn học, độ khó & phần học.");
             return;
         }
-<<<<<<< HEAD
-        if (include(subjectsSelected, subjectID)) {
-=======
+
         if (include(subjectsSelected, subjectID, level)) {
->>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
+
             alert("Môn học đã tồn tại!");
             return;
         }
@@ -247,42 +244,21 @@
         subjectObject['numQuestion'] = numQuestion;
         subjectObject['scoreQuestion'] = scoreQuestion;
         subjectObject['level'] = level;
-<<<<<<< HEAD
-=======
+
         subjectObject['levelName'] = levelName;
->>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
+
         subjectsSelected.push(subjectObject);
         currentNumQuestion += parseInt(numQuestion);
         updateView();
     }
 
-<<<<<<< HEAD
 
-    function updateSubject(id) {
-        var numQuestionNode = "text" + id;
-        var numQuestion = $(numQuestionNode).val();
-
-        for (var i in subjectsSelected) {
-            if (subjectsSelected.hasOwnProperty(i)) {
-                if (subjectsSelected[i]['id'] == id) {
-                    subjectsSelected[i]['numQuestion'] = numQuestion;
-                    alert("Update Success");
-                    return;
-                }
-            }
-        }
-    }
-
-=======
->>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
     function removeSubject(id) {
         for (var i in subjectsSelected) {
             if (subjectsSelected.hasOwnProperty(i)) {
                 if (subjectsSelected[i]['id'] == id) {
-<<<<<<< HEAD
-=======
+
                 	currentNumQuestion -= subjectsSelected[i]['numQuestion'];
->>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
                     subjectsSelected.splice(i,1);
                     updateView();
                     return;
