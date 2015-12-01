@@ -2,7 +2,7 @@
 
 
 class CreateTest extends MX_Controller {
-	private $_form_create_test1 = 'create_test';
+	private $_form_create_test1 = 'create_test1';
 	private $_data ;
 	private $_subs_selected = null;
 
@@ -22,7 +22,6 @@ class CreateTest extends MX_Controller {
 	function index(){
 		$this->_data['categories'] = $this->mcategory->get_list_category();
 		$this->load->view($this->_form_create_test1, $this->_data);
-
 	}
 
 	function get_subject() {
@@ -87,23 +86,29 @@ class CreateTest extends MX_Controller {
 		$test_question = array();
 		$get_question_info = array();
 		$question_not_enough = false;
+		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
 
 		foreach($input_data['subjects'] as $key => $value) {
 			$input_data['subjects'][$key]['questions'] = array();
 			$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
-			if ($result != null)
-				$input_data['subjects'][$key]['questions'] = $result;
-			else if (sizeof($result) < $value['num_question']){
+			
+			if (sizeof($result) < $value['num_question']){
+				$question_not_enough = true;
 				$get_question_info[$value['id']] = "phan hoc " . $value['name'] .  "voi level " . $value['level_name']. " khong du cau hoi";
-			}
+			} else if ($result != null)
+				$input_data['subjects'][$key]['questions'] = $result;
 		}
 
+		if ($questions_not_enough == true)  {
+			echo "Khong du cau hoi";
+			return;
+		}
 
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
 			$result = $this->mquestion->get_questions_with_category($input_data['category']);
-			if (sizeof == null) {
-				echo "Khong du cau hoi tong hop";
-				return;
+			if (sizeof($result) < $num_general_question) {
+				$get_question_info['generral'] = "Khong du du lieu cho cau hoi tong hop";
+				$question_not_enough = true;
 			}
 			$input_data['general_question_bank'] = $result;
 		}
@@ -121,7 +126,7 @@ class CreateTest extends MX_Controller {
 			}
 		}
 
-		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
+		
 
 		//cau hoi tong hop
 		$avg_score = 0;
