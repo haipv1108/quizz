@@ -119,7 +119,6 @@ class Question extends MX_Controller{
 				$data['success'] = $success;
 			}
 		}
-		$data['template'] = 'notify';
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	

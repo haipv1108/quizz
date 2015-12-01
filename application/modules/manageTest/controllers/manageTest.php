@@ -37,6 +37,30 @@ class ManageTest extends MX_Controller {
 	 	$this->load->view('admin/backend/layouts/home');
 	 }
 
+ 	function viewTest($test_id= 0){
+		save_url();// Luu current_url vao session
+		$user = check_login(3);
+		$data = array(
+				'user' => $user,
+				'meta_title' => 'View Test Detail',
+				'template' => 'backend/home/viewTestDetails'
+				);
+		$test = $this->mmanageTest->find_test($test_id);
+		if(!$test){
+			$data['error'] = 'Bạn chưa tạo bài test này. ';
+			$data['template'] = 'backend/home/notify';
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
+		}
+		$data['test'] = $test;
+		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+	}
+
+
+
+
+
+
 	 function delete($id = 0){
 	 	save_url();// Luu current_url vao session
 		$user = check_login(3);

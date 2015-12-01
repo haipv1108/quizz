@@ -31,5 +31,16 @@ class MmanageTest extends CI_Model{
 		$this->db->where('id', $id)->limit(1)->delete($this->_name);
 	}
 
-
+	function find_test($test_id){
+		$query = $this->db->select('q.type, q.question, q.answer, test.id, q.level, q.correct, q.ans_explained, question.score')
+			->from('test')
+			->where('test.id',$test_id)
+			->join('question','test.id = question.testid')
+			->join('questionbank as q','q.id = question.questionid')
+			->limit(20)
+			->get();
+		if($query->num_rows()>0)
+			return $query->result_array();
+		else return false;
+	}
 }

@@ -10,6 +10,7 @@
 	<?php 	if(isset($success)){?>
 				<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
 	<?php } ?>
+
 			<form action="" method="post">
 				<fieldset>
 					<legend>You want to delete category id = <?php if(isset($quiz_info)) echo $quiz_info['id'];?>?</legend>
