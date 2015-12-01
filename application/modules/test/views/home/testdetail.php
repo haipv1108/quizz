@@ -31,8 +31,8 @@ ent">
          </form>
          <div class="divider divider2"></div>
          </div>
-         <div class="text-center delay"><p>Bạn sẽ bắt đầu trong 5s</p></div>
-         
+         <div class="text-center delay"><p>Bạn sẽ bắt đầu trong <span id="demlui5s"></span>s</p></div>
+         <div class="text-center shownotice"> <p>Bạn đã hết giờ làm bài,hãy bấm nút nộp bài để hiển thị điểm</p></div>
          <div class="box-body">
          <?php if(isset($test) && !empty($test)){
             $number_question = 1;
@@ -76,7 +76,7 @@ ent">
                </tr> 
                <tr>
                    <td style="text-align : center;">
-                     <span id="phut"><?php echo $test_info['time']?></span>
+                     <span id="phut"></span>
                      :
                      <span id="giay">00</span>
                   </td>
@@ -109,18 +109,28 @@ ent">
 </script>
  <script type="text/javascript">
       $(document).ready(function(){
-         var m = <?php echo $test_info['time'] ?>; // Phút
+         var m = 0; // Phút //var m = <?php echo $test_info['time'] ?>; // Phút
          var s = 6; // Giây
+         var dem = 5;
          var timeout = null;
          function start(){
+         if(dem == 0){
+            $('.delay').fadeOut(300);
+
+         }
+         $('#demlui5s').html('').html(dem);
          if (s === -1){
                     m -= 1;
                     s = 59;
                 }
          if (m == -1){
                     clearTimeout(timeout);
-                    alert('Hết giờ');
+                    $('.box-body').hide();
+                    $('.shownotice').fadeIn(300);
+                    alert('Hết giờ,bạn hãy bấm nút nộp bài');
+                    
                     return false;
+
                 }
 
          $('#phut').html('').html(m);
@@ -128,17 +138,19 @@ ent">
 
          timeout = setTimeout(function(){
                     s--;
+                    dem--;
                     start();
                 }, 1000);
 
          }
          start();
-
+         $('.shownotice').hide()
          $('.box-body').hide();
          setTimeout(function(){
             $('.box-body').fadeIn(300);
-            $('.delay').fadeOut(300);
-         },5000);
+            /*$('.delay').fadeOut(300);*/
+         },6000);
+
       })
          
    </script>
