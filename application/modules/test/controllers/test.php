@@ -111,8 +111,7 @@ class Test extends MX_Controller {
 				$responses['answer_choice'] = json_encode($result['answer']);
 				if(isset($responses['answer_choice']))
 					$this->mtest->addtest($responses);
-
-
+				
 		if(!$this->input->post('submit_rs')){
 			$data['totalScore'] = $totalScore;
 			$data['score'] = $Score;
