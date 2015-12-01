@@ -36,7 +36,7 @@
 
         function checkLevelExist(_name) {
             $.ajax({
-                url: "<?php site_url();?>managelevel/get_level",
+                url: "<?php site_url();?>level/get_level",
                 type: 'POST',
                 data: {cat_id : data, name: _name},
                 dataType: 'text',
@@ -49,7 +49,7 @@
         function viewLevel() {
             var data = $('#category').val();
             $.ajax({
-                url: "<?php site_url();?>managelevel/get_level",
+                url: "<?php site_url();?>level/get_level",
                 type: 'POST',
                 data: {cat_id : data},
                 dataType: 'html',
@@ -63,7 +63,7 @@
             if ($('#category').val() === 'non_select')
                 return;
             $.ajax({
-                url: "<?php site_url();?>managelevel/add_level",
+                url: "<?php site_url();?>level/add_level",
                 type: 'POST',
                 data: {
                     level_name : $('#level_name').val(),
@@ -79,7 +79,7 @@
         function removeLevel($id) {
 
             $.ajax({
-                url: "<?php site_url();?>managelevel/remove_level",
+                url: "<?php site_url();?>level/remove_level",
                 type: 'POST',
                 data: {
                     id: $id,
@@ -97,7 +97,7 @@
             var id_name = "#text" + _id;
 
             $.ajax({
-                url: "<?php site_url();?>managelevel/update_level",
+                url: "<?php site_url();?>level/update_level",
                 type: 'POST',
                 data: {
                     id: _id,

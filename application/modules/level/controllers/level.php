@@ -1,5 +1,5 @@
-<?php
-class Managelevel extends MX_Controller {
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+class Level extends MX_Controller {
     private $_data;
     public function __construct() {
         parent::__construct();
@@ -9,7 +9,7 @@ class Managelevel extends MX_Controller {
 
     public function index() {
         $this->_data['category'] = $this->mcategory->get_list_category();
-        $this->load->view('managelevel', $this->_data);
+        $this->load->view('level', $this->_data);
     }
 
     private function update_level_view($levels) {
@@ -23,8 +23,6 @@ class Managelevel extends MX_Controller {
                     ";
         }
     }
-
-
 
     public function get_level() {
         if (isset($_POST['cat_id']))
