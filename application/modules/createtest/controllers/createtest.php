@@ -71,7 +71,7 @@ class CreateTest extends MX_Controller {
 
 		foreach($data as $key => $value) {
 			array_push($input_data['subjects'],
-				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level));
+				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
 			$input_data['current_num_question'] += $value->numQuestion;
 		}
 
@@ -81,26 +81,27 @@ class CreateTest extends MX_Controller {
 
 
 		$this->create_test($input_data);
-
 	}
 
 	function create_test($input_data) {
 		$test_question = array();
+		$get_question_info = array();
+		$question_not_enough = false;
 
 		foreach($input_data['subjects'] as $key => $value) {
 			$input_data['subjects'][$key]['questions'] = array();
 			$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
 			if ($result != null)
 				$input_data['subjects'][$key]['questions'] = $result;
-			else {
-				echo "Khong du cau hoi";
-				return;
+			else if (sizeof($result) < $value['num_question']){
+				$get_question_info[$value['id']] = "phan hoc " . $value['name'] .  "voi level " . $value['level_name']. " khong du cau hoi";
 			}
 		}
 
+
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
 			$result = $this->mquestion->get_questions_with_category($input_data['category']);
-			if ($result == null) {
+			if (sizeof == null) {
 				echo "Khong du cau hoi tong hop";
 				return;
 			}
@@ -147,7 +148,5 @@ class CreateTest extends MX_Controller {
 
 		$this->mtest->insert_test($data);
 	}
-
-
 }
 
