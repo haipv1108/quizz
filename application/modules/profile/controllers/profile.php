@@ -78,10 +78,11 @@ class Profile extends MX_Controller {
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 			return;
 		}
+
 		$test = $this->mprofile->get_test_detail($responses['testid']);
 		$data['test'] = $test;
 		$data['score'] = $responses['score'];
-		$data['answer_choosen'] = json_decode($responses['answer_choice']);
+		$data['answer_choosen'] = json_decode($responses['answer_choice'],true);
 		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 

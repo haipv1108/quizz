@@ -1,9 +1,8 @@
-
+<form action="" method="post">
 <section class="content">
    <div class="row">
       <div class="col-md-10">
          <!-- Hiển thị các danh ĐỀ THI của content -->
-         <form action="" method="post">
             <div class="box box-success">
                <!-- Title của đề thi -->
                <div class="row" style="padding-top: 20px;">
@@ -25,10 +24,8 @@
                </div>
                <div class="box-header">
                   <p class="pull-right"><b>Lưu ý:</b> Một câu hỏi có thể có nhiều hơn một đáp án đúng.</p>
-         </form>
          
          <a href="test/printTest/<?php if(isset($test_info) && !empty($test_info)) echo $test_info['id'];?>" class="btn btn-primary">Click to Print this Test >>></a>
-         </form>
          <div class="divider divider2"></div>
          </div>
          <div class="text-center delay"><p>Bạn sẽ bắt đầu trong 5s</p></div>
@@ -85,9 +82,8 @@
              <tr>
                   <!--<td><a type ="submit" id="testFinish" class="button" name="submit" value="Nộp bài">Nộp Bài</a></td>-->
                   <td>
-                  <form method="post" action="">
                      <input type="submit"  id ="testFinish" class="button" name="submit" value="Nộp bài">
-                  </form>
+
                   </td>
              </tr> 
          </table>
@@ -107,7 +103,7 @@
         })
       })
 </script>
- <script type="text/javascript">
+<script type="text/javascript">
       $(document).ready(function(){
          var m = <?php echo $test_info['time'] ?>; // Phút
          var s = 6; // Giây
@@ -140,5 +136,5 @@
             $('.delay').fadeOut(300);
          },5000);
       })
-         
-   </script>
+</script>
+</form>

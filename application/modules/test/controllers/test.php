@@ -107,7 +107,7 @@ class Test extends MX_Controller {
 				}
 				$totalScore += $value['score'];
 			}
-				$responses['score'] =  $Score/ $totalScore;
+				$responses['score'] =  round($Score/ $totalScore,3);
 				$responses['answer_choice'] = json_encode($result['answer']);
 				if(isset($responses['answer_choice']))
 					$this->mtest->addtest($responses);
