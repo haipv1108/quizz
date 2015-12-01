@@ -115,7 +115,7 @@ class Test extends MX_Controller {
 		if(!$this->input->post('submit_rs')){
 			$data['totalScore'] = $totalScore;
 			$data['score'] = $Score;
-			$data['meta_title'] = 'result';
+			$data['meta_title'] = 'Result';
 			$data['template'] = 'home/result';			
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
