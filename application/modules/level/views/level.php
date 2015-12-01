@@ -60,6 +60,12 @@
         }
 
         function addLevel() {
+            level_name = $('#level_name').val();
+            if (!level_name) {
+                alert("Tên level không thể rỗng!");
+                return;
+            }
+
             if ($('#category').val() === 'non_select')
                 return;
             $.ajax({
@@ -69,9 +75,15 @@
                     level_name : $('#level_name').val(),
                     cat_id : $('#category').val()
                 },
-                dataType: 'html',
+                dataType: 'text',
                 success: function(response) {
+                    if (response === 'false') {
+                        alert("Không thể trùng độ khó trong 1 môn!");
+                        document.getElementById(id_name).value = level_name;
+                        return;
+                    }
                     $('#level').html(response);
+                    alert("Add success");
                 }
             });
         }
@@ -95,7 +107,11 @@
 
         function updateLevel(_id) {
             var id_name = "#text" + _id;
-
+            level_name = $(id_name).val();
+             if (!level_name) {
+                alert("Tên level không thể rỗng!");
+                return;
+            }
             $.ajax({
                 url: "<?php site_url();?>level/update_level",
                 type: 'POST',
@@ -104,8 +120,13 @@
                     cat_id: $('#category').val(),
                     name : $(id_name).val()
                 },
-                dataType: 'html',
+                dataType: 'text',
                 success: function(response) {
+                    if (response === 'false') {
+                        alert("Không thể trùng độ khó trong 1 môn!");
+                        document.getElementById(id_name).value = level_name;
+                        return;
+                    }
                     $('#level').html(response);
                     alert("Update success");
                 }

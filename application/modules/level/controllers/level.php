@@ -31,14 +31,19 @@ class Level extends MX_Controller {
         $this->update_level_view($levels);
     }
 
+
+
     public function add_level() {
         if (isset($_POST['level_name']) && isset($_POST['cat_id'])) {
             $data['name'] = $_POST['level_name'];
             $data['categoryid'] = $_POST['cat_id'];
-
-            $this->mlevel->add_level($data);
-            $levels = $this->mlevel->get_level($data['categoryid']);
-            $this->update_level_view($levels);
+            if ($this->mlevel->check_level_existed($data['name'], $data['categoryid']) == false) {
+                $this->mlevel->add_level($data);
+                $levels = $this->mlevel->get_level($data['categoryid']);
+                $this->update_level_view($levels);
+            } else {
+                echo "false";
+            }
         }
     }
 
@@ -55,9 +60,14 @@ class Level extends MX_Controller {
             $data['name'] = $_POST['name'];
             $data['id'] = $_POST['id'];
             $data['categoryid'] = $_POST['cat_id'];
-            $this->mlevel->update_level($data);
-            $levels = $this->mlevel->get_level($_POST['cat_id']);
-            $this->update_level_view($levels);
+            if ($this->mlevel->check_level_existed($data['name'], $data['categoryid']) == false) {
+                 $this->mlevel->update_level($data);
+                 $levels = $this->mlevel->get_level($_POST['cat_id']);
+                 $this->update_level_view($levels);
+            } else {
+                echo "false";
+            }
+           
         }
     }
 

@@ -6,7 +6,7 @@
 	<div class="content-box-content">
 		<?php echo validation_errors();?>
 
-		<form action = 'createtest/get_input' method = 'post' name = 'form' id = 'form'>
+		<form action = 'manageTest/get_input' method = 'post' name = 'form' id = 'form'>
 			<p>
 				<input type = "hidden" id = "data" name = "data">
 				<label>Tên đề thi</label>
@@ -54,6 +54,11 @@
 					 } ?>
 				</select>
 			</div>
+			<p>
+				<label>Tổng số lượng câu hỏi</label>
+				<input class="text-input" type = text id = max_question name = max_question value="<?php echo set_value('max_question'); ?>">
+				<span id="avai"></span>
+			</p>
 			</p>
 			<div class="clear"></div>
 			<div>
@@ -72,11 +77,6 @@
 				</select>
 			</div>
 			<div class="clear"></div>
-			<p>
-				<label>Tổng số lượng câu hỏi</label>
-				<input class="text-input" type = text id = max_question name = max_question value="<?php echo set_value('max_question'); ?>">
-				<span id="avai"></span>
-			</p>
 			<div class="clear"></div>
 			<p>
 			<div>
@@ -107,23 +107,14 @@
 			</div>
 			</p>
 			<div class="clear"></div>
-			
-			<div>
-				<label>Level</label>
-				<select name="level">
-						<option value = '1'>Student</option>
-						<option value = '2'>Teacher</option>
-						<option value = '3'>Admin</option>
-				</select>
-			</div>
-			<div class="clear"></div>
 			<p>
 				<table style = "width:100%">
 					<thead>
 					<tr>
-						<th>Subjects Selected</th>
-						<th>Number Of Question</th>
-						<th>Tool</th>
+						<th>Mô học</th>
+						<th>Độ khó</th>
+						<th>Số lượng câu hỏi</th>
+						<th>Chức năng</th>
 					</tr>
 					</thead>
 
@@ -195,7 +186,7 @@
 
 
         if (currentNumQuestion + parseInt(numQuestion) > maxQuestion) {
-            alert("Qua nhieu cau hoi trong phan hoc nay");
+            alert("Vượt qua tổng số lượng câu hỏi");
             return;
         }
         if (subjectID == 'non_select' || $('#level').val() == 'non_select' || $('#category').val() == 'non_select') {
@@ -248,7 +239,7 @@
             $('#category').on('change', function(){
                 var selected = $('#category').val()
                 $.ajax({
-                    url: "<?php site_url();?>createtest/get_subject",
+                    url: "<?php site_url();?>manageTest/get_subject",
                     type: 'POST',
                     data: {cat_id : selected},
                     dataType: 'html',
@@ -262,7 +253,7 @@
             $('#category').on('change', function(){
                 var selected = $('#category').val()
                 $.ajax({
-                    url: "<?php site_url();?>createtest/get_level",
+                    url: "<?php site_url();?>manageTest/get_level",
                     type: 'POST',
                     data: {cat_id : selected},
                     dataType: 'html',
