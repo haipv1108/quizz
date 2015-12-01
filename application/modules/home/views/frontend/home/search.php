@@ -28,7 +28,8 @@
 										</div>
 									</div>
 								</div>
-							<?php		}?>
+								<?php if(($i%4) == 0) echo '<div class="clearfix"></div>';?>
+						<?php	}?>
 						</div>
 
 				  	<?php }
