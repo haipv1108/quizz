@@ -34,4 +34,9 @@ Class Mlevel extends CI_Model {
 			return $query->result_array();
 		 return false;
 	}
+
+    function check_level_existed($name, $categoryid) {
+        $query = $this->db->where('name', $name)->where('categoryid', $categoryid)->get($this->_table_name);
+        return $query->num_rows() > 0? true:false;
+    }
 }
