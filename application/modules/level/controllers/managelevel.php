@@ -25,7 +25,6 @@ class Managelevel extends MX_Controller {
     }
 
 
-
     public function get_level() {
         if (isset($_POST['cat_id']))
             $category = $_POST['cat_id'];
