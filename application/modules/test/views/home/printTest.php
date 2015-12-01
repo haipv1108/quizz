@@ -19,8 +19,6 @@
       <!-- Content Wrapper. Contains page content -->
       <div>
 		    <section class="content">
-
-
           <div class="row">
             <!-- Hiển thị các danh ĐỀ THI của content -->
             <div id="test" class="col-md-10 col-md-offset-1">
@@ -46,7 +44,7 @@
                 <div class="box-header">
                   <p class="pull-right">Lưu ý: Một câu hỏi có thể có nhiều hơn một đáp án đúng.</p>
                   <form>
-                    <input type="button" value="Print this page" onClick="window.print()">
+                    <input class="btn btn-primary" type="button" value="Print this Test" onClick="window.print()">
                   </form>
                 </div>
                 <div class="box-body">

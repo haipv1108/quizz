@@ -1,0 +1,31 @@
+    <section class="content">
+	<!-- Hiển thị các danh ĐỀ THI của content -->
+	  <div class="box box-success">
+		<div class="box-body">
+			<?php if(isset($test) && !empty($test)){
+			  $number_question = 1;
+			  foreach($test as $key=>$val){?> <!--moi cau hoi-->
+				<div class="clearfix cauhoi-wrap">
+				  <span class="cauhoi"><?php echo $number_question++;?>. <?php echo $val['question'];?></span>
+				  <div class="form-group">
+					<?php if(isset($val['answer']) && !empty($val['answer'])){
+					  $answer_choice = json_decode($val['answer'],true);?>
+					  <?php $number_choice = count($answer_choice);
+							$answer_true = json_decode($val['correct'],true);
+							for($choice = 1; $choice<= $number_choice; $choice++){?>
+								<div class="radio">
+									<label>
+										<input	type="checkbox" value="<?php echo $choice;?>" name="answer[<?php echo $key;?>][]">
+										<?php echo $answer_choice[$choice];?>
+									</label>
+								</div>
+						  <?php }?>
+				  <?php }?>             
+				  </div>
+				</div>                
+			<?php }
+			}?>
+		</div>
+	  </div>
+	</section>
+

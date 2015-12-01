@@ -15,7 +15,7 @@
 					?>
 						<option value="<?php echo $value['id']; ?>" <?php if($quiz_info['categoryid'] == $value['id']) echo 'selected';?>><?php echo $value['name']; ?></option>
 						<?php
-				 } ?>
+				} ?>
 			</select>
 			<br>
 			<span>Chọn phần học: </span>
@@ -64,9 +64,9 @@
 										break;
 								}
 								if ($k <= sizeof($cor)) {
-									echo "<input type = checkbox name = correct[] checked";
+									echo "<input type = checkbox name = correct[] checked value = $key ";
 								} else {
-									echo "<input type = checkbox name = correct[]>";
+									echo "<input type = checkbox name = correct[] value = $key >";
 								}
 						
 					?>

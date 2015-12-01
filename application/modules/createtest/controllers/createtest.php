@@ -23,6 +23,11 @@ class CreateTest extends MX_Controller {
 		$this->_data['categories'] = $this->mcategory->get_list_category();
 		$this->load->view($this->_form_create_test1, $this->_data);
 	}
+	
+	function test(){
+		$data['template'] = 'create_test1';
+		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+	}
 
 	function get_subject() {
 		if (isset($_POST['cat_id']) && strcmp($_POST['cat_id'],'non_select') != 0)
@@ -91,13 +96,14 @@ class CreateTest extends MX_Controller {
 		foreach($input_data['subjects'] as $key => $value) {
 			$input_data['subjects'][$key]['questions'] = array();
 			$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
-			
+
 			if (sizeof($result) < $value['num_question']){
 				$question_not_enough = true;
 				$get_question_info[$value['id']] = "phan hoc " . $value['name'] .  "voi level " . $value['level_name']. " khong du cau hoi";
 			} else if ($result != null)
 				$input_data['subjects'][$key]['questions'] = $result;
-		}
+		
+		
 
 		if ($questions_not_enough == true)  {
 			echo "Khong du cau hoi";
@@ -109,6 +115,7 @@ class CreateTest extends MX_Controller {
 			if (sizeof($result) < $num_general_question) {
 				$get_question_info['generral'] = "Khong du du lieu cho cau hoi tong hop";
 				$question_not_enough = true;
+
 			}
 			$input_data['general_question_bank'] = $result;
 		}

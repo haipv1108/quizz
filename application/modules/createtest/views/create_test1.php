@@ -5,9 +5,14 @@
 	</div>
 	<div class="content-box-content">
 		<?php echo validation_errors();?>
+<<<<<<< HEAD
+		<form action="" method="post">
+			<p>
+=======
 		<form action = 'createtest/get_input' method = 'post' name = 'form' id = 'form'>
 			<p>
 				<input type = "hidden" id = "data" name = "data">
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
 				<label>Tên đề thi</label>
 				<input class="text-input" type="text" name="test_name" value="<?php echo set_value('test_name'); ?>"/>
 				<span id="avai"></span>
@@ -138,6 +143,15 @@
 		</form>
 	</div>
 </div>
+<<<<<<< HEAD
+
+<script>
+    function include(arr, id) {
+        for (var i = 0; i < arr.length; ++i) {
+            if (arr[i]['id'] == id)
+                return true;
+        }
+=======
 <script language="javascript" src="/CI/js/jquery-2.0.0.min.js"></script>
 <script>
     function include(arr, id, level) {
@@ -146,6 +160,7 @@
                 return true;
         }
         return false;
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
     }
 
     var subjectsSelected =[];
@@ -163,6 +178,15 @@
                 numQuestion = subjectsSelected[i]['numQuestion'];
                 scoreQuestion = subjectsSelected[i]['scoreQuestion'];
                 level = subjectsSelected[i]['level'];
+<<<<<<< HEAD
+                str = str +
+                    "<tr>" +
+                    "<td>"+subjectName+"</td>" +
+                    "<td>"+level+"</td>" + 
+                    "<td><input type = text id = text" + subjectID + " value=" +numQuestion +"></td>" +
+                    "<td>"+scoreQuestion+"</td>" + 
+                    "<td> <button type = 'button' onclick='updateSubject(" + subjectID + ")'>Update</button></td>" +
+=======
                 levelName = subjectsSelected[i]['levelName'];
                 str = str +
                     "<tr>" +
@@ -170,6 +194,7 @@
                     "<td>"+levelName+"</td>" + 
                     "<td>"+numQuestion+"</td>" +
                     "<td>"+scoreQuestion+"</td>" + 
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
                     "<td> <button type = 'button' onclick='removeSubject(" + subjectID + ")'>Remove</button></td>" +
                     "</tr>";
 
@@ -187,7 +212,10 @@
         var maxQuestion = $('#max_question').val();
         var scoreQuestion = $('#score_question').val();
         var level = $('#level').val();
+<<<<<<< HEAD
+=======
         var levelName = $("#level option:selected").text();
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
 
         if (currentNumQuestion + parseInt(numQuestion) > maxQuestion) {
             alert("Qua nhieu cau hoi trong phan hoc nay");
@@ -197,7 +225,11 @@
             alert("Xin hãy chọn môn học, độ khó & phần học.");
             return;
         }
+<<<<<<< HEAD
+        if (include(subjectsSelected, subjectID)) {
+=======
         if (include(subjectsSelected, subjectID, level)) {
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
             alert("Môn học đã tồn tại!");
             return;
         }
@@ -215,17 +247,42 @@
         subjectObject['numQuestion'] = numQuestion;
         subjectObject['scoreQuestion'] = scoreQuestion;
         subjectObject['level'] = level;
+<<<<<<< HEAD
+=======
         subjectObject['levelName'] = levelName;
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
         subjectsSelected.push(subjectObject);
         currentNumQuestion += parseInt(numQuestion);
         updateView();
     }
 
+<<<<<<< HEAD
+
+    function updateSubject(id) {
+        var numQuestionNode = "text" + id;
+        var numQuestion = $(numQuestionNode).val();
+
+        for (var i in subjectsSelected) {
+            if (subjectsSelected.hasOwnProperty(i)) {
+                if (subjectsSelected[i]['id'] == id) {
+                    subjectsSelected[i]['numQuestion'] = numQuestion;
+                    alert("Update Success");
+                    return;
+                }
+            }
+        }
+    }
+
+=======
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
     function removeSubject(id) {
         for (var i in subjectsSelected) {
             if (subjectsSelected.hasOwnProperty(i)) {
                 if (subjectsSelected[i]['id'] == id) {
+<<<<<<< HEAD
+=======
                 	currentNumQuestion -= subjectsSelected[i]['numQuestion'];
+>>>>>>> e9d443b32f2052667652c3c468a2b6c57fb12510
                     subjectsSelected.splice(i,1);
                     updateView();
                     return;

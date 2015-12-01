@@ -36,9 +36,17 @@
 					foreach($view_question as $key=>$val){?>
 						<tr>
 							<td><?php echo $val['question'];?></td>
-							<td><?php echo $val['answer'];?></td>
+							<td>
+								<?php foreach (json_decode($val['answer'],true) as $key => $value) {
+									echo "{$key} : {$value}<br/>";
+								}?>
+							</td>
 							<td><?php echo $val['level'];?></td>
-							<td><?php echo $val['correct'];?></td>
+							<td>
+								<?php foreach (json_decode($val['correct'],true) as $key1 => $value1) {
+									echo "<li>{$value1}</li>";
+								}?>
+							</td>
 							<td><?php echo $val['ans_explained'];?></td>
 							<td>
 								<a href="<?php echo site_url();?>question/editquestion/<?php echo $val['id'];?>" title="Edit"><img src="template/backend/simpla-admin/resources/images/icons/pencil.png" alt="Edit"></a>

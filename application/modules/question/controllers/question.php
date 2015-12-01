@@ -83,9 +83,7 @@ class Question extends MX_Controller{
 				$this->mquestion->updatequestion($edit_quiz);
 				$data['success'] = 'Sửa câu hỏi thành công';
 				$data['template'] = 'notify';
-				echo "<pre>";
-								print_r($correct);
-				//$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+				$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 				return;
 			}
 		}
@@ -121,7 +119,6 @@ class Question extends MX_Controller{
 				$data['success'] = $success;
 			}
 		}
-		$data['template'] = 'notify';
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	

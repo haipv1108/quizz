@@ -20,8 +20,8 @@ if(!function_exists('get_info_question')){
 		$ci = &get_instance();
 		$answer = $ci->input->post('answer');
 		$correct = $ci->input->post('correct');
-		$ans_json = array_for_json($answer);
-		$corr_json = array_for_json($correct);
+		$ans_json = array_for_json_answer($answer);
+		$corr_json = array_for_json_correct($correct);
 		$quiz_info = array(
 							'categoryid' => $ci->input->post('category'),
 							'subjectid' => $ci->input->post('subject'),
@@ -37,12 +37,24 @@ if(!function_exists('get_info_question')){
 	}
 }
 
-if(!function_exists('array_for_json')){
-	function array_for_json($array_string){
+if(!function_exists('array_for_json_answer')){
+	function array_for_json_answer($array_string){
 		$array = array();
 		$j = 1;
 		for ($i = 0; $i < sizeof($array_string); ++$i) {
-			array_push($array, array($j++  => $array_string[$i]));
+			$array[$j++] = $array_string[$i];
+		}
+		$arr_json = json_encode($array);
+		return $arr_json;
+	}
+}
+
+if(!function_exists('array_for_json_correct')){
+	function array_for_json_correct($array_string){
+		$array = array();
+		$j = 1;
+		for ($i = 0; $i < sizeof($array_string); ++$i) {
+			$array[$j++] = (int) $array_string[$i];
 		}
 		$arr_json = json_encode($array);
 		return $arr_json;
