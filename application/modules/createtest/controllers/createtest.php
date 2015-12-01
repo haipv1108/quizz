@@ -24,6 +24,11 @@ class CreateTest extends MX_Controller {
 		$this->load->view($this->_form_create_test1, $this->_data);
 
 	}
+	
+	function test(){
+		$data['template'] = 'create_test1';
+		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+	}
 
 	function get_subject() {
 		if (isset($_POST['cat_id']) && strcmp($_POST['cat_id'],'non_select') != 0)
@@ -93,7 +98,7 @@ class CreateTest extends MX_Controller {
 			if ($result != null)
 				$input_data['subjects'][$key]['questions'] = $result;
 			else {
-				echo "Khong du cau hoi";
+				echo "Không đủ câu hỏi.";
 				return;
 			}
 		}
@@ -101,7 +106,7 @@ class CreateTest extends MX_Controller {
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
 			$result = $this->mquestion->get_questions_with_category($input_data['category']);
 			if ($result == null) {
-				echo "Khong du cau hoi tong hop";
+				echo "Không đủ câu hỏi tổng hợp";
 				return;
 			}
 			$input_data['general_question_bank'] = $result;

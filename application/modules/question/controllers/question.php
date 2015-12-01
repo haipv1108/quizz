@@ -31,6 +31,7 @@ class Question extends MX_Controller{
 					);
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
+
 	function addquestion(){
 		save_url();// Luu current_url vao session
 		$user = check_login(3);

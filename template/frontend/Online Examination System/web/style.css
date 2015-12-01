@@ -104,8 +104,8 @@ body {
 }
 .fixed{
     position: fixed!important;
-    right: 22%!important;
-    top: 2%!important;
+    right: 2%!important;
+    top: 22%!important;
     width: 12%!important;
 }
 .chanle:nth-child(2n) {
