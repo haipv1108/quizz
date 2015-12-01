@@ -1,0 +1,28 @@
+1) Xóa category
+	Cần xóa những phần liên quan đến nó, gồm:
+	a) Xóa phần học subject
+	b) Xóa level môn học
+	c) Xóa các câu hỏi trong questionbank
+	d) Xóa các đề test của môn học
+	e) Xóa category đó
+2) Xóa subject
+	Cần xóa những phân liên quan, gồm:
+	a) Xóa câu hỏi trong questionbank có liên quan đến subjectid đó
+	b) Xóa subject đó
+3) Xóa test
+	Cần xóa những phân liên quan, gồm:
+	a) Xóa các câu hỏi trong bảng question (không phải questionbank)
+	b) Xóa dữ liệu người dùng đã thi trong bảng response
+	c) Xóa đề test đó
+4) Xóa level
+	Cần xóa những phân liên quan, gồm:
+	a) Xóa những câu hỏi trong questionbank có liên quan đến levelid đó
+	b) Xóa level đó
+5) Xóa questionbank
+	Khi xóa 1 câu hỏi trong questionbank, cần xóa những phần liên quan, gồm:
+	a) Xóa những câu hỏi trong bảng question ( không phải questionbank) liên quan đến câu hỏi đó
+	b) Xóa câu hỏi đó.
+6) Xóa user
+	Khi xóa 1 người dùng, cần xóa những phần liên quan, gồm:
+	1) Xóa dữ liệu thi của người dùng đó trong bảng response
+	2) Xóa người dùng đó.
