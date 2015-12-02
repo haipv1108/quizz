@@ -43,9 +43,10 @@ class Test extends MX_Controller {
 				);
 			$this->result($result,$responses);
 			return;
-		}
+		}else{
 		$data['template'] = 'home/testdetail'; 
 		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+		}
 	}
 // One True All Score <tyrpe = 1>
 	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
@@ -116,7 +117,9 @@ class Test extends MX_Controller {
 			$data['totalScore'] = $totalScore;
 			$data['score'] = $Score;
 			$data['meta_title'] = 'Result';
-			$data['template'] = 'home/result';			
+			$data['template'] = 'home/result';
+			$data['test'] = $result['test'];
+			$data['answer_choosen']	= $result['answer'];		
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
 			redirect(base_url());
