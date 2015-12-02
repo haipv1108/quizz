@@ -29,14 +29,6 @@ class Home extends MX_Controller{
 		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
 		
 	}
-	function testdetail($testid){
-		$data = array(
-						'test' => $this->mhome->get_test_detail($testid),
-						'meta_title' => 'Test Detail',
-						'template' => 'frontend/home/testdetail'
-					);
-		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
-	}
 	// tim kiem de thi
 	function search(){
 		save_url();// Luu current_url vao session
@@ -47,19 +39,14 @@ class Home extends MX_Controller{
 			$this->form_validation->set_rules('search', 'Mã đề hoặc Tên đề', 'required'); 
 			if($this->form_validation->run() == TRUE){
 				$search = $this->input->post('search');
-				// lay danh sach theo category
-				$list_cate = $this->mhome->get_list_cate();
-				foreach($list_cate as $key=>$val){
-					$listtest[$val['id']] = $this->mhome->search_test($search, $val['id']);
-				}
+				$listtest = $this->mhome->search_test($search);
 				if(!$listtest){
 					$data['error'] = 'Không có đề thi trong hệ thống';
-					$data['template'] = 'home/notify';
+					$data['template'] = 'frontend/home/notify';
 					$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);
 					return;
 				}
 				$data['listtest'] = $listtest;
-				$data['listcate'] = $list_cate;
 			}
 		}
 		$this->load->view('frontend/layouts/home',isset($data)?$data:NULL);

@@ -7,16 +7,11 @@
 				<h3 class="box-title">Danh sách kết quả tìm kiếm: </h3>
 			</box>
 			<div class="box-body">
-				<?php  if(isset($listcate) && !empty($listcate)){
-				  foreach($listcate as $k=>$v){
-					  if(isset($listtest[$v['id']]) && !empty($listtest[$v['id']])){?>
+				<?php  
+					  if(isset($listtest) && !empty($listtest)){?>
 						<div class="row">
-							<div class="container">
-								<p style="font-size: 18px;">Môn học: <a href="home/listtest/<?php echo $v['id'];?>" class="btn2-app"><?php echo $v['name'];?></a></p>
-							</div>
-							<div class="clearfix"></div>
 							<?php	  $i = 0;
-							  foreach($listtest[$v['id']] as $key=>$val){
+							  foreach($listtest as $key=>$val){
 								$i++;?>
 								<div class="col-md-3">
 									<div class="box <?php if($i <5) echo 'box-success'; else if($i < 9) echo 'box-danger'; else echo 'box-info';?> box-solid">
@@ -32,9 +27,7 @@
 						<?php	}?>
 						</div>
 
-				  	<?php }
-				  }
-				}?>
+				  	<?php }?>
 			</div>
 		</div>
 	</div>

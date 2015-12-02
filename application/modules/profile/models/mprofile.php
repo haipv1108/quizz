@@ -22,6 +22,7 @@ class Mprofile extends CI_Model{
 				->from('responses as r')
 				->where('userid',$user_id)
 				->join('test as t', 't.id = r.testid')
+				->order_by('r.id','desc')
 				->get();
 		if($query->result_array()>0)
 			return $query->result_array();

@@ -1,9 +1,0 @@
-diff a/application/modules/home/controllers/home.php b/application/modules/home/controllers/home.php	(rejected hunks)
-@@ -5,6 +5,7 @@
- 		$this->load->model('mhome');
- 		parent::__construct();
- 	}
-+
- 	function index(){
- 		save_url();
- 		$list_cate = $this->mhome->get_list_cate();

@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+	<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Test extends MX_Controller {
 	private $_form_create_test1 = 'create_test_1';
@@ -47,6 +47,53 @@ class Test extends MX_Controller {
 		$data['template'] = 'home/testdetail'; 
 		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
+
+	function result($result,$responses){		
+			$Score = 0;
+			$totalScore = 0;
+			$ans;
+			foreach ($result['test'] as $key => $value) {
+				$true_ans = json_decode($value['correct'],true);
+				if(!empty($result['answer'][$key])){
+					if($value['type'] == 1)
+						$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
+					else if($value['type'] == 2)
+						$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
+					else
+						$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
+					$Score += $partScore*$value['score'];
+				}
+				$totalScore += $value['score'];
+			}
+				$responses['score'] =  round($Score/ $totalScore,3);
+				$responses['answer_choice'] = json_encode($result['answer']);
+				if(isset($responses['answer_choice']))
+					$this->mtest->addtest($responses);
+			
+			if($this->input->post('submit_rs')){
+				redirect(base_url().'profile/review_test/');	
+			}
+			$data['totalScore'] = $totalScore;
+			$data['score'] = $Score;
+			$data['meta_title'] = 'Result';
+			$data['template'] = 'home/result';			
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+	}
+	
+	function printTest($testid = 0){
+		// kiem tra testid co ton tai khong?
+		$check_test = $this->mtest->get_test_detail($testid);
+		if(!$check_test){
+			$data['error'] = 'Không có đề thi trong hệ thống.';
+			$data['template'] = 'home/notify'; 
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
+			return;
+		}
+		$data['test'] = $check_test;
+		$data['test_info'] = $this->mtest->get_test_info($testid);
+		$this->load->view('home/printTest',isset($data)?$data:NULL);
+	}
+	
 // One True All Score <tyrpe = 1>
 	private function markScoreForAQuestionOTAS($answer_choice,$answer_true){
 		foreach ($answer_choice as $key => $value) {
@@ -90,52 +137,6 @@ class Test extends MX_Controller {
 	}
 
 
-	function result($result,$responses){		
-			$Score = 0;
-			$totalScore = 0;
-			$ans;
-			foreach ($result['test'] as $key => $value) {
-				$true_ans = json_decode($value['correct'],true);
-				if(!empty($result['answer'][$key])){
-					if($value['type'] == 1)
-						$partScore = $this->markScoreForAQuestionOTAS($result['answer'][$key],$true_ans);
-					else if($value['type'] == 2)
-						$partScore = $this->markScoreForAQuestionPTPS($result['answer'][$key],$true_ans);
-					else
-						$partScore = $this->markScoreForAQuestionATAS($result['answer'][$key],$true_ans);
-					$Score += $partScore*$value['score'];
-				}
-				$totalScore += $value['score'];
-			}
-				$responses['score'] =  round($Score/ $totalScore,3);
-				$responses['answer_choice'] = json_encode($result['answer']);
-				if(isset($responses['answer_choice']))
-					$this->mtest->addtest($responses);
-				
-		if(!$this->input->post('submit_rs')){
-			$data['totalScore'] = $totalScore;
-			$data['score'] = $Score;
-			$data['meta_title'] = 'Result';
-			$data['template'] = 'home/result';			
-			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
-		}else{
-			redirect(base_url());
-		}
-	}
-	
-	function printTest($testid = 0){
-		// kiem tra testid co ton tai khong?
-		$check_test = $this->mtest->get_test_detail($testid);
-		if(!$check_test){
-			$data['error'] = 'Không có đề thi trong hệ thống.';
-			$data['template'] = 'home/notify'; 
-			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
-			return;
-		}
-		$data['test'] = $check_test;
-		$data['test_info'] = $this->mtest->get_test_info($testid);
-		$this->load->view('home/printTest',isset($data)?$data:NULL);
-	}
 	
 	
 }
