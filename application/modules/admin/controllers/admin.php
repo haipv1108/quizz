@@ -41,9 +41,9 @@ class Admin extends MX_Controller {
 					'template' => 'backend/home/add_user'
 					);
 		if($this->input->post('submit')){
-			vali_user();// check validate_form su dung helper
+			vali_add_user();// check validate_form su dung helper
 			if($this->form_validation->run() == TRUE){
-				$u_info = get_info_user();//get info user using helper
+				$u_info = get_info_add_user();//get info user using helper
 				$error = '';
 				$check_name = $this->madmin->check_name($u_info['name']);
 				if(!$check_name){
@@ -80,9 +80,9 @@ class Admin extends MX_Controller {
 		else{
 			$data['user_info']= $user_info;
 			if($this->input->post('submit')){
-				vali_user();// check validate_form su dung helper
+				vali_edit_user();// check validate_form su dung helper
 				if($this->form_validation->run() == TRUE){
-					$u_info = get_info_user();//get info user using helper
+					$u_info = get_info_edit_user();//get info user using helper
 					$u_info['id'] = $id;
 					$this->madmin->updateuser($u_info);
 					$message = 'Edit user successfully.';
