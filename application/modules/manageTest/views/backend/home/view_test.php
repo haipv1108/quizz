@@ -4,7 +4,7 @@
 		<div class="notification success png_bg">
 			<a href="" class="close"><img src="template/backend/simpla-admin/resources/images/icons/cross_grey_small.png" title="Close this notification" alt="close" /></a>
 			<div>
-				Database has a total of <?php echo $total;?> users.
+				Database has a total of <?php echo $total;?> test.
 			</div>
 		</div>
 	<?php }?>

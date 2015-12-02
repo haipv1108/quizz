@@ -50,9 +50,6 @@ class MmanageTest extends CI_Model{
 
 		$testid = $this->get_last_id();
 
-		echo "<pre>";
-		print_r($data['test_question']);
-
 		foreach ($data['test_question'] as  $key => $value) {
 			$this->db->insert('question', array('testid' => $testid, 'questionid' => $value['questionid'], 'score' => $value['score']));
 		}

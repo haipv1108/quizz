@@ -13,6 +13,7 @@ class Madmin extends CI_Model{
 	function viewuser($per_page, $offset){
 		$query = $this->db->limit($per_page,$offset)
 				->order_by('id','desc')
+				->where('level !=',3)
 				->get($this->_name);
 		if($query->num_rows()>0)
 			return $query->result_array();
@@ -40,7 +41,7 @@ class Madmin extends CI_Model{
 		$this->db->where('id', $id)->limit(1)->delete($this->_name);
 	}
 	function search_user($id){
-		$query = $this->db->where('id',$id)->get($this->_name);
+		$query = $this->db->where('id',$id)->where('level !=', 3)->get($this->_name);
 		if($query ->row_array()>0)
 			return $query->row_array();
 		else return false;

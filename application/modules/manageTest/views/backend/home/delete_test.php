@@ -12,7 +12,7 @@
 	<?php } ?>
 			<form action="" method="post">
 				<fieldset>
-					<legend>You want to delete user <?php if(isset($user_info)) echo $user_info['name'];?>?</legend>
+					<legend>You want to delete test <?php if(isset($user_info)) echo $user_info['name'];?>?</legend>
 					<div>
 						<input type="radio" name="delete" value="no" checked="checked"/>No
 						<input type="radio" name="delete" value="yes" />Yes

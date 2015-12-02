@@ -6,7 +6,7 @@
 	<div class="content-box-content">
 		<?php echo validation_errors();?>
 
-		<form action = 'manageTest/get_input' method = 'post' name = 'form' id = 'form'>
+		<form action = '' method = 'post' name = 'form' id = 'form'>
 			<p>
 				<input type = "hidden" id = "data" name = "data">
 				<label>Tên đề thi</label>

@@ -12,7 +12,7 @@
 						<input type="radio" name="delete" value="no" checked="checked"/>No
 						<input type="radio" name="delete" value="yes" />Yes
 					</div>
-					<div><input type="submit" name="submit" value="Delete"/></div>
+					<div><input type="submit" class="button" name="submit" value="Delete"/></div>
 				</fieldset>
 				<div class="clear"></div>
 			</form>

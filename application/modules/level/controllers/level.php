@@ -8,17 +8,25 @@ class Level extends MX_Controller {
     }
 
     public function index() {
-        $this->_data['category'] = $this->mcategory->get_list_category();
-        $this->load->view('level', $this->_data);
+		save_url();// Luu current_url vao session
+		$user = check_login(3);
+		$this->_data = array(
+							'category' =>$this->mcategory->get_list_category(),
+							'template' => 'level',
+							'user' => $user,
+							'meta_title' => 'Manage Level',
+							'active' => 'level-add',
+							);
+		$this->load->view('admin/backend/layouts/home',isset($this->_data)?$this->_data:NULL);
     }
 
     private function update_level_view($levels) {
         foreach($levels as $key => $value) {
             print
                 "<tr>
-                    <td><input type = text id = text" . $value['id'] ." value = '" . $value['name'] ."'></td>
-                    <td><button onclick='updateLevel(" . $value['id'] . ")'>Update</button></td>
-                    <td><button onclick='removeLevel(" . $value['id'] . ")'>Delete</button></td>
+                    <td><input type = text class=text-input id = text" . $value['id'] ." value = '" . $value['name'] ."'></td>
+                    <td><button class=button onclick='updateLevel(" . $value['id'] . ")'>Update</button></td>
+                    <td><button class=button onclick='removeLevel(" . $value['id'] . ")'>Delete</button></td>
                  </tr>
                     ";
         }

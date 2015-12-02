@@ -9,15 +9,11 @@ class ManageTest extends MX_Controller {
 		
 		parent::__construct();
 		$this->load->model('mmanageTest');
-		// $this->load->helper('admin');
-		// $this->load->library(array('email'));
 		$this->load->model('category/mcategory');
 		$this->load->model('subject/msubject');
 		$this->load->model('level/mlevel');
 		$this->load->model('question/mquestion');
-		//$this->load->helper(array('form_vali'));
-		$this->load->helper('form');
-		$this->load->helper('array');
+		$this->load->helper(array('form','array','test'));
 	}
 
 	function index(){
@@ -46,8 +42,32 @@ class ManageTest extends MX_Controller {
 
 
 	function add(){
-		$this->_data['template'] = 'create_test';
-		$this->_data['categories'] = $this->mcategory->get_list_category();
+		save_url();// Luu current_url vao session
+		$user = check_login(3);
+		$this->_data = array(
+							'template' => 'create_test',
+							'user' => $user,
+							'categories' => $this->mcategory->get_list_category(),
+							'active' => 'test-add',
+							'meta_title' => 'Add Test'
+							);
+		if($this->input->post('submit')){
+			vali_test();// check validate_form su dung helper
+			if($this->form_validation->run() == TRUE){
+				$data = json_decode(stripslashes($_POST['data']));
+				$input_data = get_info_test();//get info user using helper
+				foreach($data as $key => $value) {
+					array_push($input_data['subjects'],
+						array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
+					$input_data['current_num_question'] += $value->numQuestion;
+				}
+
+				if ($input_data['current_num_question'] == $input_data['max_question']) {
+					echo "MAX";
+				}
+				$this->create_test($input_data);
+			}
+		}
 	 	$this->load->view('admin/backend/layouts/home',isset($this->_data)?$this->_data:NULL);
 	}
 
@@ -136,31 +156,6 @@ class ManageTest extends MX_Controller {
 		}
 	}
 
-	function get_input() {
-		$data = json_decode(stripslashes($_POST['data']));
-		$input_data['test_name'] = $_POST['test_name'];
-		$input_data['test_time'] = $_POST['test_time'];
-		$input_data['test_des']= $_POST['test_des'];
-		$input_data['category']= $_POST['category'];
-		$input_data['max_question'] = $_POST['max_question'];
-		$input_data['madethi'] = $_POST['madethi'];
-		$input_data['current_num_question'] = 0;
-		$input_data['subjects'] = array();
-
-		foreach($data as $key => $value) {
-			array_push($input_data['subjects'],
-				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
-			$input_data['current_num_question'] += $value->numQuestion;
-		}
-
-		if ($input_data['current_num_question'] == $input_data['max_question']) {
-			echo "MAX";
-		}
-
-
-		$this->create_test($input_data);
-	}
-
 	function create_test($input_data) {
 		$test_question = array();
 		$get_question_info = array();
@@ -180,14 +175,14 @@ class ManageTest extends MX_Controller {
 		}
 
 		if ($question_not_enough == true)  {
-			echo "Khong du cau hoi";
+			echo "Không đủ câu hỏi";
 			return;
 		}
 
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
 			$result = $this->mquestion->get_questions_with_category($input_data['category']);
 			if (sizeof($result) < $num_general_question) {
-				$get_question_info['generral'] = "Khong du du lieu cho cau hoi tong hop";
+				$get_question_info['generral'] = "Không đủ dữ liệu cho câu hỏi tổng hợp";
 				$question_not_enough = true;
 
 			}
@@ -233,6 +228,7 @@ class ManageTest extends MX_Controller {
 		$data['test_question'] = $test_question;
 
 		$this->mmanageTest->insert_test($data);
+		echo "Thành công";
 	}
 
 }

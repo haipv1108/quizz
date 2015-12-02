@@ -24,8 +24,9 @@
                </div>
                <div class="box-header">
                   <p class="pull-right"><b>Lưu ý:</b> Một câu hỏi có thể có nhiều hơn một đáp án đúng.</p>
-         
-         <a href="test/printTest/<?php if(isset($test_info) && !empty($test_info)) echo $test_info['id'];?>" class="btn btn-primary">Click to Print this Test >>></a>
+				 <?php if(isset($user['level']) && $user['level'] == 2){?>
+					 <a href="test/printTest/<?php if(isset($test_info) && !empty($test_info)) echo $test_info['id'];?>" class="btn btn-primary">Click to Print this Test >>></a>
+				 <?php } ?>
          <div class="divider divider2"></div>
          </div>
          <div class="text-center delay"><p>Bạn sẽ bắt đầu trong <span id="demlui5s"></span>s</p></div>

@@ -2,7 +2,7 @@
 
 
 class CreateTest extends MX_Controller {
-	private $_form_create_test1 = 'create_test1';
+	private $_form_create_test = 'create_test';
 	private $_data ;
 	private $_subs_selected = null;
 
@@ -13,20 +13,7 @@ class CreateTest extends MX_Controller {
 		$this->load->model('subject/msubject');
 		$this->load->model('level/mlevel');
 		$this->load->model('question/mquestion');
-		//$this->load->helper(array('form_vali'));
-		$this->load->helper('form');
-		$this->load->helper('array');
-
-	}
-
-	function index(){
-		$this->_data['categories'] = $this->mcategory->get_list_category();
-		$this->load->view($this->_form_create_test1, $this->_data);
-	}
-	
-	function test(){
-		$data['template'] = 'create_test1';
-		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+		$this->load->helper(array('form','array','test'));
 	}
 
 	function get_subject() {
@@ -63,28 +50,24 @@ class CreateTest extends MX_Controller {
 	}
 
 	function get_input() {
-		$data = json_decode(stripslashes($_POST['data']));
-		$input_data['test_name'] = $_POST['test_name'];
-		$input_data['test_time'] = $_POST['test_time'];
-		$input_data['test_des']= $_POST['test_des'];
-		$input_data['category']= $_POST['category'];
-		$input_data['max_question'] = $_POST['max_question'];
-		$input_data['madethi'] = $_POST['madethi'];
-		$input_data['current_num_question'] = 0;
-		$input_data['subjects'] = array();
+		if($this->input->post('submit')){
+			vali_test();// check validate_form su dung helper
+			if($this->form_validation->run() == TRUE){
+				$data = json_decode(stripslashes($_POST['data']));
+				$input_data = get_info_test();//get info user using helper
+				foreach($data as $key => $value) {
+					array_push($input_data['subjects'],
+						array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
+					$input_data['current_num_question'] += $value->numQuestion;
+				}
 
-		foreach($data as $key => $value) {
-			array_push($input_data['subjects'],
-				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
-			$input_data['current_num_question'] += $value->numQuestion;
+				if ($input_data['current_num_question'] == $input_data['max_question']) {
+					echo "MAX";
+				}
+				$this->create_test($input_data);
+			}
 		}
-
-		if ($input_data['current_num_question'] == $input_data['max_question']) {
-			echo "MAX";
-		}
-
-
-		$this->create_test($input_data);
+		
 	}
 
 	function create_test($input_data) {

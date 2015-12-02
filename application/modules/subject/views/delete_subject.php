@@ -12,7 +12,7 @@
 	<?php } ?>
 			<form action="" method="post">
 				<fieldset>
-					<legend>You want to delete category <?php if(isset($subject_info)) echo $subject_info['name'];?>?</legend>
+					<legend>You want to delete subject <?php if(isset($subject_info)) echo $subject_info['name'];?>?</legend>
 					<div>
 						<input type="radio" name="delete" value="no" checked="checked"/>No
 						<input type="radio" name="delete" value="yes" />Yes

@@ -23,7 +23,7 @@
 			<div id="profile-links">
 				Hello, <a href="#" title="Edit your profile"><?php echo (isset($user))? htmlspecialchars($user['name']) : 'Member';?></a><br />
 				<br />
-				<a href="" title="View the Site">View the Site</a> | <a href="<?php echo base_url();?>verify/logout" title="Sign Out">Sign Out</a>
+				<a href="" title="View the Site">View the Site</a> | <a href="verify/logout" title="Sign Out">Sign Out</a>
 			</div>        
 			<ul id="main-nav">  <!-- Accordion Menu -->
 				<li> 
@@ -55,7 +55,7 @@
 				</li>
 
 				<li>
-					<a href="<?php echo base_url();?>" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'quiz'))?'current':'';?>">
+					<a href="" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'quiz'))?'current':'';?>">
 						Question
 					</a>
 					<ul>
@@ -67,7 +67,7 @@
 
 
 				<li>
-					<a href="<?php echo base_url();?>" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'test'))?'current':'';?>">
+					<a href="" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'test'))?'current':'';?>">
 						Test
 					</a>
 					<ul>
@@ -75,18 +75,15 @@
 						<li><a <?php echo (isset($active) && $active=='test-add')? 'class="current"' : '' ?> href="<?php echo site_url();?>managetest/add">Create a new test</a></li>
 					</ul>
 				</li>
-				
 				<li>
-					<a href="#" class="nav-top-item">
-						Settings
+					<a href="" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'level'))?'current':'';?>">
+						Test
 					</a>
 					<ul>
-						<li><a href="#">General</a></li>
-						<li><a href="#">Design</a></li>
-						<li><a href="#">Your Profile</a></li>
-						<li><a href="#">Users and Permissions</a></li>
+						<li><a <?php echo (isset($active) && $active=='level-add')? 'class="current"' : '' ?> href="<?php echo site_url();?>level">Manage Level</a></li>
 					</ul>
-				</li>      
+				</li>
+				
 			</ul>
 		</div></div>
 		<div id="main-content">
