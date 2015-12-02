@@ -11,6 +11,7 @@
 		<table>
 			<thead>
 				<tr>
+				   <th>ID</th>
 				   <th>Question</th>
 				   <th>Answer</th>
 				   <th>Level</th>
@@ -35,6 +36,7 @@
 		<?php	if(isset($view_question) && !empty($view_question)){
 					foreach($view_question as $key=>$val){?>
 						<tr>
+							<td><?php echo $val['id'];?></td>
 							<td><?php echo $val['question'];?></td>
 							<td>
 								<?php foreach (json_decode($val['answer'],true) as $key => $value) {
