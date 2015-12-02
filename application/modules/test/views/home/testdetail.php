@@ -107,13 +107,9 @@
 </script>
 <script type="text/javascript">
       $(document).ready(function(){
-<<<<<<< HEAD
-         var m = 0; // Phút //var m = <?php echo $test_info['time'] ?>;
-         var s = 25; // Giây
-=======
+
          var m = <?php echo $test_info['time'] ?>; // Phút
          var s = 6; // Giây
->>>>>>> 27638082071e739ebcc185ee9a224f8f8a1930eb
          var dem = 5;
          var timeout = null;
          function start(){

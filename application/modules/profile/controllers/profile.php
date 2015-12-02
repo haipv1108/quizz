@@ -123,9 +123,10 @@ class Profile extends MX_Controller {
 			$result['answer'] = $this->input->post('answer');
 			$result['test'] = $data['test'];
 			$this->displayResult($result);
+		}else{
+			$data['template'] = 'home/mark';	
+			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);	
 		}
-		$data['template'] = 'home/mark';	
-		$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 	}
 	
 	function displayResult($result){
@@ -152,7 +153,9 @@ class Profile extends MX_Controller {
 					'totalScore' => $totalScore,
 					'score' => $score,
 					'meta_title' => 'Result',
-					'template' => 'home/result'
+					'template' => 'home/result',
+					'test' => $result['test'],
+					'answer_choosen' => $result['answer']
 				);			
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{
