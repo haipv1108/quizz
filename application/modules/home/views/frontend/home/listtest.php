@@ -18,7 +18,7 @@
 				                    <span class="info-box-icon">
 				                      <p class="text-center">
 				                        <a href="test/testdetail/<?php echo $val['id'];?>">
-				                          <img src="template/frontend/Online Examination System/image/english.jpg" alt="Nihongo">
+				                          <img src="template/frontend/Online Examination System/image/Test.jpg" alt="Nihongo">
 				                        </a> 
 				                      </p> 
 				                    </span>

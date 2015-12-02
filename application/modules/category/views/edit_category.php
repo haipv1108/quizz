@@ -21,7 +21,7 @@
 					</p>
 						<div class="clear"></div>
 					<p> 
-						<label>Email</label>
+						<label>Decription</label>
 						<input class="text-input large-input" type="text" name="decription" value="<?php echo $cate_info['decription']; ?>"/>
 					</p>
 					<div class="clear"></div>

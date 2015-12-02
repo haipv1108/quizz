@@ -92,9 +92,8 @@ body {
     padding: 5px;
     z-index: 300;
     position: absolute;
-    right: 1%;
-    top: 10%;
-    width: 12%;
+    /*right: 2%;*/
+    /*width: 12%;*/
     font-family: Arial,Helvetica,sans-serif;
     color: #444;
     font-family: Arial,Helvetica,sans-serif;
@@ -103,9 +102,9 @@ body {
 }
 .fixed{
     position: fixed!important;
-    right: 2%!important;
+    /*right: 2%!important;*/
     top: 2%!important;
-    width: 12%!important;
+    /*width: 12%!important;*/
 }
 .chanle:nth-child(2n) {
     background: #edf3f7 none repeat scroll 0 0;
