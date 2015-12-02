@@ -20,7 +20,7 @@ if(!function_exists('get_info_test')){
 							'test_name' => $ci->input->post('test_name'),
 							'test_time' => $ci->input->post('test_time'),
 							'test_des' => $ci->input->post('test_des'),
-							'category' => $ci->input->post('category'),
+							'categoryid' => $ci->input->post('category'),
 							'max_question' => $ci->input->post('max_question'),
 							'madethi' => $ci->input->post('madethi'),
 							'current_num_question' => 0,

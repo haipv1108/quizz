@@ -56,6 +56,7 @@ class ManageTest extends MX_Controller {
 			if($this->form_validation->run() == TRUE){
 				$data = json_decode(stripslashes($_POST['data']));
 				$input_data = get_info_test();//get info user using helper
+		 
 				foreach($data as $key => $value) {
 					array_push($input_data['subjects'],
 						array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
@@ -180,7 +181,7 @@ class ManageTest extends MX_Controller {
 		}
 
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
-			$result = $this->mquestion->get_questions_with_category($input_data['category']);
+			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
 			if (sizeof($result) < $num_general_question) {
 				$get_question_info['generral'] = "Không đủ dữ liệu cho câu hỏi tổng hợp";
 				$question_not_enough = true;
@@ -225,6 +226,7 @@ class ManageTest extends MX_Controller {
 		$data['test_info']['decription']= $input_data['test_des'];
 		$data['test_info']['sl'] = $input_data['max_question'];
 		$data['test_info']['madethi'] = $input_data['madethi'];
+		$data['test_info']['categoryid'] = $input_data['categoryid'];
 		$data['test_question'] = $test_question;
 
 		$this->mmanageTest->insert_test($data);
