@@ -106,8 +106,8 @@
 </script>
 <script type="text/javascript">
       $(document).ready(function(){
-         var m = 0; // Phút //var m = <?php echo $test_info['time'] ?>; // Phút
-         var s = 6; // Giây
+         var m = 2; // Phút //var m = <?php echo $test_info['time'] ?>; // Phút
+         var s = 5 ; // Giây
          var dem = 5;
          var timeout = null;
          function start(){
