@@ -7,7 +7,7 @@
                     <span class="info-box-icon">
                       <p class="text-center">
                         <a href="home/listtest/<?php echo $val['id'];?>">
-                          <img src="template/frontend/Online Examination System/image/english.jpg" alt="Nihongo">
+                          <img src="template/frontend/Online Examination System/image/category.jpg" alt="Nihongo">
                         </a> 
                       </p> 
                     </span>

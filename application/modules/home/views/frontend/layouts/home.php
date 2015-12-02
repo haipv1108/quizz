@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-	<base href="<?php echo site_url();?>">
+	  <base href="<?php echo site_url();?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title><?php echo (isset($meta_title))? htmlspecialchars($meta_title): 'Online Examination System';?></title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

@@ -58,15 +58,15 @@
             }?>   
          <div class="divider divider2"></div>
          <div class="col-md-6 col-md-offset-5"> 
-         <input type="submit" class="btn btn-success" name="submit" value="Nộp bài">
+          <input type="submit" class="btn btn-success" name="submit" value="Nộp bài"  style="margin-left: 21px;">
          </div>
          </div>
          </div>
       </div>
       <!-- Time -->
-     
-      <div id="practiceScore" style="display: block;">
-         <table style="width: 15 0px">
+      <div class="col-md-2 no-padding">
+        <div id="practiceScore" style="display: block;">
+           <table>
             <tbody>
                <tr>
                   <td>Thời gian còn lại:</td>
@@ -82,11 +82,12 @@
              <tr>
                   <!--<td><a type ="submit" id="testFinish" class="button" name="submit" value="Nộp bài">Nộp Bài</a></td>-->
                   <td>
-                     <input type="submit"  id ="testFinish" class="button" name="submit" value="Nộp bài">
+                     <input type="submit"  id ="testFinish" class="btn btn-success" name="submit" value="Nộp bài">
 
                   </td>
              </tr> 
-         </table>
+          </table>
+         </div>
       </div>
       <!-- end Time -->
    </div><!-- Row-->
@@ -96,16 +97,16 @@
       $(window).ready(function(){
         $(window).scroll(function(){
           var top=$(window).scrollTop();
-          if (top>20) {
-            $('#practiceScore').addClass('fixed');
+          if (top>150) {
+            $('.col-md-2 > #practiceScore').addClass('fixed');
           }else{
-            $('#practiceScore').removeClass('fixed');          }
+            $('.col-md-2 > #practiceScore').removeClass('fixed');          }
         })
       })
 </script>
 <script type="text/javascript">
       $(document).ready(function(){
-         var m = 0; // Phút //var m = <?php echo $test_info['time'] ?>; // Phút
+         var m = <?php echo $test_info['time'] ?>; // Phút
          var s = 6; // Giây
          var dem = 5;
          var timeout = null;
