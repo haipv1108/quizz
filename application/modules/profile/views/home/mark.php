@@ -28,8 +28,6 @@
          <a href="test/printTest/<?php if(isset($test_info) && !empty($test_info)) echo $test_info['id'];?>" class="btn btn-primary">Click to Print this Test >>></a>
          <div class="divider divider2"></div>
          </div>
-         <div class="text-center delay"><p>Bạn sẽ bắt đầu trong <span id="demlui5s"></span>s</p></div>
-         <div class="text-center shownotice"> <p>Bạn đã hết giờ làm bài,hãy bấm nút nộp bài để hiển thị điểm</p></div>
          <div class="box-body">
          <?php if(isset($test) && !empty($test)){
             $number_question = 1;
