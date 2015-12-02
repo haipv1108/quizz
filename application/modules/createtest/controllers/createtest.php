@@ -2,7 +2,7 @@
 
 
 class CreateTest extends MX_Controller {
-	private $_form_create_test1 = 'create_test';
+	private $_form_create_test1 = 'create_test1';
 	private $_data ;
 	private $_subs_selected = null;
 
@@ -22,7 +22,6 @@ class CreateTest extends MX_Controller {
 	function index(){
 		$this->_data['categories'] = $this->mcategory->get_list_category();
 		$this->load->view($this->_form_create_test1, $this->_data);
-
 	}
 	
 	function test(){
@@ -76,7 +75,7 @@ class CreateTest extends MX_Controller {
 
 		foreach($data as $key => $value) {
 			array_push($input_data['subjects'],
-				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level));
+				array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
 			$input_data['current_num_question'] += $value->numQuestion;
 		}
 
@@ -86,28 +85,37 @@ class CreateTest extends MX_Controller {
 
 
 		$this->create_test($input_data);
-
 	}
 
 	function create_test($input_data) {
 		$test_question = array();
+		$get_question_info = array();
+		$question_not_enough = false;
+		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
 
 		foreach($input_data['subjects'] as $key => $value) {
 			$input_data['subjects'][$key]['questions'] = array();
 			$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
-			if ($result != null)
+
+			if (sizeof($result) < $value['num_question']){
+				$question_not_enough = true;
+				$get_question_info[$value['id']] = "phan hoc " . $value['name'] .  "voi level " . $value['level_name']. " khong du cau hoi";
+			} else if ($result != null)
 				$input_data['subjects'][$key]['questions'] = $result;
-			else {
-				echo "Không đủ câu hỏi.";
-				return;
-			}
+		
+		
+
+		if ($questions_not_enough == true)  {
+			echo "Khong du cau hoi";
+			return;
 		}
 
 		if ($input_data['current_num_question'] < $input_data['max_question'])  {
 			$result = $this->mquestion->get_questions_with_category($input_data['category']);
-			if ($result == null) {
-				echo "Không đủ câu hỏi tổng hợp";
-				return;
+			if (sizeof($result) < $num_general_question) {
+				$get_question_info['generral'] = "Khong du du lieu cho cau hoi tong hop";
+				$question_not_enough = true;
+
 			}
 			$input_data['general_question_bank'] = $result;
 		}
@@ -125,7 +133,7 @@ class CreateTest extends MX_Controller {
 			}
 		}
 
-		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
+		
 
 		//cau hoi tong hop
 		$avg_score = 0;
@@ -152,7 +160,5 @@ class CreateTest extends MX_Controller {
 
 		$this->mtest->insert_test($data);
 	}
-
-
 }
 

@@ -107,7 +107,7 @@ class Test extends MX_Controller {
 				}
 				$totalScore += $value['score'];
 			}
-				$responses['score'] =  $Score/ $totalScore;
+				$responses['score'] =  round($Score/ $totalScore,3);
 				$responses['answer_choice'] = json_encode($result['answer']);
 				if(isset($responses['answer_choice']))
 					$this->mtest->addtest($responses);
@@ -115,7 +115,7 @@ class Test extends MX_Controller {
 		if(!$this->input->post('submit_rs')){
 			$data['totalScore'] = $totalScore;
 			$data['score'] = $Score;
-			$data['meta_title'] = 'result';
+			$data['meta_title'] = 'Result';
 			$data['template'] = 'home/result';			
 			$this->load->view('home/frontend/layouts/home',isset($data)?$data:NULL);
 		}else{

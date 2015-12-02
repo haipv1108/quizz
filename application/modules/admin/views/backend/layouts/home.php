@@ -53,6 +53,7 @@
 						<li><a <?php echo (isset($active) && $active=='subject-add')? 'class="current"' : '' ?> href="<?php echo site_url();?>subject/addsubject">Create a new Subject</a></li>
 					</ul>
 				</li>
+
 				<li>
 					<a href="<?php echo base_url();?>" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'quiz'))?'current':'';?>">
 						Question
@@ -60,6 +61,18 @@
 					<ul>
 						<li><a <?php echo (isset($active) && $active=='quiz-view')? 'class="current"' : '' ?> href="<?php echo site_url();?>question">Manage Question</a></li>
 						<li><a <?php echo (isset($active) && $active=='quiz-add')? 'class="current"' : '' ?> href="<?php echo site_url();?>question/addquestion">Create a new Question</a></li>
+					</ul>
+				</li>
+
+
+
+				<li>
+					<a href="<?php echo base_url();?>" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'test'))?'current':'';?>">
+						Test
+					</a>
+					<ul>
+						<li><a <?php echo (isset($active) && $active=='test-view')? 'class="current"' : '' ?> href="<?php echo site_url();?>managetest">Manage Test</a></li>
+						<li><a <?php echo (isset($active) && $active=='test-add')? 'class="current"' : '' ?> href="<?php echo site_url();?>managetest/add">Create a new test</a></li>
 					</ul>
 				</li>
 				
