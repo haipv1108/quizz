@@ -25,17 +25,6 @@
 						<input class="text-input" type="text" name="email" value="<?php echo $user_info['email']; ?>"/>
 					</p>
 					<div class="clear"></div>
-					<p>
-						<label>Password</label>
-						<input class="text-input" type="password" name="password" value="<?php echo $user_info['password']; ?>"/>
-					</p>
-					<div class="clear"></div>
-
-					<p>
-						<label>Confirm Password</label>
-						<input class="text-input" type="password" name="passconf" value="<?php echo $user_info['password']; ?>"/>
-					</p>
-					<div class="clear"></div>
 				  <?php $extra_info = json_decode($user_info['extra_info'],true);?>
 					<p>
 					<label>Address</label>

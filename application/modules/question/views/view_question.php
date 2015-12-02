@@ -13,7 +13,6 @@
 				<tr>
 				   <th>Question</th>
 				   <th>Answer</th>
-				   <th>Level</th>
 				   <th>Correct</th>
 				   <th>Ans Explained</th>
 				   <th>Tool</th>
@@ -41,7 +40,6 @@
 									echo "{$key} : {$value}<br/>";
 								}?>
 							</td>
-							<td><?php echo $val['level'];?></td>
 							<td>
 								<?php foreach (json_decode($val['correct'],true) as $key1 => $value1) {
 									echo "<li>{$value1}</li>";
