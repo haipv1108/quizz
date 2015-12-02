@@ -64,8 +64,8 @@ class ManageTest extends MX_Controller {
 				}
 		 		if (sizeof($data) <= 0) {
 		 			$this->create_test($input_data);
-		 			return;
-		 		}
+		 			
+		 		} else 
 
 				foreach($data as $key => $value) {
 					array_push($input_data['subjects'],
@@ -75,7 +75,8 @@ class ManageTest extends MX_Controller {
 
 				$re= $this->create_test($input_data);
 				if ($re == null) {
-					$this->_data['success'] = "Tao de thanh cong";
+					$this->_data['success'] = "Tạo đề thành công";
+					
 				} else {
 					$this->_data['error'] = $re;
 				}
@@ -192,6 +193,10 @@ class ManageTest extends MX_Controller {
 		}
 
 		if ($num_general_question > 0)  {
+			if ($input_data['general_score'] <= 0) {
+				$get_question_info[$i] = "Chưa có điểm cho câu hỏi tổng hợp";
+				return $get_question_info;
+			}
 			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
 			if (sizeof($result) < $num_general_question || $result == NULL) {
 				$get_question_info[$i] = "Không đủ dữ liệu cho câu hỏi tổng hợp<br>";
@@ -237,7 +242,6 @@ class ManageTest extends MX_Controller {
 		$data['test_question'] = $test_question;
 
 		$this->mmanageTest->insert_test($data);
-		echo "Thành công";
 		return null;
 	}
 
