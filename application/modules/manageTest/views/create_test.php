@@ -31,16 +31,6 @@
 				<input class="text-input" type="madethi" name="madethi" value="<?php echo set_value('madethi'); ?>"/>
 			</p>
 			<div class="clear"></div>
-			<div>
-				<label>Cách chấm</label>
-				<select name="type">
-					<option selected value = 'non_select'>Chọn loại câu hỏi</option>
-					<option value = '1' <?php if(set_value('type') == 1) echo 'selected';?>>Chỉ cần chọn một câu trả lời đúng</option>
-					<option value = '2' <?php if(set_value('type') == 2) echo 'selected';?>>Điểm sẽ được chia đều cho các đáp án đúng</option>
-					<option value = '3' <?php if(set_value('type') == 3) echo 'selected';?>>Phải trả lời hết các đáp án đúng</option>
-				</select>
-			</div>
-			<div class="clear"></div>
 			<p>
 			<div>
 				<label>Môn học</label>

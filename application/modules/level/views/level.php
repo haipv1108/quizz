@@ -4,31 +4,34 @@
 		<div class="clear"></div>
 	</div>
 	<div class="content-box-content">
-		<p>
-			<label>Môn học</label>
-			<select id = "category" name = "category">
-				<option selected value = 'non_select'>Select Category</option>
-				<?php
-				foreach($category as $key => $value) {
-					?>
-					<option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
+		
+			<p>
+				<label>Môn học</label>
+				<select id = "category" name = "category">
+					<option selected value = 'non_select'>Select Category</option>
 					<?php
-				} ?>
-			</select>
-		</p>
-		<div class="clear"></div>
-		<input type = "text" class="text-input" id = "level_name" >
-		<input type = "button" class="button" id = "btn_add_level" value = "Insert">
-		<table>
-			<thead>
-				<th>Name</th>
-				<th>Tools</th>
-			</thead>
+					foreach($category as $key => $value) {
+						?>
+						<option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
+						<?php
+					} ?>
+				</select>
+			</p>
+			<div class="clear"></div>
+			<label>Level</label>
+			<input type = "text" class="text-input" id = "level_name" >
+			<input type = "button" class="button" id = "btn_add_level" value = "Insert">
+			<table>
+				<thead>
+					<th>Name</th>
+					<th>Tools</th>
+				</thead>
 
-			<tbody id = "level">
+				<tbody id = "level">
 
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		
 	</div>
 </div>
 <script language="javascript" src="/CI/js/jquery-2.0.0.min.js"></script>

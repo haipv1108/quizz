@@ -16,7 +16,7 @@ if(!function_exists('vali_test')){
 if(!function_exists('get_info_test')){
 	function get_info_test(){
 		$ci = &get_instance();
-		$quiz_info = array(
+		$test_info = array(
 							'test_name' => $ci->input->post('test_name'),
 							'test_time' => $ci->input->post('test_time'),
 							'test_des' => $ci->input->post('test_des'),
@@ -26,6 +26,6 @@ if(!function_exists('get_info_test')){
 							'current_num_question' => 0,
 							'subjects' => array(),
 						);
-		return $quiz_info;
+		return $test_info;
 	}
 }
