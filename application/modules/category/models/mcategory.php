@@ -52,23 +52,13 @@ class Mcategory extends CI_Model{
 			return true;
 		else return false;
 	}
-	function list_subject($cate_id){
-		$query = $this->db->query("	SELECT subject.id
-									FROM category, subject
-									WHERE category.id = {$cate_id}
-									AND category.id = subject.categoryid "
-								);
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else return false;
+	function deletesubject($cate_id){
+		$this->db->where('categoryid', $cate_id)->delete('subject');
 	}
-	function list_level($cate_id){
-		$query = $this->db->select('id')->where('categoryid',$cate_id)->get('level');
-		if($query->num_rows()>0)
-			return $query->result_array();
-		else return false;
+	function deletetest($cate_id){
+		$this->db->where('categoryid', $cate_id)->delete('test');
 	}
-	function delete_level($level_id){
-		$this->db->where('id', $level_id)->limit(1)->delete('level');
+	function deletelevel($cate_id){
+		$this->db->where('categoryid', $cate_id)->delete('level');
 	}
 }

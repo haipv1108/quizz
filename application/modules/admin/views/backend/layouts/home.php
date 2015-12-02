@@ -77,7 +77,7 @@
 				</li>
 				<li>
 					<a href="" class="nav-top-item <?php if(isset($active) && !empty($active)) echo strlen(strstr($active,'level'))?'current':'';?>">
-						Test
+						Level
 					</a>
 					<ul>
 						<li><a <?php echo (isset($active) && $active=='level-add')? 'class="current"' : '' ?> href="<?php echo site_url();?>level">Manage Level</a></li>

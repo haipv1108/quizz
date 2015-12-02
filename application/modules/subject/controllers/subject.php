@@ -31,12 +31,6 @@ class Subject extends MX_Controller{
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 	function addsubject(){
-		/*
-			co 1 loi:
-			Neu tao muc: subject trong Tieng Anh
-			Thi van co the tao muc: Subject trong tieng nhat
-			Nhu vay co van de trong ham check_name
-		*/
 		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
@@ -65,7 +59,6 @@ class Subject extends MX_Controller{
 	}
 	function editsubject($id = 0){
 		save_url();// Luu current_url vao session
-		// co 1 loi la chua kiem tra name da thay doi roi.
 		$user = check_login(3);
 		$data = array(
 					'user' => $user,
@@ -95,9 +88,6 @@ class Subject extends MX_Controller{
 		}
 	}
 	function deletesubject($id = 0){
-		/*
-			Ham search co van de. Neu nhu cho 3 category co cung ten subject
-		*/
 		save_url();// Luu current_url vao session
 		$user = check_login(3);
 		$data = array(
@@ -109,30 +99,27 @@ class Subject extends MX_Controller{
 		$subject_info = $this->msubject->search_subject($id);
 		if(!$subject_info){
 			$data['error'] = 'Subject not found in database.';
+			$data['template'] = 'notify';
 			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+			return;
 		}
-		else{
-			$data['subject_info']= $subject_info;
-			if($this->input->post('submit')){
-				$this->form_validation->set_rules('delete', 'Delete Radio', 'required'); 
-				$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
-				if($this->form_validation->run() == TRUE){
-					if($this->input->post('delete')=='yes'){
-						$list_test = $this->msubject->list_test($id);
-						if(isset($list_test) && !empty($list_test)){
-							foreach($list_test as $key=>$val){
-								$this->mtest->deletequestion($val['id']);
-							}
-						}
-						$this->msubject->deletesubject($id);
-						$success = 'You have successfully deleted.';
-					}else if($this->input->post('delete') =='no'){
-						$success = 'I also think you should not delete Subject';
-					}
-					$data['success'] = $success;
+		$data['subject_info']= $subject_info;
+		if($this->input->post('submit')){
+			$this->form_validation->set_rules('delete', 'Delete Radio', 'required'); 
+			$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
+			if($this->form_validation->run() == TRUE){
+				if($this->input->post('delete')=='yes'){
+					$this->msubject->deletesubject($id);
+					$success = 'You have successfully deleted.';
+				}else if($this->input->post('delete') =='no'){
+					$success = 'I also think you should not delete Subject';
 				}
+				$data['success'] = $success;
+				$data['template'] = 'notify';
+				$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+				return;
 			}
-			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 		}
+		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 }

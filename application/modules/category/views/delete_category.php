@@ -1,6 +1,6 @@
 <div class="content-box"><!-- Start Content Box -->
 	<div class="content-box-header">
-		<h3>Delete User</h3>
+		<h3>Delete Category</h3>
 		<div class="clear"></div>
 	</div>
 	<div class="content-box-content">

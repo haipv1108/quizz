@@ -56,22 +56,6 @@ class Category extends MX_Controller{
 		}
 		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
-	/*function setlevel($categoryid){
-		$user = check_login(3);
-		$data = array(
-					'user' => $user,
-					'meta_title' => 'Set Level Subject',
-					'active' => 'cate-add',
-					'template' => 'set_level'
-					);
-		if($this->input->post('submit')){
-			vali_setlevel();//check validate_form using helper
-			if($this->form_validation->run() == TRUE){
-				$level_info() = get_info_setlevel();// get info level using helper
-				$this->mcategory->
-			}
-		}
-	}*/
 	function editcategory($id = 0){
 		save_url();// Luu current_url vao session
 		// co 1 loi la chua kiem tra name da thay doi roi.
@@ -114,47 +98,34 @@ class Category extends MX_Controller{
 		$cate_info = $this->mcategory->search_category($id);
 		if(!$cate_info){
 			$data['error'] = 'Category not found in database.';
+			$data['template'] = 'notify';
 			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+			return;
 		}
-		else{
-			$data['cate_info']= $cate_info;
-			if($this->input->post('submit')){
-				$this->form_validation->set_rules('delete', 'Delete Radio', 'required'); 
-				$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
-				if($this->form_validation->run() == TRUE){
-					if($this->input->post('delete')=='yes'){
-						// delete subject
-						$list_subject = $this->mcategory->list_subject($id);
-						if(isset($list_subject) && !empty($list_subject)){
-							foreach($list_subject as $key=>$val){
-								//delete test
-								$l_test = $this->msubject->list_test($val['id']);
-								if(isset($l_test) && !empty($l_test)){
-									foreach($l_test as $k=>$v){
-										$this->mtest->deletequestion($v['id']);
-										$this->mtest->deletetest($v['id']);
-									}
-								}
-								$this->msubject->deletesubject($val['id']);
-							}
-						}
-						//delete level
-						$list_level = $this->mcategory->list_level($id);
-						if(isset($list_level) && !empty($list_level)){
-							foreach($list_level as $key=>$val){
-								$this->mcategory->delete_level($val['id']);
-							}
-						}
-						//delete category
-						$this->mcategory->deletecategory($id);
-						$success = 'You have successfully deleted.';
-					}else if($this->input->post('delete') =='no'){
-						$success = 'I also think you should not delete Category';
-					}
-					$data['success'] = $success;
+		$data['cate_info']= $cate_info;
+		if($this->input->post('submit')){
+			$this->form_validation->set_rules('delete', 'Delete Radio', 'required'); 
+			$this->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
+			if($this->form_validation->run() == TRUE){
+				if($this->input->post('delete')=='yes'){
+					// delete subject
+					$this->mcategory->deletesubject($id);
+					//delete test
+					$this->mcategory->deletetest($id);
+					//delete level
+					$this->mcategory->deletelevel($id);
+					//delete category
+					$this->mcategory->deletecategory($id);
+					$success = 'You have successfully deleted.';
+				}else if($this->input->post('delete') =='no'){
+					$success = 'I also think you should not delete Category';
 				}
+				$data['success'] = $success;
+				$data['template'] = 'notify';
+				$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
+				return;
 			}
-			$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 		}
+		$this->load->view('admin/backend/layouts/home',isset($data)?$data:NULL);
 	}
 }
