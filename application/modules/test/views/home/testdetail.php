@@ -1,5 +1,4 @@
-<section class="cont
-ent">
+<section class="content">
    <div class="row">
       <div class="col-md-10">
          <!-- Hiển thị các danh ĐỀ THI của content -->
@@ -76,7 +75,7 @@ ent">
                </tr> 
                <tr>
                    <td style="text-align : center;">
-                     <span id="phut"></span>
+                     <span id="phut">00</span>
                      :
                      <span id="giay">00</span>
                   </td>
@@ -109,8 +108,8 @@ ent">
 </script>
  <script type="text/javascript">
       $(document).ready(function(){
-         var m = 0; // Phút //var m = <?php echo $test_info['time'] ?>; // Phút
-         var s = 6; // Giây
+         var m = 0; // Phút //var m = <?php echo $test_info['time'] ?>;
+         var s = 10; // Giây
          var dem = 5;
          var timeout = null;
          function start(){
