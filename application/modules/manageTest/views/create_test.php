@@ -48,6 +48,9 @@
 				<label>Tổng số lượng câu hỏi</label>
 				<input class="text-input" type = text id = max_question name = max_question value="<?php echo set_value('max_question'); ?>">
 				<span id="avai"></span>
+				<label>Điểm cho câu hỏi tổng hợp(nếu có)</label>
+				<input  class="text-input" type = text name = "general_score" id = "general_score" value="<?php echo set_value('general_score'); ?>">
+				<span id="avai"></span>
 			</p>
 			</p>
 			<div class="clear"></div>
@@ -104,6 +107,7 @@
 						<th>Mô học</th>
 						<th>Độ khó</th>
 						<th>Số lượng câu hỏi</th>
+						<th>Điểm</th>
 						<th>Chức năng</th>
 					</tr>
 					</thead>

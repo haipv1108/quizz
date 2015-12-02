@@ -56,17 +56,28 @@ class ManageTest extends MX_Controller {
 			if($this->form_validation->run() == TRUE){
 				$data = json_decode(stripslashes($_POST['data']));
 				$input_data = get_info_test();//get info user using helper
-		 
+				if ($this->mmanageTest->check_made_existed($input_data['madethi']) == true) {
+					echo "Mã đề thi đã tồn tại";
+					return;
+				}
+
+				if ($input_data['categoryid'] == 'non_select') {
+					echo "Chưa chọn môn học";
+					return;
+				}
+		 		if (sizeof($data) <= 0) {
+		 			$this->create_test($input_data);
+		 			return;
+		 		}
+
 				foreach($data as $key => $value) {
 					array_push($input_data['subjects'],
 						array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
 					$input_data['current_num_question'] += $value->numQuestion;
 				}
 
-				if ($input_data['current_num_question'] == $input_data['max_question']) {
-					echo "MAX";
-				}
 				$this->create_test($input_data);
+				return;
 			}
 		}
 	 	$this->load->view('admin/backend/layouts/home',isset($this->_data)?$this->_data:NULL);
@@ -158,36 +169,49 @@ class ManageTest extends MX_Controller {
 	}
 
 	function create_test($input_data) {
+		$i = 0;
 		$test_question = array();
 		$get_question_info = array();
 		$question_not_enough = false;
 		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
 
-		foreach($input_data['subjects'] as $key => $value) {
-			$input_data['subjects'][$key]['questions'] = array();
-			$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
+		if (isset($input_data['subjects']) && sizeof($input_data['subjects']) > 0) {
+			foreach($input_data['subjects'] as $key => $value) {
+				$input_data['subjects'][$key]['questions'] = array();
+				$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
 
-			if (sizeof($result) < $value['num_question']){
-				$question_not_enough = true;
-				$get_question_info[$value['id']] = "phan hoc " . $value['name'] .  "voi level " . $value['level_name']. " khong du cau hoi";
-			} else if ($result != null)
-				$input_data['subjects'][$key]['questions'] = $result;
-		
+				if (sizeof($result) < $value['num_question'] || $result == NULL){
+					$question_not_enough = true;
+					$get_question_info[$i] = "Phần học " . $value['name'] .  " với độ khó " . $value['level_name']. " không đủ câu hỏi<br>";
+					++$i;
+				} else if ($result != null)
+					$input_data['subjects'][$key]['questions'] = $result;
+			}
 		}
 
-		if ($question_not_enough == true)  {
-			echo "Không đủ câu hỏi";
+		if ($num_general_question > 0)  {
+			if ($input_data['general_score'] <= 0) {
+				echo "Lỗi: Điểm câu hỏi tổng hợp <= 0!";
+				return;
+			}
+
+			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
+			if (sizeof($result) < $num_general_question || $result == NULL) {
+				$get_question_info[$i] = "Không đủ dữ liệu cho câu hỏi tổng hợp<br>";
+				$question_not_enough = true;
+				++$i;
+			} else 
+				$input_data['general_question_bank'] = $result;
+		} else if ($input_data['current_num_question'] <= 0) {
+			echo "bạn đã nhập câu hỏi rỗng";
 			return;
 		}
 
-		if ($input_data['current_num_question'] < $input_data['max_question'])  {
-			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
-			if (sizeof($result) < $num_general_question) {
-				$get_question_info['generral'] = "Không đủ dữ liệu cho câu hỏi tổng hợp";
-				$question_not_enough = true;
-
+		if ($question_not_enough == true)  {
+			foreach ($get_question_info as $key => $value) {
+				echo $value;
 			}
-			$input_data['general_question_bank'] = $result;
+			return;
 		}
 
 		//random lay cau hoi
@@ -203,19 +227,11 @@ class ManageTest extends MX_Controller {
 			}
 		}
 
-		
-
-		//cau hoi tong hop
-		$avg_score = 0;
-		foreach ($input_data['subjects'] as $key => $value) {
-			$avg_score += $value['score_question'] / sizeof($input_data['subjects']);
-		}
-
 
 		while ($num_general_question > 0) {
 			$question_index = rand(0, sizeof($input_data['general_question_bank']) - 1);
 			$question_id = $input_data['general_question_bank'][$question_index];
-			array_push($test_question, array('questionid' => $question_id['id'], 'score' => $avg_score));
+			array_push($test_question, array('questionid' => $question_id['id'], 'score' => $input_data['general_score']));
 			array_slice($input_data['general_question_bank'], $question_index);
 			--$num_general_question;
 		}

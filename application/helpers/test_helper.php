@@ -6,12 +6,34 @@ if(!function_exists('vali_test')){
 		$ci->form_validation->set_rules('test_name', 'Tên đề thi', 'required'); 
 		$ci->form_validation->set_rules('test_time', 'Thời gian', 'required'); 
 		$ci->form_validation->set_rules('test_des', 'Mô tả đề test', 'required');
-		$ci->form_validation->set_rules('category', 'Môn học', 'required');
-		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required'); 
+		$ci->form_validation->set_rules('category', 'Môn học', 'required|valid_category');
+		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required|not_zero'); 
 		$ci->form_validation->set_rules('madethi', 'Mã đề thi', 'required');
+		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'required|not_zero');
 		$ci->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
 	}
-}
+
+	function not_zero($id) {
+		$ci = &get_instance();
+		if ($id <= 0) {
+			$ci->form_validation->set_message('not_zero', '{field} không thể nhỏ hơn 0');
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function valid_category($id) {
+		$ci = &get_instance();
+		if ($id == 'non_select') {
+			$ci->form_validation->set_message('valid_category', '{field} chưa được chọn');
+			return false;
+		} else {
+			return true;
+		}	
+	}
+} 
+
 
 if(!function_exists('get_info_test')){
 	function get_info_test(){
@@ -24,6 +46,7 @@ if(!function_exists('get_info_test')){
 							'max_question' => $ci->input->post('max_question'),
 							'madethi' => $ci->input->post('madethi'),
 							'current_num_question' => 0,
+							'general_score' => $ci->input->post('general_score'),
 							'subjects' => array(),
 						);
 		return $test_info;
