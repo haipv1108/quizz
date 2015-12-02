@@ -110,7 +110,9 @@
 
 	function updateLevel(_id) {
 		var id_name = "#text" + _id;
-		level_name = $(id_name).val();
+		var level_name = $(id_name).val();
+		var preHtml = $('#level').html();
+
 		 if (!level_name) {
 			alert("Tên level không thể rỗng!");
 			return;
@@ -127,7 +129,7 @@
 			success: function(response) {
 				if (response === 'false') {
 					alert("Không thể trùng độ khó trong 1 môn!");
-					document.getElementById(id_name).value = level_name;
+					$('#level').html(preHtml);
 					return;
 				}
 				$('#level').html(response);

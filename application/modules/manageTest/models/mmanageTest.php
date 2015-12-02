@@ -59,4 +59,9 @@ class MmanageTest extends CI_Model{
 		return $this->db->insert_id();
 	}
 
+	function check_made_existed($madethi) {
+		$query = $this->db->where('madethi', $madethi)->get($this->_name);
+		return $query->num_rows() > 0 ? true: false;
+	}
+
 }

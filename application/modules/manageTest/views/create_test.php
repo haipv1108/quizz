@@ -5,7 +5,16 @@
 	</div>
 	<div class="content-box-content">
 		<?php echo validation_errors();?>
-
+		<?php 	if(isset($error)){?>
+					<div style="color: red; font-weight: bold"><?php
+					 foreach ($error as $key => $value) {
+					 	echo $value;
+					 }
+					 ?></div>
+			<?php } ?>
+			<?php 	if(isset($success)){?>
+					<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
+			<?php } ?>
 		<form action = '' method = 'post' name = 'form' id = 'form'>
 			<p>
 				<input type = "hidden" id = "data" name = "data">
@@ -47,6 +56,9 @@
 			<p>
 				<label>Tổng số lượng câu hỏi</label>
 				<input class="text-input" type = text id = max_question name = max_question value="<?php echo set_value('max_question'); ?>">
+				<span id="avai"></span>
+				<label>Điểm cho câu hỏi tổng hợp(nếu có)</label>
+				<input  class="text-input" type = text name = "general_score" id = "general_score" value="<?php echo set_value('general_score'); ?>">
 				<span id="avai"></span>
 			</p>
 			</p>
@@ -104,6 +116,7 @@
 						<th>Mô học</th>
 						<th>Độ khó</th>
 						<th>Số lượng câu hỏi</th>
+						<th>Điểm</th>
 						<th>Chức năng</th>
 					</tr>
 					</thead>
