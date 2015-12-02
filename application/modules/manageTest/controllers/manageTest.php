@@ -13,7 +13,8 @@ class ManageTest extends MX_Controller {
 		$this->load->model('subject/msubject');
 		$this->load->model('level/mlevel');
 		$this->load->model('question/mquestion');
-		$this->load->helper(array('form','array','test'));
+		$this->load->helper(array('form','array','test', 'url'));
+		$this->load->library('form_validation');
 	}
 
 	function index(){
@@ -55,11 +56,7 @@ class ManageTest extends MX_Controller {
 			vali_test();// check validate_form su dung helper
 			if($this->form_validation->run() == TRUE){
 				$data = json_decode(stripslashes($_POST['data']));
-				$input_data = get_info_test();//get info user using helper
-				if ($this->mmanageTest->check_made_existed($input_data['madethi']) == true) {
-					echo "Mã đề thi đã tồn tại";
-					return;
-				}
+				$input_data = get_info_test();//get info user using helpe
 
 				if ($input_data['categoryid'] == 'non_select') {
 					echo "Chưa chọn môn học";
@@ -76,8 +73,13 @@ class ManageTest extends MX_Controller {
 					$input_data['current_num_question'] += $value->numQuestion;
 				}
 
-				$this->create_test($input_data);
-				return;
+				$re= $this->create_test($input_data);
+				if ($re == null) {
+					$this->_data['success'] = "Tao de thanh cong";
+				} else {
+					$this->_data['error'] = $re;
+				}
+
 			}
 		}
 	 	$this->load->view('admin/backend/layouts/home',isset($this->_data)?$this->_data:NULL);
@@ -190,11 +192,6 @@ class ManageTest extends MX_Controller {
 		}
 
 		if ($num_general_question > 0)  {
-			if ($input_data['general_score'] <= 0) {
-				echo "Lỗi: Điểm câu hỏi tổng hợp <= 0!";
-				return;
-			}
-
 			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
 			if (sizeof($result) < $num_general_question || $result == NULL) {
 				$get_question_info[$i] = "Không đủ dữ liệu cho câu hỏi tổng hợp<br>";
@@ -202,16 +199,10 @@ class ManageTest extends MX_Controller {
 				++$i;
 			} else 
 				$input_data['general_question_bank'] = $result;
-		} else if ($input_data['current_num_question'] <= 0) {
-			echo "bạn đã nhập câu hỏi rỗng";
-			return;
 		}
 
 		if ($question_not_enough == true)  {
-			foreach ($get_question_info as $key => $value) {
-				echo $value;
-			}
-			return;
+			return $get_question_info;
 		}
 
 		//random lay cau hoi
@@ -247,6 +238,7 @@ class ManageTest extends MX_Controller {
 
 		$this->mmanageTest->insert_test($data);
 		echo "Thành công";
+		return null;
 	}
 
 }

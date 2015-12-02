@@ -1,15 +1,16 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+include_once getcwd() . "\application\modules\manageTest\models\mmanageTest.php";
 
 if(!function_exists('vali_test')){
 	function vali_test(){
 		$ci = &get_instance();
 		$ci->form_validation->set_rules('test_name', 'Tên đề thi', 'required'); 
-		$ci->form_validation->set_rules('test_time', 'Thời gian', 'required'); 
+		$ci->form_validation->set_rules('test_time', 'Thời gian', 'required|integer'); 
 		$ci->form_validation->set_rules('test_des', 'Mô tả đề test', 'required');
 		$ci->form_validation->set_rules('category', 'Môn học', 'required|valid_category');
-		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required|not_zero'); 
-		$ci->form_validation->set_rules('madethi', 'Mã đề thi', 'required');
-		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'required|not_zero');
+		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required|not_zero|integer'); 
+		$ci->form_validation->set_rules('madethi', 'Mã đề thi', 'required|valid_madethi');
+		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'required|not_zero|integer');
 		$ci->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
 	}
 
@@ -31,6 +32,17 @@ if(!function_exists('vali_test')){
 		} else {
 			return true;
 		}	
+	}
+
+	function valid_madethi($madethi) {
+		$ci = &get_instance();
+		$mmanageTest = new MmanageTest();
+		if ($mmanageTest->check_made_existed($madethi) == true) {
+			$ci->form_validation->set_message('valid_madethi', '{field} đã tồn tại!');
+			return false;
+		} else {
+			return true;
+		}
 	}
 } 
 

@@ -5,7 +5,16 @@
 	</div>
 	<div class="content-box-content">
 		<?php echo validation_errors();?>
-
+		<?php 	if(isset($error)){?>
+					<div style="color: red; font-weight: bold"><?php
+					 foreach ($error as $key => $value) {
+					 	echo $value;
+					 }
+					 ?></div>
+			<?php } ?>
+			<?php 	if(isset($success)){?>
+					<div style="color: green; font-weight: bold"><?php echo $success; die;?></div>
+			<?php } ?>
 		<form action = '' method = 'post' name = 'form' id = 'form'>
 			<p>
 				<input type = "hidden" id = "data" name = "data">
