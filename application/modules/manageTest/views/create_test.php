@@ -44,7 +44,7 @@
 			<div>
 				<label>Môn học</label>
 				<select id = "category" name = "category">
-					<option selected value = 'non_select'>Select Category</option>
+					<option selected value = 'non_select'>Chọn môn học</option>
 					<?php
 					foreach($categories as $key => $value) {
 						?>
@@ -66,7 +66,7 @@
 			<div>
 				<label>Độ khó</label>
 				<select id = "level" name = "level">
-					<option selected value = 'non_select'>Select Level</option>
+					<option selected value = 'non_select'>Chọn độ khó</option>
 					<?php
 					if (isset($levels)) {
 						foreach($levels as $key => $value) {
@@ -84,7 +84,7 @@
 			<div>
 				<label>Phần học</label>
 				<select id = "subject">
-					<option selected value = 'non_select'>Select Subject</option>
+					<option selected value = 'non_select'>Chọn phần học</option>
 					<?php
 					if (isset($subjects)) {
 						foreach($subjects as $key => $value) {

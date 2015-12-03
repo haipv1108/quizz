@@ -5,12 +5,12 @@ if(!function_exists('vali_test')){
 	function vali_test(){
 		$ci = &get_instance();
 		$ci->form_validation->set_rules('test_name', 'Tên đề thi', 'required'); 
-		$ci->form_validation->set_rules('test_time', 'Thời gian', 'required|integer'); 
+		$ci->form_validation->set_rules('test_time', 'Thời gian', 'required|integer|not_zero'); 
 		$ci->form_validation->set_rules('test_des', 'Mô tả đề test', 'required');
 		$ci->form_validation->set_rules('category', 'Môn học', 'required|valid_category');
-		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required|not_zero|integer'); 
+		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required|integer|not_zero'); 
 		$ci->form_validation->set_rules('madethi', 'Mã đề thi', 'required|valid_madethi');
-		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'not_zero|integer');
+		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'integer|not_zero');
 		$ci->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
 	}
 

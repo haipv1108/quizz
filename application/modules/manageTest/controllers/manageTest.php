@@ -55,6 +55,7 @@ class ManageTest extends MX_Controller {
 		if($this->input->post('submit')){
 			vali_test();// check validate_form su dung helper
 			if($this->form_validation->run() == TRUE){
+				$re = array();
 				$data = json_decode(stripslashes($_POST['data']));
 				$input_data = get_info_test();//get info user using helpe
 
@@ -65,15 +66,16 @@ class ManageTest extends MX_Controller {
 		 		if (sizeof($data) <= 0) {
 		 			$this->create_test($input_data);
 		 			
-		 		} else 
-
-				foreach($data as $key => $value) {
+		 		} else {
+		 			foreach($data as $key => $value) {
 					array_push($input_data['subjects'],
 						array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
 					$input_data['current_num_question'] += $value->numQuestion;
-				}
+					}
 
-				$re= $this->create_test($input_data);
+					$re= $this->create_test($input_data);	
+		 		}
+
 				if ($re == null) {
 					$this->_data['success'] = "Tạo đề thành công";
 					
@@ -126,9 +128,9 @@ class ManageTest extends MX_Controller {
 				if($this->form_validation->run() == TRUE){
 					if($this->input->post('delete')=='yes'){
 						$this->mmanageTest->deletetest($id);
-						$data['success'] = 'You have successfully deleted.';
+						$data['success'] = 'Bạn đã xóa đề thi thành công.';
 					}else if($this->input->post('delete') =='no'){
-						$data['success'] = 'I also think you should not delete user';
+						$data['success'] = 'Tôi cũng nghĩ bạn không nên xóa đề thi này.';
 					}
 				}
 			}
@@ -143,7 +145,7 @@ class ManageTest extends MX_Controller {
 		{
 			$subjects = $this->msubject->select_subject($_POST['cat_id']);
 		}
-		print "<option value=\"non_select\">Select Subject</option>\n";
+		print "<option value=\"non_select\">Chọn phần học</option>\n";
 		if (strcmp($_POST['cat_id'],'non_select') == 0) {
 			return;
 		}
@@ -159,7 +161,7 @@ class ManageTest extends MX_Controller {
 			$sub_id = $_POST['cat_id'];
 			$levels = $this->mlevel->get_level($sub_id);
 		}
-		print "<option value = \"non_select\">Select Level</option>\n";
+		print "<option value = \"non_select\">Chọn độ khó</option>\n";
 		if (strcmp($_POST['cat_id'],'non_select') == 0) {
 			return;
 		}
