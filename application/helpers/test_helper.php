@@ -10,7 +10,7 @@ if(!function_exists('vali_test')){
 		$ci->form_validation->set_rules('category', 'Môn học', 'required|valid_category');
 		$ci->form_validation->set_rules('max_question', 'Số lượng câu hỏi', 'required|not_zero|integer'); 
 		$ci->form_validation->set_rules('madethi', 'Mã đề thi', 'required|valid_madethi');
-		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'required|not_zero|integer');
+		$ci->form_validation->set_rules('general_score', 'Điểm câu hỏi tổng hợp', 'not_zero|integer');
 		$ci->form_validation->set_error_delimiters('<div class="input-notification error png_bg">', '</div>');
 	}
 
