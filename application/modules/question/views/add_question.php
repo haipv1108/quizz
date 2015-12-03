@@ -48,7 +48,7 @@
 			<br>			
 			<p>
 				<label>Nội dung câu hỏi: </label>
-				<textarea class="text-input textarea wysiwyg" name="question" cols="79" rows="3" ><?php echo set_value('question'); ?></textarea>
+				<textarea class="text-input textarea wysiwyg" name="question" cols="79" rows="5" ><?php echo set_value('question'); ?></textarea>
 			</p>
 			<p> 
 				<label>Các câu trả lời: </label>
