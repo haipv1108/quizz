@@ -13,7 +13,8 @@ class ManageTest extends MX_Controller {
 		$this->load->model('subject/msubject');
 		$this->load->model('level/mlevel');
 		$this->load->model('question/mquestion');
-		$this->load->helper(array('form','array','test'));
+		$this->load->helper(array('form','array','test', 'url'));
+		$this->load->library('form_validation');
 	}
 
 	function index(){
@@ -55,18 +56,30 @@ class ManageTest extends MX_Controller {
 			vali_test();// check validate_form su dung helper
 			if($this->form_validation->run() == TRUE){
 				$data = json_decode(stripslashes($_POST['data']));
-				$input_data = get_info_test();//get info user using helper
-		 
+				$input_data = get_info_test();//get info user using helpe
+
+				if ($input_data['categoryid'] == 'non_select') {
+					echo "Chưa chọn môn học";
+					return;
+				}
+		 		if (sizeof($data) <= 0) {
+		 			$this->create_test($input_data);
+		 			return;
+		 		}
+
 				foreach($data as $key => $value) {
 					array_push($input_data['subjects'],
 						array('id' => $value->id, 'name' => $value->name, 'num_question' => $value->numQuestion, 'score_question' => $value->scoreQuestion, 'level' => $value->level, 'level_name' => $value->levelName));
 					$input_data['current_num_question'] += $value->numQuestion;
 				}
 
-				if ($input_data['current_num_question'] == $input_data['max_question']) {
-					echo "MAX";
+				$re= $this->create_test($input_data);
+				if ($re == null) {
+					$this->_data['success'] = "Tao de thanh cong";
+				} else {
+					$this->_data['error'] = $re;
 				}
-				$this->create_test($input_data);
+
 			}
 		}
 	 	$this->load->view('admin/backend/layouts/home',isset($this->_data)?$this->_data:NULL);
@@ -158,36 +171,38 @@ class ManageTest extends MX_Controller {
 	}
 
 	function create_test($input_data) {
+		$i = 0;
 		$test_question = array();
 		$get_question_info = array();
 		$question_not_enough = false;
 		$num_general_question = $input_data['max_question'] - $input_data['current_num_question'];
 
-		foreach($input_data['subjects'] as $key => $value) {
-			$input_data['subjects'][$key]['questions'] = array();
-			$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
+		if (isset($input_data['subjects']) && sizeof($input_data['subjects']) > 0) {
+			foreach($input_data['subjects'] as $key => $value) {
+				$input_data['subjects'][$key]['questions'] = array();
+				$result = $this->mquestion->get_questions_with_subject_level($value['id'], $value['level']);
 
-			if (sizeof($result) < $value['num_question']){
+				if (sizeof($result) < $value['num_question'] || $result == NULL){
+					$question_not_enough = true;
+					$get_question_info[$i] = "Phần học " . $value['name'] .  " với độ khó " . $value['level_name']. " không đủ câu hỏi<br>";
+					++$i;
+				} else if ($result != null)
+					$input_data['subjects'][$key]['questions'] = $result;
+			}
+		}
+
+		if ($num_general_question > 0)  {
+			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
+			if (sizeof($result) < $num_general_question || $result == NULL) {
+				$get_question_info[$i] = "Không đủ dữ liệu cho câu hỏi tổng hợp<br>";
 				$question_not_enough = true;
-				$get_question_info[$value['id']] = "phan hoc " . $value['name'] .  "voi level " . $value['level_name']. " khong du cau hoi";
-			} else if ($result != null)
-				$input_data['subjects'][$key]['questions'] = $result;
-		
+				++$i;
+			} else 
+				$input_data['general_question_bank'] = $result;
 		}
 
 		if ($question_not_enough == true)  {
-			echo "Không đủ câu hỏi";
-			return;
-		}
-
-		if ($input_data['current_num_question'] < $input_data['max_question'])  {
-			$result = $this->mquestion->get_questions_with_category($input_data['categoryid']);
-			if (sizeof($result) < $num_general_question) {
-				$get_question_info['generral'] = "Không đủ dữ liệu cho câu hỏi tổng hợp";
-				$question_not_enough = true;
-
-			}
-			$input_data['general_question_bank'] = $result;
+			return $get_question_info;
 		}
 
 		//random lay cau hoi
@@ -203,19 +218,11 @@ class ManageTest extends MX_Controller {
 			}
 		}
 
-		
-
-		//cau hoi tong hop
-		$avg_score = 0;
-		foreach ($input_data['subjects'] as $key => $value) {
-			$avg_score += $value['score_question'] / sizeof($input_data['subjects']);
-		}
-
 
 		while ($num_general_question > 0) {
 			$question_index = rand(0, sizeof($input_data['general_question_bank']) - 1);
 			$question_id = $input_data['general_question_bank'][$question_index];
-			array_push($test_question, array('questionid' => $question_id['id'], 'score' => $avg_score));
+			array_push($test_question, array('questionid' => $question_id['id'], 'score' => $input_data['general_score']));
 			array_slice($input_data['general_question_bank'], $question_index);
 			--$num_general_question;
 		}
@@ -231,6 +238,7 @@ class ManageTest extends MX_Controller {
 
 		$this->mmanageTest->insert_test($data);
 		echo "Thành công";
+		return null;
 	}
 
 }

@@ -49,30 +49,28 @@
 			<p> 
 				<label>Các câu trả lời: </label>
 
-				<input type = 'button' id = 'btn_add' value = 'ADD' >
+				<input type = 'button' class="button" id = 'btn_add' value = 'ADD' >
 				<br/><br/>
 				
 				<ol id = answer>
 					<?php 	$ans = json_decode($quiz_info['answer'], true);
 							$cor = json_decode($quiz_info['correct'], true);
 							$i = 0;
-							foreach($ans as $key=>$val){ 
-								echo "Đáp án" . $key. "<input type = text name = answer[]  value=$val>";
-								$k = 0;
-								for($k = 1; $k <= sizeof($cor); ++$k) {
-									if ($key == $cor[$k])
-										break;
+							foreach($ans as $key=>$val){?>
+								Đáp án <?php echo $key;?> : <input type='text' class = 'text-input' name = 'answer[]' value='<?php echo $val;?>'>
+					<?php		for($k = 1; $k <= sizeof($cor); ++$k){
+									if($key == $cor[$k]) break;
 								}
-								if ($k <= sizeof($cor)) {
-									echo "<input type = checkbox name = correct[] checked value = $key ";
-								} else {
-									echo "<input type = checkbox name = correct[] value = $key >";
-								}
-						
-					?>
+								if ($k <= sizeof($cor)) {?>
+									<input type = checkbox name = 'correct[]' checked value = <?php echo $key;?> >
+					<?php		} else {?>
+									<input type = checkbox name = correct[] value = <?php echo $key;?> >
+					<?php		}?>
 								<br></br>
 								<div class="clear"></div>
 					<?php	}?>
+					
+							
 				</ol>
 				<div id = 'answer_view'>
 
