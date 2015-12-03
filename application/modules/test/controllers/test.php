@@ -21,6 +21,8 @@ class Test extends MX_Controller {
 	function testdetail($testid = 0){
 		save_url();
 		$user = check_login12(1,2);
+		if($this->input->post('submit_rs'))
+			redirect(base_url());
 		$data = array(
 				'user' => $user,
 				'meta_title' => 'Test Detail',

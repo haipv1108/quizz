@@ -97,8 +97,9 @@
 		//document.getElementById("btn_add").addEventListener('click',addAnswer);
 		$('#btn_add').click(function(){
 			index = currentIndex;
+			++index;
+			$('#answer').append("Đáp án " + index + ": <input type = text name = answer[]>" + "<input type = checkbox name = correct[] value = " + index +"><br/><br/>");
 			++currentIndex;
-			$('#answer').append("Đáp án " + currentIndex + ": <input type = text name = answer[]>" + "<input type = checkbox name = correct[] value = " + index +"><br/><br/>");
 		});
 		
 		$('#category').on('change', function(){

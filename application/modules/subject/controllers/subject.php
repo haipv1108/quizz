@@ -64,7 +64,7 @@ class Subject extends MX_Controller{
 					'user' => $user,
 					'meta_title' => 'Edit Subject',
 					'active' => 'subject-edit',
-					'list_category'=>$this->msubject->get_list_category(),
+					'list_category'=>$this->mcategory->get_list_category(),
 					'template' => 'edit_subject'
 					);
 		$subject_info = $this->msubject->search_subject($id);

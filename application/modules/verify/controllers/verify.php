@@ -33,7 +33,8 @@
 									'level'	=> $check['level'],
 									'logged_in'	=> TRUE
 								);
-					$this->session->set_userdata('user', $data); 
+					$this->session->set_userdata('user', $data); //set cookie
+					// redirect current_url
 					$link = $this->session->userdata('current_url');
 					if(isset($link['current_url']) && !empty($link['current_url']))
 					$current_url = $link['current_url'];
@@ -41,6 +42,7 @@
 						$current_url = base_url().'admin';
 					else if($check['level_id'] == 1) $current_url = base_url().'user';
 						redirect($current_url); 
+					// end redirect
 				} else{ 
 					$error['error'] = 'Username or Password error.';
 				} 
